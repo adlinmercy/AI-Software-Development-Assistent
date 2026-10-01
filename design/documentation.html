@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documentation Generation - DevCore AI</title>
+
+    <link rel="stylesheet" href="css/documentation.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <div>
+                <h2>DevCore</h2>
+                <span>AI Assistant</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html">
+                <span>▤</span>
+                Requirement Analysis
+            </a>
+
+            <a href="code-generation.html">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="code-debugging.html">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="code-review.html">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="test-cases.html">
+                <span>☑</span>
+                Test Case Generation
+            </a>
+
+            <a href="documentation.html" class="active">
+                <span>▧</span>
+                Documentation
+            </a>
+
+            <a href="#">
+                <span>◫</span>
+                Project History
+            </a>
+
+            <a href="#">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#" id="logoutBtn">
+                <span>↪</span>
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Navbar -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <h3>Documentation Generation</h3>
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">🔔</button>
+
+                <div class="profile">
+                    <div class="profile-avatar">A</div>
+
+                    <div class="profile-info">
+                        <strong>Adlin</strong>
+                        <span>Developer</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page Content -->
+        <section class="page-content">
+
+            <div class="page-heading">
+                <div>
+                    <h1>Generate Technical Documentation</h1>
+
+                    <p>
+                        Create clear and structured documentation from your
+                        software requirements or source code.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Documentation Generator -->
+            <div class="documentation-card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>Documentation Generator</h2>
+
+                        <p>
+                            Provide your requirement or source code and
+                            select the type of documentation you need.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Options -->
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="docInputType">
+                            Input Type
+                        </label>
+
+                        <select id="docInputType">
+
+                            <option value="requirement">
+                                Software Requirement
+                            </option>
+
+                            <option value="code">
+                                Source Code
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="documentationType">
+                            Documentation Type
+                        </label>
+
+                        <select id="documentationType">
+
+                            <option value="readme">
+                                README Documentation
+                            </option>
+
+                            <option value="api">
+                                API Documentation
+                            </option>
+
+                            <option value="code">
+                                Code Documentation
+                            </option>
+
+                            <option value="setup">
+                                Setup / Deployment Guide
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="docLanguage">
+                            Programming Language
+                        </label>
+
+                        <select id="docLanguage">
+
+                            <option value="Java">
+                                Java
+                            </option>
+
+                            <option value="Python">
+                                Python
+                            </option>
+
+                            <option value="JavaScript">
+                                JavaScript
+                            </option>
+
+                            <option value="C">
+                                C
+                            </option>
+
+                            <option value="C++">
+                                C++
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Input -->
+                <div class="form-group full-width">
+
+                    <label for="documentationInput">
+                        Requirement / Source Code
+                    </label>
+
+                    <textarea
+                        id="documentationInput"
+                        maxlength="5000"
+                        placeholder="Enter your software requirement here..."
+                    ></textarea>
+
+                    <div class="character-count">
+                        <span id="docCharCount">0</span> / 5000
+                    </div>
+
+                </div>
+
+
+                <!-- Generate Button -->
+                <button
+                    id="generateDocumentationBtn"
+                    class="generate-btn"
+                >
+                    <span>✨</span>
+                    Generate Documentation
+                </button>
+
+            </div>
+
+
+            <!-- Result -->
+            <div
+                class="documentation-result"
+                id="documentationResult"
+            >
+
+                <div class="result-header">
+
+                    <div>
+                        <h2>Generated Documentation</h2>
+
+                        <p>
+                            AI-generated technical documentation will appear
+                            here.
+                        </p>
+                    </div>
+
+                    <span
+                        class="status-badge"
+                        id="documentationStatus"
+                    >
+                        Ready
+                    </span>
+
+                </div>
+
+
+                <!-- Empty State -->
+                <div
+                    class="documentation-empty"
+                    id="documentationEmpty"
+                >
+
+                    <div class="empty-icon">📄</div>
+
+                    <h3>No Documentation Generated Yet</h3>
+
+                    <p>
+                        Enter your requirement or source code above and
+                        click "Generate Documentation".
+                    </p>
+
+                </div>
+
+
+                <!-- Generated Documentation -->
+                <div
+                    class="generated-documentation"
+                    id="generatedDocumentation"
+                >
+
+                </div>
+
+            </div>
+
+
+            <!-- Features -->
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">📘</div>
+
+                    <h3>README</h3>
+
+                    <p>
+                        Generate structured project README files
+                        automatically.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">🔗</div>
+
+                    <h3>API Documentation</h3>
+
+                    <p>
+                        Create clear documentation for APIs,
+                        endpoints, parameters and responses.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">💻</div>
+
+                    <h3>Code Documentation</h3>
+
+                    <p>
+                        Generate explanations for functions,
+                        classes and important code sections.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">🚀</div>
+
+                    <h3>Setup Guide</h3>
+
+                    <p>
+                        Generate installation, configuration and
+                        deployment instructions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/documentation.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    color: #0f172a;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.register-container {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+}
+
+
+/* =========================
+   LEFT SECTION
+========================= */
+
+.left-section {
+    width: 55%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+
+    background: #0f172a;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   BRAND CONTENT
+========================= */
+
+.register-brand {
+    max-width: 500px;
+}
+
+.brand-logo {
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #ffffff;
+
+    margin-bottom: 50px;
+}
+
+.register-brand h1 {
+    font-size: 52px;
+    line-height: 1.1;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+    margin-bottom: 22px;
+}
+
+.register-brand p {
+    max-width: 420px;
+
+    font-size: 16px;
+    line-height: 1.7;
+
+    color: #94a3b8;
+}
+
+
+/* =========================
+   RIGHT SECTION
+========================= */
+
+.right-section {
+    width: 45%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   REGISTER CONTENT
+========================= */
+
+.register-content {
+    width: 100%;
+    max-width: 400px;
+
+    background: #ffffff;
+
+    padding: 28px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.register-header {
+    margin-bottom: 20px;
+}
+
+.register-header h1 {
+    font-size: 27px;
+    font-weight: 700;
+
+    color: #0f172a;
+
+    margin-bottom: 6px;
+}
+
+.register-header p {
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.register-form {
+    width: 100%;
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.form-group {
+    margin-bottom: 13px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #334155;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.form-group input {
+    width: 100%;
+    height: 43px;
+
+    padding: 0 13px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #94a3b8;
+}
+
+.form-group input:hover {
+    border-color: #b8c2d1;
+}
+
+.form-group input:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 8px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    padding: 5px;
+
+    opacity: 0.6;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+}
+
+
+/* =========================
+   PASSWORD HINT
+========================= */
+
+.password-hint {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #94a3b8;
+}
+
+
+/* =========================
+   ERROR MESSAGE
+========================= */
+
+.error-message {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    color: #dc2626;
+}
+
+.form-message {
+    display: none;
+
+    padding: 8px 10px;
+
+    margin-bottom: 10px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   TERMS
+========================= */
+
+.terms {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: 14px 0 16px;
+}
+
+.terms input {
+    margin-top: 3px;
+
+    cursor: pointer;
+}
+
+.terms label {
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    color: #64748b;
+
+    cursor: pointer;
+}
+
+.terms a {
+    color: #4f46e5;
+
+    text-decoration: none;
+
+    font-weight: 500;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+.register-button {
+    width: 100%;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #4f46e5;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.register-button:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(79, 70, 229, 0.25);
+}
+
+.register-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   BUTTON LOADER
+========================= */
+
+.button-loader {
+    display: none;
+}
+
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-link {
+    text-align: center;
+
+    margin-top: 17px;
+}
+
+.login-link p {
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+.login-link a {
+    color: #4f46e5;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    body {
+        height: auto;
+        min-height: 100vh;
+
+        overflow-y: auto;
+    }
+
+    .register-container {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .left-section {
+        display: none;
+    }
+
+    .right-section {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+
+        padding: 20px;
+
+        overflow: visible;
+    }
+
+    .register-content {
+        max-width: 420px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .right-section {
+        padding: 15px;
+    }
+
+    .register-content {
+        padding: 22px 18px;
+
+        border-radius: 12px;
+    }
+
+    .register-header h1 {
+        font-size: 24px;
+    }
+}

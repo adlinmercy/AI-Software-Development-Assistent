@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - DevCore AI</title>
+
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                D
+            </div>
+
+            <div>
+                <h2>DevCore</h2>
+                <span>AI Assistant</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html">
+                <span>▤</span>
+                Requirement Analysis
+            </a>
+
+            <a href="code-generation.html">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="code-debugging.html">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="code-review.html">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="test-cases.html">
+                <span>☑</span>
+                Test Case Generation
+            </a>
+
+            <a href="documentation.html">
+                <span>▧</span>
+                Documentation
+            </a>
+
+            <a href="project-history.html">
+                <span>◫</span>
+                Project History
+            </a>
+
+            <a href="settings.html" class="active">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="#" id="logoutBtn">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <h3>Settings</h3>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button
+                    class="notification-btn"
+                    id="notificationBtn">
+                    🔔
+                </button>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        A
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>Adlin</strong>
+
+                        <span>
+                            Developer
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             PAGE CONTENT
+        ========================== -->
+
+        <section class="page-content">
+
+
+            <div class="page-heading">
+
+                <h1>Settings</h1>
+
+                <p>
+                    Manage your profile, AI preferences,
+                    notifications and application settings.
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 PROFILE SETTINGS
+            ========================== -->
+
+            <div class="settings-card">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <h2>Profile Settings</h2>
+
+                        <p>
+                            Manage your personal information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-section">
+
+                    <div class="large-avatar">
+                        A
+                    </div>
+
+
+                    <div class="profile-form">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    value="Adlin Mercy"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="email">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    value="adlin@example.com"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="role">
+                                    Role
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="role"
+                                    value="Developer"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="language">
+                                    Preferred Language
+                                </label>
+
+                                <select id="language">
+
+                                    <option value="english">
+                                        English
+                                    </option>
+
+                                    <option value="tamil">
+                                        Tamil
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 AI PREFERENCES
+            ========================== -->
+
+            <div class="settings-card">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <h2>AI Preferences</h2>
+
+                        <p>
+                            Customize how DevCore AI assists you.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-options">
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>AI Response Detail</h3>
+
+                            <p>
+                                Choose how detailed AI responses
+                                should be.
+                            </p>
+
+                        </div>
+
+
+                        <select id="responseDetail">
+
+                            <option value="concise">
+                                Concise
+                            </option>
+
+                            <option value="balanced" selected>
+                                Balanced
+                            </option>
+
+                            <option value="detailed">
+                                Detailed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>Code Suggestions</h3>
+
+                            <p>
+                                Allow AI to provide improvement
+                                suggestions for generated code.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="codeSuggestions"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>Security Analysis</h3>
+
+                            <p>
+                                Analyze generated code for common
+                                security issues.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="securityAnalysis"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 NOTIFICATIONS
+            ========================== -->
+
+            <div class="settings-card">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🔔
+                    </div>
+
+                    <div>
+
+                        <h2>Notifications</h2>
+
+                        <p>
+                            Control application notifications.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-options">
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>Project Notifications</h3>
+
+                            <p>
+                                Receive notifications about project
+                                activity.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="projectNotifications"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>AI Task Completion</h3>
+
+                            <p>
+                                Notify when an AI task is completed.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="taskNotifications"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>Email Notifications</h3>
+
+                            <p>
+                                Receive important updates through email.
+                            </p>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="emailNotifications"
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 APPEARANCE
+            ========================== -->
+
+            <div class="settings-card">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🎨
+                    </div>
+
+                    <div>
+
+                        <h2>Appearance</h2>
+
+                        <p>
+                            Customize the appearance of DevCore AI.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-options">
+
+                    <div class="setting-option">
+
+                        <div>
+
+                            <h3>Theme</h3>
+
+                            <p>
+                                Select your preferred application theme.
+                            </p>
+
+                        </div>
+
+
+                        <select id="themeSelect">
+
+                            <option value="light">
+                                Light
+                            </option>
+
+                            <option value="dark">
+                                Dark
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 SECURITY
+            ========================== -->
+
+            <div class="settings-card">
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <h2>Security</h2>
+
+                        <p>
+                            Manage your account security.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-row">
+
+                    <div>
+
+                        <h3>Change Password</h3>
+
+                        <p>
+                            Update your account password regularly
+                            to keep your account secure.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="secondary-btn"
+                        id="changePasswordBtn">
+
+                        Change Password
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 SAVE BUTTON
+            ========================== -->
+
+            <div class="save-section">
+
+                <button
+                    class="save-btn"
+                    id="saveSettingsBtn">
+
+                    ✓ Save Settings
+
+                </button>
+
+            </div>
+
+
+            <!-- STATUS MESSAGE -->
+
+            <div
+                class="save-message"
+                id="saveMessage">
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <script src="js/settings.js"></script>
+
+</body>
+
+</html>

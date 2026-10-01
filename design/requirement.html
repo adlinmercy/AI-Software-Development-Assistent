@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requirement Analysis - DevCore AI</title>
+
+    <link rel="stylesheet" href="css/requirement.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <span>DevCore <strong>AI</strong></span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html" class="nav-item active">
+                <span>▣</span>
+                Requirement Analysis
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>□</span>
+                Test Cases
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>▤</span>
+                Documentation
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>◷</span>
+                Project History
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="login.html" class="nav-item logout">
+                <span>↪</span>
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Navbar -->
+        <header class="topbar">
+
+            <div class="page-title">
+                <h1>Requirement Analysis</h1>
+                <p>Analyze and understand your software requirements with AI.</p>
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">
+                    🔔
+                </button>
+
+                <div class="profile">
+                    <div class="profile-avatar">A</div>
+
+                    <div class="profile-info">
+                        <span class="profile-name">Adlin Mercy</span>
+                        <span class="profile-role">Developer</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Requirement Workspace -->
+        <section class="workspace">
+
+            <!-- Input Section -->
+            <div class="requirement-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Enter Your Requirements</h2>
+                        <p>
+                            Describe your software project or problem statement.
+                            DevCore AI will analyze it and provide structured requirements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="input-area">
+
+                    <label for="requirementInput">
+                        Project Requirements
+                    </label>
+
+                    <textarea
+                        id="requirementInput"
+                        placeholder="Example:
+
+I want to develop a college bus tracking system where students can view the live location of buses. Drivers can share their location through the mobile application. Management can manage bus and driver details.
+
+Enter your requirements here..."
+                    ></textarea>
+
+                    <div class="input-footer">
+
+                        <span id="characterCount">
+                            0 characters
+                        </span>
+
+                        <button id="analyzeBtn" class="analyze-btn">
+                            <span>✦</span>
+                            Analyze Requirements
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Analysis Result -->
+            <div class="result-card">
+
+                <div class="result-header">
+
+                    <div>
+                        <h2>AI Analysis</h2>
+                        <p>
+                            Your analyzed requirements will appear here.
+                        </p>
+                    </div>
+
+                    <span class="ai-status">
+                        AI Ready
+                    </span>
+
+                </div>
+
+
+                <div id="analysisResult" class="analysis-result">
+
+                    <div class="empty-analysis">
+
+                        <div class="empty-icon">
+                            ✦
+                        </div>
+
+                        <h3>No Analysis Yet</h3>
+
+                        <p>
+                            Enter your project requirements above and click
+                            <strong>Analyze Requirements</strong> to get started.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Analysis Categories -->
+            <div class="analysis-grid">
+
+                <div class="analysis-box">
+
+                    <div class="box-icon functional">
+                        ✓
+                    </div>
+
+                    <div>
+                        <h3>Functional Requirements</h3>
+                        <p>
+                            Features and functions identified from your requirements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-box">
+
+                    <div class="box-icon non-functional">
+                        ◈
+                    </div>
+
+                    <div>
+                        <h3>Non-Functional Requirements</h3>
+                        <p>
+                            Performance, security, reliability and usability requirements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-box">
+
+                    <div class="box-icon ambiguity">
+                        !
+                    </div>
+
+                    <div>
+                        <h3>Ambiguities</h3>
+                        <p>
+                            Unclear or incomplete information detected in the requirements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-box">
+
+                    <div class="box-icon suggestions">
+                        ✦
+                    </div>
+
+                    <div>
+                        <h3>AI Suggestions</h3>
+                        <p>
+                            Suggestions to improve and clarify your requirements.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/requirement.js"></script>
+
+</body>
+</html>

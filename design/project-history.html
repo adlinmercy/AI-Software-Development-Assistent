@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project History - DevCore AI</title>
+
+    <link rel="stylesheet" href="css/project-history.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">D</div>
+
+            <div>
+                <h2>DevCore</h2>
+                <span>AI Assistant</span>
+            </div>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html">
+                <span>▤</span>
+                Requirement Analysis
+            </a>
+
+            <a href="code-generation.html">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="code-debugging.html">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="code-review.html">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="test-cases.html">
+                <span>☑</span>
+                Test Case Generation
+            </a>
+
+            <a href="documentation.html">
+                <span>▧</span>
+                Documentation
+            </a>
+
+            <a href="project-history.html" class="active">
+                <span>◫</span>
+                Project History
+            </a>
+
+            <a href="#">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="#" id="logoutBtn">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <h3>Project History</h3>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">
+                    🔔
+                </button>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        A
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>Adlin</strong>
+
+                        <span>
+                            Developer
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page Content -->
+        <section class="page-content">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>
+                        Project History
+                    </h1>
+
+                    <p>
+                        View and manage your previous
+                        software development projects.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="new-project-btn"
+                    id="newProjectBtn"
+                >
+                    + New Project
+                </button>
+
+            </div>
+
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📁
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Projects
+                        </span>
+
+                        <h2 id="totalProjects">
+                            6
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <h2 id="completedProjects">
+                            4
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⚙
+                    </div>
+
+                    <div>
+
+                        <span>
+                            In Progress
+                        </span>
+
+                        <h2 id="progressProjects">
+                            2
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🤖
+                    </div>
+
+                    <div>
+
+                        <span>
+                            AI Tasks
+                        </span>
+
+                        <h2 id="aiTasks">
+                            28
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Search and Filter -->
+            <div class="history-toolbar">
+
+                <div class="search-box">
+
+                    <span>🔍</span>
+
+                    <input
+                        type="text"
+                        id="projectSearch"
+                        placeholder="Search projects..."
+                    >
+
+                </div>
+
+
+                <select id="projectFilter">
+
+                    <option value="all">
+                        All Projects
+                    </option>
+
+                    <option value="completed">
+                        Completed
+                    </option>
+
+                    <option value="progress">
+                        In Progress
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Projects -->
+            <div class="projects-card">
+
+                <div class="projects-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Projects
+                        </h2>
+
+                        <p>
+                            Your recently created
+                            development projects.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="project-list"
+                    id="projectList"
+                >
+
+                    <!-- Project 1 -->
+                    <div
+                        class="project-item"
+                        data-status="completed"
+                        data-name="Student Management System"
+                    >
+
+                        <div class="project-icon">
+                            🎓
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                Student Management System
+                            </h3>
+
+                            <p>
+                                Java • Code Generation •
+                                Code Review
+                            </p>
+
+                            <span>
+                                Modified 2 hours ago
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status completed">
+                            Completed
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="Student Management System"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="Student Management System"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project 2 -->
+                    <div
+                        class="project-item"
+                        data-status="progress"
+                        data-name="E-Commerce Application"
+                    >
+
+                        <div class="project-icon">
+                            🛒
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                E-Commerce Application
+                            </h3>
+
+                            <p>
+                                Python • Requirement Analysis •
+                                Test Cases
+                            </p>
+
+                            <span>
+                                Modified yesterday
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status progress">
+                            In Progress
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="E-Commerce Application"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="E-Commerce Application"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project 3 -->
+                    <div
+                        class="project-item"
+                        data-status="completed"
+                        data-name="Library Management System"
+                    >
+
+                        <div class="project-icon">
+                            📚
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                Library Management System
+                            </h3>
+
+                            <p>
+                                JavaScript • Code Debugging •
+                                Documentation
+                            </p>
+
+                            <span>
+                                Modified 3 days ago
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status completed">
+                            Completed
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="Library Management System"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="Library Management System"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project 4 -->
+                    <div
+                        class="project-item"
+                        data-status="progress"
+                        data-name="Hospital Management System"
+                    >
+
+                        <div class="project-icon">
+                            🏥
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                Hospital Management System
+                            </h3>
+
+                            <p>
+                                Python • Code Generation •
+                                Code Review
+                            </p>
+
+                            <span>
+                                Modified 5 days ago
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status progress">
+                            In Progress
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="Hospital Management System"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="Hospital Management System"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project 5 -->
+                    <div
+                        class="project-item"
+                        data-status="completed"
+                        data-name="Weather Application"
+                    >
+
+                        <div class="project-icon">
+                            🌦️
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                Weather Application
+                            </h3>
+
+                            <p>
+                                JavaScript • API Documentation •
+                                Test Cases
+                            </p>
+
+                            <span>
+                                Modified 1 week ago
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status completed">
+                            Completed
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="Weather Application"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="Weather Application"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project 6 -->
+                    <div
+                        class="project-item"
+                        data-status="completed"
+                        data-name="Online Voting System"
+                    >
+
+                        <div class="project-icon">
+                            🗳️
+                        </div>
+
+
+                        <div class="project-details">
+
+                            <h3>
+                                Online Voting System
+                            </h3>
+
+                            <p>
+                                C++ • Requirement Analysis •
+                                Code Debugging
+                            </p>
+
+                            <span>
+                                Modified 2 weeks ago
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-status completed">
+                            Completed
+                        </div>
+
+
+                        <div class="project-actions">
+
+                            <button
+                                class="open-btn"
+                                data-project="Online Voting System"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                data-project="Online Voting System"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- No Results -->
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+
+                    <div>
+                        🔍
+                    </div>
+
+                    <h3>
+                        No Projects Found
+                    </h3>
+
+                    <p>
+                        Try changing your search or
+                        filter.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/project-history.js"></script>
+
+</body>
+</html>

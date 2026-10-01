@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Test Case Generation | DevCore AI</title>
+
+    <link rel="stylesheet" href="css/test-cases.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <span>DevCore AI</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html" class="nav-item">
+                <span>▤</span>
+                Requirement Analysis
+            </a>
+
+            <a href="code-generation.html" class="nav-item">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="code-debugging.html" class="nav-item">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="code-review.html" class="nav-item">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="test-cases.html" class="nav-item active">
+                <span>☑</span>
+                Test Cases
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>▧</span>
+                Documentation
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>◷</span>
+                Project History
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="login.html" class="nav-item logout">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h2>Test Case Generation</h2>
+
+                <p>
+                    Generate test cases automatically using AI
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">
+                    🔔
+                </button>
+
+                <div class="profile">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>Adlin</strong>
+
+                        <span>Developer</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= WORKSPACE ================= -->
+
+        <section class="workspace">
+
+
+            <!-- INTRO -->
+
+            <div class="test-intro">
+
+                <h1>
+                    Generate Smart Test Cases
+                </h1>
+
+                <p>
+                    Enter your software requirement or code
+                    and DevCore AI will generate meaningful
+                    test cases automatically.
+                </p>
+
+            </div>
+
+
+            <!-- INPUT CARD -->
+
+            <div class="test-card">
+
+
+                <!-- INPUT TYPE -->
+
+                <div class="input-options">
+
+                    <div class="control-group">
+
+                        <label for="testInputType">
+                            Input Type
+                        </label>
+
+                        <select id="testInputType">
+
+                            <option value="Requirement">
+                                Software Requirement
+                            </option>
+
+                            <option value="Code">
+                                Source Code
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="control-group">
+
+                        <label for="testLanguage">
+                            Programming Language
+                        </label>
+
+                        <select id="testLanguage">
+
+                            <option value="Java">
+                                Java
+                            </option>
+
+                            <option value="Python">
+                                Python
+                            </option>
+
+                            <option value="JavaScript">
+                                JavaScript
+                            </option>
+
+                            <option value="C">
+                                C
+                            </option>
+
+                            <option value="C++">
+                                C++
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUIREMENT / CODE -->
+
+                <div class="test-input-area">
+
+                    <label for="testInput">
+                        Requirement / Code
+                    </label>
+
+                    <textarea
+                        id="testInput"
+                        placeholder="Enter your software requirement or paste your source code here..."
+                        spellcheck="false"
+                    ></textarea>
+
+                    <div class="character-count">
+                        <span id="charCount">0</span> characters
+                    </div>
+
+                </div>
+
+
+                <!-- GENERATE BUTTON -->
+
+                <button
+                    id="generateTestBtn"
+                    class="generate-test-btn"
+                >
+
+                    <span>✦</span>
+
+                    Generate Test Cases
+
+                </button>
+
+            </div>
+
+
+            <!-- ================= RESULT ================= -->
+
+            <div class="test-result-card">
+
+                <div class="result-header">
+
+                    <div>
+
+                        <h2>
+                            Generated Test Cases
+                        </h2>
+
+                        <p>
+                            AI-generated test scenarios
+                            based on your input
+                        </p>
+
+                    </div>
+
+                    <span
+                        id="testStatus"
+                        class="test-status"
+                    >
+                        Ready
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="testResult"
+                    class="test-result"
+                >
+
+                    <div class="empty-test">
+
+                        <div class="empty-test-icon">
+                            ☑
+                        </div>
+
+                        <h3>
+                            No Test Cases Generated
+                        </h3>
+
+                        <p>
+                            Enter a requirement or source code
+                            and click Generate Test Cases.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FEATURE CARDS ================= -->
+
+            <div class="feature-grid">
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        Functional Tests
+                    </h3>
+
+                    <p>
+                        Verify that the system performs
+                        its required functions correctly.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        !
+                    </div>
+
+                    <h3>
+                        Negative Tests
+                    </h3>
+
+                    <p>
+                        Check how the system handles
+                        invalid or unexpected inputs.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Edge Cases
+                    </h3>
+
+                    <p>
+                        Identify boundary conditions and
+                        unusual input scenarios.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        ★
+                    </div>
+
+                    <h3>
+                        Priority
+                    </h3>
+
+                    <p>
+                        Automatically classify test cases
+                        based on their importance.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <script src="js/test-cases.js"></script>
+
+</body>
+
+</html>

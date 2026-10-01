@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Code Debugging - DevCore AI</title>
+
+    <link rel="stylesheet" href="css/code-debugging.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <span>DevCore <strong>AI</strong></span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="requirement.html" class="nav-item">
+                <span>▣</span>
+                Requirement Analysis
+            </a>
+
+            <a href="code-generation.html" class="nav-item">
+                <span>&lt;/&gt;</span>
+                Code Generation
+            </a>
+
+            <a href="code-debugging.html" class="nav-item active">
+                <span>⚙</span>
+                Code Debugging
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>✓</span>
+                Code Review
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>□</span>
+                Test Cases
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>▤</span>
+                Documentation
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>◷</span>
+                Project History
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="login.html" class="nav-item logout">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h1>Code Debugging</h1>
+
+                <p>
+                    Find errors, understand problems, and fix your code with AI.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="notification-btn">
+                    🔔
+                </button>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        A
+                    </div>
+
+                    <div class="profile-info">
+
+                        <span class="profile-name">
+                            Adlin Mercy
+                        </span>
+
+                        <span class="profile-role">
+                            Developer
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= WORKSPACE ================= -->
+
+        <section class="workspace">
+
+
+            <!-- DEBUG INPUT CARD -->
+
+            <div class="debug-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Debug Your Code
+                        </h2>
+
+                        <p>
+                            Paste your code and describe the problem.
+                            DevCore AI will identify errors and suggest fixes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="debug-body">
+
+
+                    <!-- LANGUAGE + ERROR -->
+
+                    <div class="debug-options">
+
+                        <div class="input-group">
+
+                            <label for="debugLanguage">
+                                Programming Language
+                            </label>
+
+                            <select id="debugLanguage">
+
+                                <option value="Java">
+                                    Java
+                                </option>
+
+                                <option value="Python">
+                                    Python
+                                </option>
+
+                                <option value="JavaScript">
+                                    JavaScript
+                                </option>
+
+                                <option value="C">
+                                    C
+                                </option>
+
+                                <option value="C++">
+                                    C++
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="errorDescription">
+                                Error / Problem
+                            </label>
+
+                            <input
+                                type="text"
+                                id="errorDescription"
+                                placeholder="Example: The program gives an error when calculating the factorial."
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CODE INPUT -->
+
+                    <div class="input-group code-input-group">
+
+                        <label for="buggyCode">
+                            Your Code
+                        </label>
+
+
+                        <div class="code-input-wrapper">
+
+                            <div class="editor-top">
+
+                                <span class="input-file-name">
+                                    your-code.java
+                                </span>
+
+                                <span class="input-language">
+                                    JAVA
+                                </span>
+
+                            </div>
+
+
+                            <textarea
+                                id="buggyCode"
+                                class="code-textarea"
+                                spellcheck="false"
+                                placeholder="Paste your code here..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DEBUG BUTTON -->
+
+                    <div class="debug-action">
+
+                        <button
+                            id="debugBtn"
+                            class="debug-btn"
+                        >
+
+                            <span>✦</span>
+
+                            Analyze & Debug
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DEBUG RESULT ================= -->
+
+            <div class="result-card">
+
+                <div class="result-header">
+
+                    <div>
+
+                        <h2>
+                            Debugging Result
+                        </h2>
+
+                        <p>
+                            AI analysis and corrected code will appear here.
+                        </p>
+
+                    </div>
+
+                    <span class="ai-status">
+                        AI Ready
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="debugResult"
+                    class="debug-result"
+                >
+
+                    <div class="empty-debug">
+
+                        <div class="debug-icon">
+                            🐛
+                        </div>
+
+                        <h3>
+                            No Code Analysis Yet
+                        </h3>
+
+                        <p>
+                            Enter your code above and click
+                            <strong>Analyze & Debug</strong>
+                            to find and fix errors.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DEBUG FEATURES ================= -->
+
+            <div class="debug-features">
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon error">
+                        !
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Error Detection
+                        </h3>
+
+                        <p>
+                            Identify syntax, logical, and runtime errors
+                            in your code.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon explanation">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Error Explanation
+                        </h3>
+
+                        <p>
+                            Understand why the error occurs and
+                            how it affects your program.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon fix">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Suggested Fix
+                        </h3>
+
+                        <p>
+                            Get corrected code and AI suggestions
+                            to solve the identified problem.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/code-debugging.js"></script>
+
+</body>
+
+</html>

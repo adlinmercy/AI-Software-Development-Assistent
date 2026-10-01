@@ -1,0 +1,606 @@
+/* =================================
+   DevCore AI - Project History
+   ================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+
+/* =================================
+   Sidebar
+   ================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.logo {
+    height: 80px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.logo h2 {
+    font-size: 19px;
+}
+
+.logo span {
+    display: block;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+
+/* =================================
+   Sidebar Navigation
+   ================================= */
+
+.sidebar-nav {
+    padding: 18px 12px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-nav a,
+.sidebar-bottom a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #cbd5e1;
+    padding: 12px 14px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.sidebar-nav a span,
+.sidebar-bottom a span {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sidebar-nav a:hover,
+.sidebar-bottom a:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.sidebar-nav a.active {
+    background: #2563eb;
+    color: white;
+}
+
+.sidebar-bottom {
+    padding: 15px 12px;
+    border-top: 1px solid #1e293b;
+}
+
+
+/* =================================
+   Main Content
+   ================================= */
+
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+}
+
+
+/* =================================
+   Topbar
+   ================================= */
+
+.topbar {
+    height: 75px;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.topbar-left h3 {
+    font-size: 17px;
+    color: #0f172a;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.notification-btn {
+    border: none;
+    background: transparent;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.profile-info strong {
+    display: block;
+    font-size: 13px;
+}
+
+.profile-info span {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+
+/* =================================
+   Page Content
+   ================================= */
+
+.page-content {
+    padding: 30px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 27px;
+    color: #0f172a;
+    margin-bottom: 7px;
+}
+
+.page-heading p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* =================================
+   New Project Button
+   ================================= */
+
+.new-project-btn {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.new-project-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =================================
+   Statistics
+   ================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 9px;
+    background: #eff6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+}
+
+.stat-card span {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.stat-card h2 {
+    font-size: 23px;
+    color: #0f172a;
+}
+
+
+/* =================================
+   Search Toolbar
+   ================================= */
+
+.history-toolbar {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+    height: 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 9px;
+}
+
+.search-box span {
+    font-size: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #334155;
+}
+
+.history-toolbar select {
+    width: 180px;
+    height: 42px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0 12px;
+    background: white;
+    color: #334155;
+    font-size: 13px;
+    outline: none;
+}
+
+
+/* =================================
+   Projects Card
+   ================================= */
+
+.projects-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    overflow: hidden;
+}
+
+.projects-header {
+    padding: 22px 25px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.projects-header h2 {
+    font-size: 18px;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.projects-header p {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =================================
+   Project Item
+   ================================= */
+
+.project-list {
+    width: 100%;
+}
+
+.project-item {
+    display: grid;
+    grid-template-columns: 50px minmax(250px, 1fr) 110px 145px;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e2e8f0;
+    transition: 0.2s;
+}
+
+.project-item:last-child {
+    border-bottom: none;
+}
+
+.project-item:hover {
+    background: #f8fafc;
+}
+
+
+/* =================================
+   Project Icon
+   ================================= */
+
+.project-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 9px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+
+/* =================================
+   Project Details
+   ================================= */
+
+.project-details h3 {
+    font-size: 14px;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.project-details p {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.project-details span {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+
+/* =================================
+   Project Status
+   ================================= */
+
+.project-status {
+    width: fit-content;
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.project-status.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.project-status.progress {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+
+/* =================================
+   Project Actions
+   ================================= */
+
+.project-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.open-btn,
+.delete-btn {
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.open-btn {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+.open-btn:hover {
+    background: #dbeafe;
+}
+
+.delete-btn {
+    background: white;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.delete-btn:hover {
+    background: #fef2f2;
+}
+
+
+/* =================================
+   No Results
+   ================================= */
+
+.no-results {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-results div {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.no-results h3 {
+    font-size: 16px;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.no-results p {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+
+/* =================================
+   Responsive
+   ================================= */
+
+@media (max-width: 1150px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-item {
+        grid-template-columns: 50px 1fr 100px;
+    }
+
+    .project-actions {
+        grid-column: 2 / -1;
+        justify-content: flex-start;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-nav {
+        display: none;
+    }
+
+    .page-content {
+        padding: 20px 15px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .history-toolbar {
+        flex-direction: column;
+    }
+
+    .history-toolbar select {
+        width: 100%;
+    }
+
+    .project-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .project-details {
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .project-status {
+        margin-left: 50px;
+    }
+
+    .project-actions {
+        margin-left: 50px;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+}

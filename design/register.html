@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | DevCore AI</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Register CSS -->
+    <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body>
+
+    <main class="register-container">
+
+        <!-- =========================
+             LEFT SECTION
+        ========================== -->
+
+        <section class="left-section">
+
+            <div class="register-brand">
+
+                <div class="brand-logo">
+                    DevCore AI
+                </div>
+
+                <h1>
+                    Build smarter.<br>
+                    Code better.
+                </h1>
+
+                <p>
+                    Your intelligent software development
+                    assistant powered by AI.
+                </p>
+
+            </div>
+
+        </section>
+        <!-- =========================
+             RIGHT SECTION
+        ========================== -->
+
+        <section class="right-section">
+
+            <div class="register-content">
+
+                <!-- Header -->
+
+                <header class="register-header">
+
+                    <h1>
+                        Create your account
+                    </h1>
+
+                    <p>
+                        Get started with DevCore AI
+                    </p>
+
+                </header>
+
+
+                <!-- REGISTER FORM -->
+
+                <form
+                    class="register-form"
+                    id="register-form"
+                >
+
+                    <!-- Full Name -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                        <small
+                            class="error-message"
+                            id="name-error"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <small
+                            class="error-message"
+                            id="email-error"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="password-toggle"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                        <small
+                            class="password-hint"
+                        >
+                            Use at least 8 characters
+                        </small>
+
+                        <small
+                            class="error-message"
+                            id="password-error"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="form-group">
+
+                        <label for="confirm-password">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirm-password"
+                                name="confirm-password"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="confirm-password-toggle"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                        <small
+                            class="error-message"
+                            id="confirm-password-error"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- Terms -->
+
+                    <div class="terms">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            name="terms"
+                            required
+                        >
+
+                        <label for="terms">
+
+                            I agree to the
+                            <a href="#">
+                                Terms of Service
+                            </a>
+                            and
+                            <a href="#">
+                                Privacy Policy
+                            </a>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- Form Message -->
+
+                    <div
+                        class="form-message"
+                        id="form-message"
+                        role="alert"
+                    ></div>
+
+
+                    <!-- Register Button -->
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                        id="register-button"
+                    >
+
+                        <span class="button-text">
+                            Create Account
+                        </span>
+
+                        <span class="button-loader">
+                            Creating account...
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login Link -->
+
+                <div class="login-link">
+
+                    <p>
+
+                        Already have an account?
+
+                        <a href="login.html">
+                            Login
+                        </a>
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Register JavaScript -->
+
+    <script src="js/register.js"></script>
+
+</body>
+
+</html>

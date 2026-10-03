@@ -54,7 +54,7 @@ body {
     width: 36px;
     height: 36px;
 
-    background: #6366f1;
+    background: #2563eb;
     border-radius: 9px;
 
     display: flex;
@@ -66,7 +66,7 @@ body {
 }
 
 .logo strong {
-    color: #818cf8;
+    color: #2563eb;
 }
 
 
@@ -112,7 +112,7 @@ body {
 }
 
 .nav-item.active {
-    background: #312e81;
+    background: #2563eb;
     color: #ffffff;
 }
 
@@ -209,7 +209,7 @@ body {
 
     border-radius: 50%;
 
-    background: #6366f1;
+    background: #2563eb;
     color: #ffffff;
 
     display: flex;
@@ -344,7 +344,7 @@ select {
 
 select:focus,
 input[type="text"]:focus {
-    border-color: #6366f1;
+    border-color: #2563eb;
 
     box-shadow:
         0 0 0 3px rgba(99, 102, 241, 0.10);
@@ -455,7 +455,7 @@ input::placeholder {
 .debug-btn {
     border: none;
 
-    background: #6366f1;
+    background:#2563eb;
     color: #ffffff;
 
     padding: 11px 19px;
@@ -476,7 +476,7 @@ input::placeholder {
 }
 
 .debug-btn:hover {
-    background: #4f46e5;
+    background: #2563eb;
 
     transform: translateY(-1px);
 }

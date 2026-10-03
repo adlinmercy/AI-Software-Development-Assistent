@@ -1,566 +1,329 @@
-// ================================
-// DevCore AI - Documentation
-// Generation
-// ================================
-
-const docInputType = document.getElementById("docInputType");
-const documentationType = document.getElementById("documentationType");
-const docLanguage = document.getElementById("docLanguage");
-
 const documentationInput =
     document.getElementById("documentationInput");
 
-const docCharCount =
-    document.getElementById("docCharCount");
+const charCount =
+    document.getElementById("charCount");
 
-const generateDocumentationBtn =
-    document.getElementById("generateDocumentationBtn");
+const generateBtn =
+    document.getElementById("generateBtn");
 
-const documentationResult =
-    document.getElementById("documentationResult");
+const loadingSection =
+    document.getElementById("loadingSection");
 
-const documentationEmpty =
-    document.getElementById("documentationEmpty");
+const resultsSection =
+    document.getElementById("resultsSection");
 
-const generatedDocumentation =
-    document.getElementById("generatedDocumentation");
+const documentationOutput =
+    document.getElementById("documentationOutput");
 
-const documentationStatus =
-    document.getElementById("documentationStatus");
+const copyBtn =
+    document.getElementById("copyBtn");
+
+const documentationType =
+    document.getElementById("documentationType");
+
+const language =
+    document.getElementById("language");
 
 
-// ================================
-// Character Counter
-// ================================
+/* =========================
+   CHARACTER COUNTER
+========================= */
 
-documentationInput.addEventListener("input", function () {
+documentationInput.addEventListener("input", () => {
 
-    docCharCount.textContent =
-        documentationInput.value.length;
+    const length = documentationInput.value.length;
+
+    charCount.textContent =
+        `${length} / 5000 characters`;
 
 });
 
 
-// ================================
-// Change Placeholder
-// ================================
+/* =========================
+   GENERATE DOCUMENTATION
+========================= */
 
-docInputType.addEventListener("change", function () {
+generateBtn.addEventListener("click", () => {
 
-    if (docInputType.value === "code") {
+    const input =
+        documentationInput.value.trim();
 
-        documentationInput.placeholder =
-            "Paste your source code here...";
+    if (input.length < 10) {
 
-    } else {
+        alert(
+            "Please enter a detailed requirement or source code."
+        );
 
-        documentationInput.placeholder =
-            "Enter your software requirement here...";
+        documentationInput.focus();
+
+        return;
+    }
+
+
+    generateBtn.disabled = true;
+
+    loadingSection.classList.add("show");
+
+    resultsSection.classList.remove("show");
+
+
+    setTimeout(() => {
+
+        const documentation =
+            generateDemoDocumentation(input);
+
+        documentationOutput.innerHTML =
+            documentation;
+
+        loadingSection.classList.remove("show");
+
+        resultsSection.classList.add("show");
+
+        generateBtn.disabled = false;
+
+
+        resultsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 1800);
+
+});
+
+
+/* =========================
+   DEMO DOCUMENTATION
+========================= */
+
+function generateDemoDocumentation(input) {
+
+    const text =
+        input.toLowerCase();
+
+    const selectedType =
+        documentationType
+            .options[documentationType.selectedIndex]
+            .text;
+
+    const selectedLanguage =
+        language
+            .options[language.selectedIndex]
+            .text;
+
+
+    let projectName =
+        "Software Development Project";
+
+
+    if (text.includes("login")) {
+
+        projectName =
+            "User Login Management System";
+
+    } else if (text.includes("bus")) {
+
+        projectName =
+            "College Bus Management System";
+
+    } else if (text.includes("library")) {
+
+        projectName =
+            "Library Management System";
+
+    } else if (text.includes("shopping")) {
+
+        projectName =
+            "Online Shopping System";
 
     }
 
-});
+
+    return `
+
+        <h1>${projectName}</h1>
+
+        <p>
+            This document provides a structured overview of the
+            software project, its functionality, technical details,
+            and usage information.
+        </p>
 
 
-// ================================
-// Generate Documentation
-// ================================
+        <h2>1. Project Overview</h2>
 
-generateDocumentationBtn.addEventListener(
-    "click",
-    function () {
-
-        const input =
-            documentationInput.value.trim();
-
-        const inputType =
-            docInputType.value;
-
-        const documentation =
-            documentationType.value;
-
-        const language =
-            docLanguage.value;
+        <p>
+            The ${projectName} is designed to provide users with
+            a simple and efficient solution for managing the
+            required software operations.
+        </p>
 
 
-        // Validation
-        if (input === "") {
+        <h2>2. Project Requirements</h2>
 
-            alert(
-                "Please enter a software requirement or source code."
-            );
+        <p>
+            The system should process user inputs and perform the
+            required operations according to the defined software
+            requirements.
+        </p>
 
-            documentationInput.focus();
+        <ul>
 
-            return;
-        }
+            <li>
+                The system should provide a user-friendly interface.
+            </li>
 
+            <li>
+                The system should validate user input.
+            </li>
 
-        // Loading State
-        generateDocumentationBtn.disabled = true;
+            <li>
+                The system should process valid requests correctly.
+            </li>
 
-        generateDocumentationBtn.innerHTML =
-            "⏳ Generating Documentation...";
+            <li>
+                The system should display appropriate messages
+                when an error occurs.
+            </li>
 
-        documentationStatus.textContent =
-            "Generating";
-
-        documentationStatus.classList.add("loading");
-
-
-        documentationEmpty.style.display =
-            "none";
-
-        generatedDocumentation.innerHTML =
-            `
-            <div class="loading-documentation">
-
-                <div class="loading-spinner"></div>
-
-                <p>
-                    DevCore AI is analyzing your input
-                    and generating documentation...
-                </p>
-
-            </div>
-            `;
+        </ul>
 
 
-        // Simulate AI processing
-        setTimeout(function () {
+        <h2>3. Main Features</h2>
 
-            generateDocumentation(
-                inputType,
-                documentation,
-                language
-            );
+        <ul>
+
+            <li>
+                User input and data processing
+            </li>
+
+            <li>
+                Input validation and error handling
+            </li>
+
+            <li>
+                Core application functionality
+            </li>
+
+            <li>
+                User-friendly result presentation
+            </li>
+
+        </ul>
+
+
+        <h2>4. Technology</h2>
+
+        <p>
+            Programming Language:
+            <strong>${selectedLanguage}</strong>
+        </p>
+
+        <p>
+            Documentation Type:
+            <strong>${selectedType}</strong>
+        </p>
+
+
+        <h2>5. System Workflow</h2>
+
+        <ol>
+
+            <li>
+                User provides the required input.
+            </li>
+
+            <li>
+                The system validates the input.
+            </li>
+
+            <li>
+                Application logic processes the request.
+            </li>
+
+            <li>
+                The system generates the required result.
+            </li>
+
+            <li>
+                The result is displayed to the user.
+            </li>
+
+        </ol>
+
+
+        <h2>6. Error Handling</h2>
+
+        <p>
+            The system should validate input data and provide
+            meaningful error messages when invalid or incomplete
+            information is provided.
+        </p>
+
+
+        <h2>7. Testing</h2>
+
+        <p>
+            The application should be tested using positive,
+            negative, boundary, and validation test cases to
+            verify expected system behavior.
+        </p>
+
+
+        <h2>8. Future Enhancements</h2>
+
+        <ul>
+
+            <li>
+                Integration with an AI-powered backend
+            </li>
+
+            <li>
+                Database integration
+            </li>
+
+            <li>
+                Authentication and user management
+            </li>
+
+            <li>
+                Project history and version management
+            </li>
+
+        </ul>
+
+    `;
+}
+
+
+/* =========================
+   COPY DOCUMENTATION
+========================= */
+
+copyBtn.addEventListener("click", async () => {
+
+    const text =
+        documentationOutput.innerText;
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+        copyBtn.textContent = "Copied";
+
+        setTimeout(() => {
+
+            copyBtn.textContent = "Copy";
 
         }, 1500);
 
-    }
-);
+    } catch (error) {
 
-
-// ================================
-// Generate Documentation Function
-// ================================
-
-function generateDocumentation(
-    inputType,
-    documentationType,
-    language
-) {
-
-    let title = "";
-    let content = "";
-
-
-    // README
-    if (documentationType === "readme") {
-
-        title = "Project README";
-
-        content = `# Software Project
-
-## Overview
-
-This project is designed to provide a software solution based on the given requirements.
-
-## Features
-
-- Requirement-based software development
-- User-friendly interface
-- Automated processing
-- Error handling
-- Scalable architecture
-
-## Technology Stack
-
-- Programming Language: ${language}
-- Frontend: HTML, CSS, JavaScript
-- Backend: Python / FastAPI
-- AI Model: Large Language Model
-
-## Installation
-
-1. Clone the project.
-2. Install the required dependencies.
-3. Configure the application.
-4. Start the application.
-
-## Usage
-
-Enter the required input and use the available features provided by the application.
-
-## Future Enhancements
-
-- Advanced AI assistance
-- Improved security
-- Cloud deployment
-- Additional programming language support
-
-## Conclusion
-
-The system provides an intelligent approach to simplify software development and improve developer productivity.`;
-
-    }
-
-
-    // API Documentation
-    else if (documentationType === "api") {
-
-        title = "API Documentation";
-
-        content = `# API Documentation
-
-## API Overview
-
-This API provides services required by the software application.
-
-## Base URL
-
-/api/v1
-
-## Endpoints
-
-### POST /analyze
-
-Analyzes the submitted software requirement.
-
-**Request:**
-
-{
-    "requirement": "User requirement description"
-}
-
-**Response:**
-
-{
-    "status": "success",
-    "analysis": "Requirement analysis result"
-}
-
----
-
-### POST /generate
-
-Generates source code based on the provided requirement.
-
-**Request:**
-
-{
-    "requirement": "Software requirement",
-    "language": "${language}"
-}
-
-**Response:**
-
-{
-    "status": "success",
-    "code": "Generated source code"
-}
-
----
-
-### POST /debug
-
-Analyzes source code and identifies possible errors.
-
-**Request:**
-
-{
-    "code": "Source code",
-    "language": "${language}"
-}
-
-**Response:**
-
-{
-    "status": "success",
-    "errors": "Detected errors",
-    "suggestion": "Suggested fix"
-}
-
-## Error Handling
-
-The API returns appropriate error messages when invalid or incomplete input is provided.`;
-
-    }
-
-
-    // Code Documentation
-    else if (documentationType === "code") {
-
-        title = "Code Documentation";
-
-        content = `# Code Documentation
-
-## Programming Language
-
-${language}
-
-## Purpose
-
-The provided source code is analyzed to explain its structure and functionality.
-
-## Main Components
-
-### Input Handling
-
-The application receives input from the user and validates the provided information.
-
-### Processing
-
-The system processes the input according to the application requirements.
-
-### Output
-
-The processed result is returned to the user through the application interface.
-
-## Functions
-
-Functions should have clear names and descriptions explaining their purpose.
-
-## Error Handling
-
-The application should handle invalid input and runtime errors appropriately.
-
-## Maintainability
-
-The code should follow consistent naming conventions, modular design and reusable functions.
-
-## Recommendations
-
-- Use meaningful variable names.
-- Add comments for complex logic.
-- Handle exceptions properly.
-- Follow coding standards.
-- Avoid unnecessary duplicate code.`;
-
-    }
-
-
-    // Setup / Deployment
-    else if (documentationType === "setup") {
-
-        title = "Setup & Deployment Guide";
-
-        content = `# Setup and Deployment Guide
-
-## System Requirements
-
-- Windows / Linux / macOS
-- ${language} environment
-- Node.js
-- Python
-- Internet connection
-
-## Step 1: Install Dependencies
-
-Install the required software and project dependencies.
-
-## Step 2: Configure the Project
-
-Create the required configuration files and add the necessary environment variables.
-
-## Step 3: Start the Backend
-
-Run the backend application using the appropriate command.
-
-## Step 4: Start the Frontend
-
-Open or start the frontend application.
-
-## Step 5: Test the Application
-
-Verify that all major features are working correctly.
-
-## Deployment
-
-The application can be deployed using a suitable cloud hosting platform.
-
-## Security
-
-- Keep API keys secure.
-- Do not expose secret credentials.
-- Validate user input.
-- Use secure API communication.
-
-## Troubleshooting
-
-If the application does not start, verify the installed dependencies, configuration values and network connection.`;
-
-    }
-
-
-    // Display Result
-    generatedDocumentation.innerHTML = `
-
-        <div class="generated-doc-header">
-
-            <div>
-
-                <span class="doc-label">
-                    AI GENERATED
-                </span>
-
-                <h2>${title}</h2>
-
-                <p>
-                    Generated using ${language}
-                </p>
-
-            </div>
-
-            <div class="doc-actions">
-
-                <button
-                    class="copy-doc-btn"
-                    id="copyDocBtn"
-                >
-                    📋 Copy
-                </button>
-
-                <button
-                    class="download-doc-btn"
-                    id="downloadDocBtn"
-                >
-                    ⬇ Download
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="documentation-content">
-
-            <pre id="documentationText">${content}</pre>
-
-        </div>
-
-    `;
-
-
-    // Completed Status
-    documentationStatus.textContent =
-        "Completed";
-
-    documentationStatus.classList.remove(
-        "loading"
-    );
-
-    documentationStatus.classList.add(
-        "completed"
-    );
-
-
-    // Restore Button
-    generateDocumentationBtn.disabled =
-        false;
-
-    generateDocumentationBtn.innerHTML =
-        "<span>✨</span> Generate Documentation";
-
-
-    // Copy Button
-    const copyDocBtn =
-        document.getElementById("copyDocBtn");
-
-    copyDocBtn.addEventListener(
-        "click",
-        function () {
-
-            navigator.clipboard.writeText(
-                content
-            );
-
-            copyDocBtn.textContent =
-                "✓ Copied";
-
-            setTimeout(function () {
-
-                copyDocBtn.textContent =
-                    "📋 Copy";
-
-            }, 1500);
-
-        }
-    );
-
-
-    // Download Button
-    const downloadDocBtn =
-        document.getElementById(
-            "downloadDocBtn"
+        alert(
+            "Unable to copy documentation."
         );
 
-    downloadDocBtn.addEventListener(
-        "click",
-        function () {
+    }
 
-            const file =
-                new Blob(
-                    [content],
-                    {
-                        type: "text/plain"
-                    }
-                );
-
-            const url =
-                URL.createObjectURL(file);
-
-            const link =
-                document.createElement("a");
-
-            link.href = url;
-
-            link.download =
-                "generated-documentation.md";
-
-            link.click();
-
-            URL.revokeObjectURL(url);
-
-        }
-    );
-
-
-    console.log(
-        "Documentation generated successfully."
-    );
-
-}
-
-
-// ================================
-// Logout
-// ================================
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener(
-        "click",
-        function (event) {
-
-            event.preventDefault();
-
-            const confirmLogout =
-                confirm(
-                    "Are you sure you want to logout?"
-                );
-
-            if (confirmLogout) {
-
-                window.location.href =
-                    "login.html";
-
-            }
-
-        }
-    );
-
-}
+});

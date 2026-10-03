@@ -1,177 +1,83 @@
-/* =========================
-   DASHBOARD
-========================= */
+/* =========================================
+   DEVCORE AI
+   DASHBOARD JAVASCRIPT
+========================================= */
 
 
-/* =========================
-   NOTIFICATION BUTTON
-========================= */
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const startProjectButton =
+    document.getElementById("startProjectButton");
 
 const notificationButton =
-    document.querySelector(".notification-button");
-
-if (notificationButton) {
-    notificationButton.addEventListener("click", function () {
-
-        alert("No new notifications.");
-
-    });
-}
+    document.getElementById("notificationButton");
 
 
-/* =========================
+/* =========================================
    START NEW PROJECT
-========================= */
+========================================= */
 
-const startButton =
-    document.querySelector(".start-button");
+startProjectButton.addEventListener(
+    "click",
+    function () {
 
-if (startButton) {
-    startButton.addEventListener("click", function () {
+        window.location.href =
+            "requirement.html";
 
-        window.location.href = "requirement.html";
-
-    });
-}
-
+    }
+);
 
 
+/* =========================================
+   NOTIFICATION
+========================================= */
+
+notificationButton.addEventListener(
+    "click",
+    function () {
+
+        alert(
+            "You don't have any new notifications."
+        );
+
+    }
+);
 
 
-/* =========================
-   SIDEBAR NAVIGATION
-========================= */
+/* =========================================
+   ACTIVE NAVIGATION
+========================================= */
 
-const sidebarLinks =
-    document.querySelectorAll(".sidebar a");
+const navItems =
+    document.querySelectorAll(".nav-item");
 
 
-sidebarLinks.forEach(function (link) {
+navItems.forEach(function (item) {
 
-    link.addEventListener("click", function (event) {
+    item.addEventListener(
+        "click",
+        function () {
 
-        const linkText =
-            link.textContent.trim();
+            /*
+             * Active state is primarily controlled
+             * by the HTML class on each page.
+             *
+             * This only updates the visual state
+             * before navigation.
+             */
 
-        /* Dashboard */
+            navItems.forEach(function (nav) {
 
-        if (linkText.includes("Dashboard")) {
+                nav.classList.remove("active");
 
-            event.preventDefault();
+            });
 
-            window.location.href = "dashboard.html";
 
-        }
-
-        /* Requirement Analysis */
-
-        else if (linkText.includes("Requirement Analysis")) {
-
-            event.preventDefault();
-
-            window.location.href = "requirement.html";
-
-        }
-
-        /* Code Generation */
-
-        else if (linkText.includes("Code Generation")) {
-
-            event.preventDefault();
-
-            window.location.href = "code-generation.html";
-
-        }
-
-        /* Code Debugging */
-
-        else if (linkText.includes("Code Debugging")) {
-
-            event.preventDefault();
-
-            window.location.href = "code-debugging.html";
+            item.classList.add("active");
 
         }
-
-        /* Code Review */
-
-        else if (linkText.includes("Code Review")) {
-
-            event.preventDefault();
-
-            window.location.href = "code-review.html";
-
-        }
-
-        /* Test Case Generation */
-
-        else if (linkText.includes("Test Case Generation")) {
-
-            event.preventDefault();
-
-            window.location.href = "test-cases.html";
-
-        }
-
-        /* Documentation */
-
-        else if (linkText.includes("Documentation")) {
-
-            event.preventDefault();
-
-            window.location.href = "documentation.html";
-
-        }
-
-        /* Project History */
-
-        else if (linkText.includes("Project History")) {
-
-            event.preventDefault();
-
-            window.location.href = "project-history.html";
-
-        }
-
-        /* Settings */
-
-        else if (linkText.includes("Settings")) {
-
-            event.preventDefault();
-
-            window.location.href = "settings.html";
-
-        }
-
-    });
+    );
 
 });
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-const logoutButton =
-    document.querySelector(".logout");
-
-if (logoutButton) {
-
-    logoutButton.addEventListener("click", function (event) {
-
-        const confirmLogout =
-            confirm("Are you sure you want to logout?");
-
-        if (!confirmLogout) {
-
-            event.preventDefault();
-
-        } else {
-
-            window.location.href = "login.html";
-
-        }
-
-    });
-
-}

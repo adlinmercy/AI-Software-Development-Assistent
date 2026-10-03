@@ -10,83 +10,150 @@
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <!-- CSS -->
+    <!-- Login CSS -->
     <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
 
-    <main class="login-container">
+    <main class="login-page">
 
-        <!-- =================================
-             LEFT BRANDING SECTION
-        ================================== -->
+        <!-- =========================
+             LEFT SECTION
+        ========================== -->
 
-        <section class="left-section">
+        <section class="login-left">
 
-            <div class="illustration">
-                <img
-                    src="assets/login page image.png"
-                    alt="DevCore AI software development assistant"
-                >
+            <div class="brand">
+
+                <div class="brand-logo">
+                    ✦
+                </div>
+
+                <span class="brand-name">
+                    DevCore <strong>AI</strong>
+                </span>
+
+            </div>
+
+
+            <div class="left-content">
+
+                <span class="badge">
+                    AI-Powered Development
+                </span>
+
+                <h1>
+                    Build smarter.<br>
+                    Code better.
+                </h1>
+
+                <p>
+                    Your intelligent software development
+                    assistant from requirements to documentation.
+                </p>
+
+                <div class="feature-list">
+
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Analyze software requirements</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Generate and debug code</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Review, test and document your code</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="left-footer">
+                © 2026 DevCore AI. Intelligent software development.
             </div>
 
         </section>
 
 
-        <!-- =================================
-             RIGHT LOGIN SECTION
-        ================================== -->
+        <!-- =========================
+             RIGHT SECTION
+        ========================== -->
 
-        <section class="right-section">
+        <section class="login-right">
 
-            <div class="login-content">
+            <div class="login-card">
 
-                <!-- Login Header -->
+                <div class="mobile-brand">
 
-                <header class="login-header">
+                    <div class="brand-logo">
+                        ✦
+                    </div>
 
-                    <h1>Welcome Back! 👋</h1>
+                    <span class="brand-name">
+                        DevCore <strong>AI</strong>
+                    </span>
+
+                </div>
+
+
+                <div class="login-header">
+
+                    <h2>
+                        Welcome back
+                    </h2>
 
                     <p>
-                        Login to your DevCore AI account
+                        Sign in to continue to DevCore AI
                     </p>
 
-                </header>
+                </div>
 
 
-                <!-- =================================
-                     LOGIN FORM
-                ================================== -->
+                <!-- Status Message -->
 
-                <form class="login-form" id="login-form">
+                <div
+                    class="status-message"
+                    id="statusMessage">
+                </div>
+
+
+                <!-- Login Form -->
+
+                <form id="loginForm">
 
                     <!-- Email -->
 
                     <div class="form-group">
 
                         <label for="email">
-                            Email
+                            Email address
                         </label>
 
                         <input
+                            type="email"
                             id="email"
                             name="email"
-                            type="email"
                             placeholder="Enter your email"
                             autocomplete="email"
-                            required
                         >
 
                         <small
                             class="error-message"
-                            id="email-error"
-                        ></small>
+                            id="emailError">
+                        </small>
 
                     </div>
 
@@ -95,28 +162,34 @@
 
                     <div class="form-group">
 
-                        <label for="password">
-                            Password
-                        </label>
+                        <div class="label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="#" id="forgotPassword">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
 
                         <div class="password-wrapper">
 
                             <input
+                                type="password"
                                 id="password"
                                 name="password"
-                                type="password"
                                 placeholder="Enter your password"
                                 autocomplete="current-password"
-                                minlength="8"
-                                required
                             >
 
                             <button
                                 type="button"
                                 class="password-toggle"
-                                id="password-toggle"
-                                aria-label="Show password"
-                            >
+                                id="passwordToggle"
+                                aria-label="Show password">
                                 👁
                             </button>
 
@@ -124,44 +197,30 @@
 
                         <small
                             class="error-message"
-                            id="password-error"
-                        ></small>
+                            id="passwordError">
+                        </small>
 
                     </div>
 
 
-                    <!-- Remember + Forgot Password -->
+                    <!-- Remember -->
 
-                    <div class="form-options">
+                    <div class="remember-row">
 
-                        <div class="remember-me">
+                        <label class="remember-label">
 
                             <input
                                 type="checkbox"
-                                id="remember-me"
-                                name="remember"
+                                id="rememberMe"
                             >
 
-                            <label for="remember-me">
+                            <span>
                                 Remember me
-                            </label>
+                            </span>
 
-                        </div>
-
-                        <a href="forgot-password.html">
-                            Forgot password?
-                        </a>
+                        </label>
 
                     </div>
-
-
-                    <!-- Error / Status Message -->
-
-                    <div
-                        class="form-message"
-                        id="form-message"
-                        role="alert"
-                    ></div>
 
 
                     <!-- Login Button -->
@@ -169,86 +228,71 @@
                     <button
                         type="submit"
                         class="login-button"
-                        id="login-button"
-                    >
-                        <span class="button-text">
-                            Login
+                        id="loginButton">
+
+                        <span id="loginButtonText">
+                            Sign in
                         </span>
 
-                        <span class="button-loader">
-                            Logging in...
-                        </span>
                     </button>
 
                 </form>
 
 
-                <!-- =================================
-                     DIVIDER
-                ================================== -->
+                <!-- Divider -->
 
                 <div class="divider">
 
-                    <span>OR</span>
+                    <span></span>
+
+                    <p>
+                        OR
+                    </p>
+
+                    <span></span>
 
                 </div>
 
 
-                <!-- =================================
-                     GOOGLE LOGIN
-                ================================== -->
+                <!-- Google -->
 
                 <button
                     type="button"
                     class="google-button"
-                    id="google-login"
-                >
+                    id="googleButton">
 
                     <span class="google-icon">
                         G
                     </span>
 
-                    <span>
-                        Continue with Google
-                    </span>
+                    Continue with Google
 
                 </button>
 
 
-                <!-- =================================
-                     REGISTER
-                ================================== -->
+                <!-- Register -->
 
-                <div class="register-link">
+                <p class="register-text">
 
-                    <p>
-                        Don't have an account?
-                        <a href="register.html">
-                            Create an account
-                        </a>
-                    </p>
+                    Don't have an account?
 
-                </div>
+                    <a href="register.html">
+                        Create account
+                    </a>
+
+                </p>
 
 
-                <!-- =================================
-                     TERMS & PRIVACY
-                ================================== -->
+                <!-- Terms -->
 
-                <div class="legal-text">
+                <p class="terms">
 
-                    <p>
-                        By continuing, you agree to our
-                        <a href="#">
-                            Terms of Service
-                        </a>
-                        and
-                        <a href="#">
-                            Privacy Policy
-                        </a>.
-                    </p>
+                    By continuing, you agree to our
+                    <a href="#">Terms of Service</a>
+                    and
+                    <a href="#">Privacy Policy</a>.
 
-                </div>
+                </p>
 
             </div>
 
@@ -257,7 +301,7 @@
     </main>
 
 
-    <!-- JavaScript -->
+    <!-- Login JavaScript -->
 
     <script src="js/login.js"></script>
 

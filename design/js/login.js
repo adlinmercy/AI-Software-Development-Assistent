@@ -1,172 +1,302 @@
-/* =========================
-   PASSWORD SHOW / HIDE
-========================= */
+/* =========================================
+   DEVCORE AI
+   LOGIN JAVASCRIPT
+========================================= */
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loginForm = document.getElementById("loginForm");
+
+const emailInput = document.getElementById("email");
 
 const passwordInput = document.getElementById("password");
-const passwordToggle = document.getElementById("password-toggle");
 
-passwordToggle.addEventListener("click", function () {
+const rememberMe = document.getElementById("rememberMe");
 
-    if (passwordInput.type === "password") {
+const passwordToggle =
+    document.getElementById("passwordToggle");
 
-        passwordInput.type = "text";
+const forgotPassword =
+    document.getElementById("forgotPassword");
 
-        passwordToggle.textContent = "🙈";
+const googleButton =
+    document.getElementById("googleButton");
 
-        passwordToggle.setAttribute(
-            "aria-label",
-            "Hide password"
-        );
+const loginButton =
+    document.getElementById("loginButton");
 
-    } else {
+const loginButtonText =
+    document.getElementById("loginButtonText");
 
-        passwordInput.type = "password";
+const statusMessage =
+    document.getElementById("statusMessage");
 
-        passwordToggle.textContent = "👁";
+const emailError =
+    document.getElementById("emailError");
 
-        passwordToggle.setAttribute(
-            "aria-label",
-            "Show password"
-        );
-    }
-
-});
+const passwordError =
+    document.getElementById("passwordError");
 
 
-/* =========================
-   LOGIN FORM
-========================= */
+/* =========================================
+   SHOW STATUS
+========================================= */
 
-const loginForm = document.getElementById("login-form");
+function showStatus(message, type) {
 
-loginForm.addEventListener("submit", function (event) {
+    statusMessage.textContent = message;
 
-    event.preventDefault();
+    statusMessage.className =
+        "status-message " + type;
 
-    /* Get values */
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const password =
-        document.getElementById("password").value;
-
-    const rememberMe =
-        document.getElementById("remember-me").checked;
+}
 
 
-    /* Error elements */
+/* =========================================
+   CLEAR STATUS
+========================================= */
 
-    const emailError =
-        document.getElementById("email-error");
+function clearStatus() {
 
-    const passwordError =
-        document.getElementById("password-error");
+    statusMessage.textContent = "";
 
-    const formMessage =
-        document.getElementById("form-message");
+    statusMessage.className =
+        "status-message";
+
+}
 
 
-    /* Clear previous errors */
+/* =========================================
+   CLEAR ERRORS
+========================================= */
+
+function clearErrors() {
 
     emailError.textContent = "";
+
     passwordError.textContent = "";
 
-    formMessage.textContent = "";
-    formMessage.style.display = "none";
+}
 
 
-    /* =========================
-       VALIDATION
-    ========================== */
+/* =========================================
+   EMAIL VALIDATION
+========================================= */
 
-    let isValid = true;
+function isValidEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+}
 
 
-    /* Email validation */
+/* =========================================
+   PASSWORD VISIBILITY
+========================================= */
 
-    if (!email) {
+passwordToggle.addEventListener(
+    "click",
+    function () {
 
-        emailError.textContent =
-            "Please enter your email.";
+        if (passwordInput.type === "password") {
 
-        isValid = false;
+            passwordInput.type = "text";
 
-    } else {
+            passwordToggle.textContent = "🙈";
 
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
 
-        if (!emailPattern.test(email)) {
+        } else {
+
+            passwordInput.type = "password";
+
+            passwordToggle.textContent = "👁";
+
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+loginForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        clearErrors();
+
+        clearStatus();
+
+
+        const email =
+            emailInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+
+        let valid = true;
+
+
+        /* Email */
+
+        if (email === "") {
+
+            emailError.textContent =
+                "Please enter your email address.";
+
+            valid = false;
+
+        } else if (!isValidEmail(email)) {
 
             emailError.textContent =
                 "Please enter a valid email address.";
 
-            isValid = false;
+            valid = false;
+
         }
+
+
+        /* Password */
+
+        if (password === "") {
+
+            passwordError.textContent =
+                "Please enter your password.";
+
+            valid = false;
+
+        } else if (password.length < 6) {
+
+            passwordError.textContent =
+                "Password must contain at least 6 characters.";
+
+            valid = false;
+
+        }
+
+
+        if (!valid) {
+
+            return;
+
+        }
+
+
+        /* Loading */
+
+        loginButton.disabled = true;
+
+        loginButtonText.textContent =
+            "Signing in...";
+
+
+        setTimeout(function () {
+
+            showStatus(
+                "Login successful. Welcome to DevCore AI!",
+                "success"
+            );
+
+
+            loginButtonText.textContent =
+                "Signed in";
+
+
+            /*
+             * Temporary navigation.
+             *
+             * Later this will be replaced
+             * with real authentication.
+             */
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 800);
+
+
+        }, 1000);
+
     }
+);
 
 
-    /* Password validation */
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
 
-    if (!password) {
+forgotPassword.addEventListener(
+    "click",
+    function (event) {
 
-        passwordError.textContent =
-            "Please enter your password.";
+        event.preventDefault();
 
-        isValid = false;
+        showStatus(
+            "Password reset will be available after authentication is connected.",
+            "error"
+        );
 
-    } else if (password.length < 8) {
-
-        passwordError.textContent =
-            "Password must contain at least 8 characters.";
-
-        isValid = false;
     }
+);
 
 
-    /* Stop if validation failed */
-
-    if (!isValid) {
-        return;
-    }
-
-
-    /* =========================
-       TEMPORARY LOGIN
-    ========================== */
-
-    formMessage.textContent =
-        "Login successful! Backend authentication will be connected later.";
-
-    formMessage.style.display = "block";
-
-
-    /*
-       Remember Me will be connected
-       to real authentication later.
-
-       Backend authentication will also
-       be added later.
-    */
-
-    console.log("Email:", email);
-    console.log("Remember Me:", rememberMe);
-
-});
-
-
-/* =========================
+/* =========================================
    GOOGLE LOGIN
-========================= */
+========================================= */
 
-const googleButton =
-    document.getElementById("google-login");
+googleButton.addEventListener(
+    "click",
+    function () {
 
-googleButton.addEventListener("click", function () {
+        showStatus(
+            "Google sign-in will be connected later.",
+            "error"
+        );
 
-    alert(
-        "Google authentication will be connected later."
-    );
+    }
+);
 
-});
+
+/* =========================================
+   REMEMBER ME
+========================================= */
+
+rememberMe.addEventListener(
+    "change",
+    function () {
+
+        if (rememberMe.checked) {
+
+            console.log(
+                "Remember me enabled"
+            );
+
+        } else {
+
+            console.log(
+                "Remember me disabled"
+            );
+
+        }
+
+    }
+);

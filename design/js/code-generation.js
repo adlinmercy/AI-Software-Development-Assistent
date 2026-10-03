@@ -1,359 +1,517 @@
-const codeRequirement = document.getElementById("codeRequirement");
-const language = document.getElementById("language");
-const framework = document.getElementById("framework");
-const codeType = document.getElementById("codeType");
-
-const generateBtn = document.getElementById("generateBtn");
-const codeOutput = document.getElementById("codeOutput");
-
-const copyBtn = document.getElementById("copyBtn");
-const downloadBtn = document.getElementById("downloadBtn");
+/* =========================================================
+   DEVCORE AI - CODE GENERATION
+   Frontend Demo
+   ========================================================= */
 
 
-// ========================================
-// GENERATE CODE
-// ========================================
+/* ================= ELEMENTS ================= */
 
-generateBtn.addEventListener("click", () => {
+const codeRequirement =
+    document.getElementById("codeRequirement");
 
-    const requirement = codeRequirement.value.trim();
+const charCount =
+    document.getElementById("charCount");
 
-    if (requirement === "") {
-        alert("Please enter a software requirement first.");
+const language =
+    document.getElementById("language");
+
+const framework =
+    document.getElementById("framework");
+
+const generateBtn =
+    document.getElementById("generateBtn");
+
+const loadingSection =
+    document.getElementById("loadingSection");
+
+const resultSection =
+    document.getElementById("resultSection");
+
+const codeOutput =
+    document.getElementById("codeOutput");
+
+const codeExplanation =
+    document.getElementById("codeExplanation");
+
+const languageLabel =
+    document.getElementById("languageLabel");
+
+const copyBtn =
+    document.getElementById("copyBtn");
+
+
+/* ================= CHARACTER COUNT ================= */
+
+codeRequirement.addEventListener("input", function () {
+
+    const length = codeRequirement.value.length;
+
+    charCount.textContent =
+        `${length} / 5000 characters`;
+
+});
+
+
+/* ================= GENERATE CODE ================= */
+
+generateBtn.addEventListener("click", function () {
+
+    const requirement =
+        codeRequirement.value.trim();
+
+    const selectedLanguage =
+        language.value;
+
+    const selectedFramework =
+        framework.value;
+
+
+    /* Validation */
+
+    if (requirement.length < 10) {
+
+        alert(
+            "Please enter a more detailed description of what you want to build."
+        );
+
         codeRequirement.focus();
+
         return;
     }
 
 
-    const selectedLanguage = language.value;
-    const selectedFramework = framework.value;
-    const selectedCodeType = codeType.value;
+    /* Hide previous result */
+
+    resultSection.style.display = "none";
 
 
-    // Loading state
+    /* Show loading */
+
+    loadingSection.style.display = "flex";
 
     generateBtn.disabled = true;
 
-    generateBtn.innerHTML = `
-        <span>⟳</span>
-        Generating...
-    `;
+    generateBtn.innerHTML =
+        "<span>✦</span><span>Generating...</span>";
 
 
-    codeOutput.textContent = `Generating ${selectedLanguage} code...
+    /*
+        Demo delay.
 
-Please wait...`;
+        Later this section will call:
+        Backend → FastAPI → Gemini API
+    */
+
+    setTimeout(function () {
+
+        const generatedCode =
+            generateDemoCode(
+                requirement,
+                selectedLanguage,
+                selectedFramework
+            );
 
 
-    // Temporary AI simulation
+        const explanation =
+            generateExplanation(
+                requirement,
+                selectedLanguage,
+                selectedFramework
+            );
 
-    setTimeout(() => {
 
-        let generatedCode = "";
+        /* Update result */
+
+        codeOutput.textContent =
+            generatedCode;
+
+        codeExplanation.textContent =
+            explanation;
+
+        languageLabel.textContent =
+            selectedLanguage;
 
 
-        // ========================================
-        // JAVA
-        // ========================================
+        /* Hide loading */
 
-        if (selectedLanguage === "Java") {
+        loadingSection.style.display =
+            "none";
 
-            generatedCode =
-`import java.util.Scanner;
+
+        /* Show result */
+
+        resultSection.style.display =
+            "block";
+
+
+        /* Reset button */
+
+        generateBtn.disabled = false;
+
+        generateBtn.innerHTML =
+            "<span>✦</span><span>Generate Code</span>";
+
+
+        /* Scroll to result */
+
+        resultSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+
+    }, 1800);
+
+});
+
+
+/* ================= DEMO CODE GENERATOR ================= */
+
+function generateDemoCode(
+    requirement,
+    selectedLanguage,
+    selectedFramework
+) {
+
+    const text =
+        requirement.toLowerCase();
+
+
+    /* ---------- PYTHON ---------- */
+
+    if (selectedLanguage === "Python") {
+
+        if (
+            text.includes("largest") ||
+            text.includes("maximum")
+        ) {
+
+            return `# Find the largest number in a list
+
+def find_largest(numbers):
+    if not numbers:
+        return None
+
+    return max(numbers)
+
+
+# Example usage
+numbers = [10, 25, 7, 42, 18]
+
+largest = find_largest(numbers)
+
+print("Largest number:", largest)
+`;
+        }
+
+
+        if (
+            text.includes("calculator") ||
+            text.includes("addition")
+        ) {
+
+            return `# Simple Calculator
+
+def add(a, b):
+    return a + b
+
+
+def subtract(a, b):
+    return a - b
+
+
+def multiply(a, b):
+    return a * b
+
+
+def divide(a, b):
+    if b == 0:
+        return "Cannot divide by zero"
+
+    return a / b
+
+
+# Example
+a = 10
+b = 5
+
+print("Addition:", add(a, b))
+print("Subtraction:", subtract(a, b))
+print("Multiplication:", multiply(a, b))
+print("Division:", divide(a, b))
+`;
+        }
+
+
+        return `# Generated Python Code
+# Requirement:
+# ${requirement}
+
+def main():
+
+    # TODO:
+    # Implement the requested functionality here.
+
+    print("Application started")
+
+
+if __name__ == "__main__":
+    main()
+`;
+    }
+
+
+    /* ---------- JAVA ---------- */
+
+    if (selectedLanguage === "Java") {
+
+        if (
+            text.includes("largest") ||
+            text.includes("maximum")
+        ) {
+
+            return `import java.util.*;
+
+public class Main {
+
+    public static int findLargest(int[] numbers) {
+
+        int largest = numbers[0];
+
+        for (int number : numbers) {
+
+            if (number > largest) {
+                largest = number;
+            }
+
+        }
+
+        return largest;
+    }
+
+    public static void main(String[] args) {
+
+        int[] numbers = {
+            10, 25, 7, 42, 18
+        };
+
+        int result =
+            findLargest(numbers);
+
+        System.out.println(
+            "Largest number: " + result
+        );
+    }
+}
+`;
+        }
+
+
+        return `import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner =
+            new Scanner(System.in);
 
-        System.out.print("Enter a number: ");
-        int number = scanner.nextInt();
-
-        long factorial = 1;
-
-        for (int i = 1; i <= number; i++) {
-            factorial *= i;
-        }
+        // Requirement:
+        // ${requirement}
 
         System.out.println(
-            "Factorial = " + factorial
+            "Application started"
         );
 
         scanner.close();
     }
-}`;
-
-
-        // ========================================
-        // PYTHON
-        // ========================================
-
-        } else if (selectedLanguage === "Python") {
-
-            generatedCode =
-`def factorial(number):
-
-    result = 1
-
-    for i in range(1, number + 1):
-        result *= i
-
-    return result
-
-
-number = int(input("Enter a number: "))
-
-result = factorial(number)
-
-print("Factorial =", result)`;
-
-
-        // ========================================
-        // JAVASCRIPT
-        // ========================================
-
-        } else if (selectedLanguage === "JavaScript") {
-
-            generatedCode =
-`function factorial(number) {
-
-    let result = 1;
-
-    for (let i = 1; i <= number; i++) {
-        result *= i;
+}
+`;
     }
 
-    return result;
+
+    /* ---------- JAVASCRIPT ---------- */
+
+    if (selectedLanguage === "JavaScript") {
+
+        return `// Generated JavaScript Code
+
+function main() {
+
+    // Requirement:
+    // ${requirement}
+
+    console.log(
+        "Application started"
+    );
 }
 
-
-const number = Number(
-    prompt("Enter a number:")
-);
-
-console.log(
-    "Factorial =",
-    factorial(number)
-);`;
+main();
+`;
+    }
 
 
-        // ========================================
-        // C
-        // ========================================
+    /* ---------- C ---------- */
 
-        } else if (selectedLanguage === "C") {
+    if (selectedLanguage === "C") {
 
-            generatedCode =
-`#include <stdio.h>
+        return `#include <stdio.h>
 
 int main() {
 
-    int number;
-    long factorial = 1;
+    /*
+       Requirement:
+       ${requirement}
+    */
 
-    printf("Enter a number: ");
-    scanf("%d", &number);
-
-    for (int i = 1; i <= number; i++) {
-        factorial *= i;
-    }
-
-    printf("Factorial = %ld\\n", factorial);
+    printf("Application started\\n");
 
     return 0;
-}`;
+}
+`;
+    }
 
 
-        // ========================================
-        // C++
-        // ========================================
+    /* ---------- C++ ---------- */
 
-        } else if (selectedLanguage === "C++") {
+    if (selectedLanguage === "C++") {
 
-            generatedCode =
-`#include <iostream>
+        return `#include <iostream>
 
 using namespace std;
 
 int main() {
 
-    int number;
-    long long factorial = 1;
+    /*
+       Requirement:
+       ${requirement}
+    */
 
-    cout << "Enter a number: ";
-    cin >> number;
-
-    for (int i = 1; i <= number; i++) {
-        factorial *= i;
-    }
-
-    cout << "Factorial = "
-         << factorial << endl;
+    cout << "Application started";
 
     return 0;
-}`;
-
-        }
-
-
-        // ========================================
-        // DISPLAY CODE
-        // ========================================
-
-        codeOutput.textContent = generatedCode;
-
-
-        // Update file name
-
-        const fileName = document.querySelector(".file-name");
-
-        if (selectedLanguage === "Java") {
-            fileName.textContent = "generated-code.java";
-        }
-
-        else if (selectedLanguage === "Python") {
-            fileName.textContent = "generated-code.py";
-        }
-
-        else if (selectedLanguage === "JavaScript") {
-            fileName.textContent = "generated-code.js";
-        }
-
-        else if (selectedLanguage === "C") {
-            fileName.textContent = "generated-code.c";
-        }
-
-        else if (selectedLanguage === "C++") {
-            fileName.textContent = "generated-code.cpp";
-        }
-
-
-        // Update language label
-
-        const languageLabel =
-            document.querySelector(".language-label");
-
-        languageLabel.textContent =
-            selectedLanguage.toUpperCase();
-
-
-        // Restore button
-
-        generateBtn.disabled = false;
-
-        generateBtn.innerHTML = `
-            <span>✦</span>
-            Generate Code
-        `;
-
-
-        console.log("Requirement:", requirement);
-        console.log("Language:", selectedLanguage);
-        console.log("Framework:", selectedFramework);
-        console.log("Code Type:", selectedCodeType);
-
-    }, 1500);
-
-});
-
-
-// ========================================
-// COPY CODE
-// ========================================
-
-copyBtn.addEventListener("click", async () => {
-
-    const code = codeOutput.textContent.trim();
-
-    if (
-        code === "" ||
-        code.includes("Generated code will appear here")
-    ) {
-        alert("There is no generated code to copy.");
-        return;
+}
+`;
     }
+
+
+    /* ---------- HTML ---------- */
+
+    if (selectedLanguage === "HTML") {
+
+        return `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Generated Page</title>
+</head>
+
+<body>
+
+    <h1>Generated Application</h1>
+
+    <p>
+        ${requirement}
+    </p>
+
+</body>
+
+</html>
+`;
+    }
+
+
+    /* ---------- CSS ---------- */
+
+    if (selectedLanguage === "CSS") {
+
+        return `/* Generated CSS */
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: #f8fafc;
+
+    color: #0f172a;
+}
+
+.container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 20px;
+}
+`;
+    }
+
+
+    return "// Code generation is not available for this language yet.";
+}
+
+
+/* ================= EXPLANATION ================= */
+
+function generateExplanation(
+    requirement,
+    selectedLanguage,
+    selectedFramework
+) {
+
+    let explanation =
+        `DevCore AI generated a ${selectedLanguage} solution based on the provided requirement. `;
+
+
+    if (selectedFramework !== "None") {
+
+        explanation +=
+            `The selected technology is ${selectedFramework}. `;
+
+    }
+
+
+    explanation +=
+        "The generated code provides a basic implementation structure and can be further modified according to the project's detailed requirements.";
+
+
+    return explanation;
+}
+
+
+/* ================= COPY CODE ================= */
+
+copyBtn.addEventListener("click", async function () {
+
+    const code =
+        codeOutput.textContent;
 
 
     try {
 
         await navigator.clipboard.writeText(code);
 
-        copyBtn.textContent = "Copied!";
+        copyBtn.textContent =
+            "Copied!";
 
-        setTimeout(() => {
-            copyBtn.textContent = "Copy";
+
+        setTimeout(function () {
+
+            copyBtn.textContent =
+                "Copy";
+
         }, 1500);
+
 
     } catch (error) {
 
-        alert("Unable to copy the code.");
+        alert(
+            "Unable to copy the code."
+        );
 
     }
-
-});
-
-
-// ========================================
-// DOWNLOAD CODE
-// ========================================
-
-downloadBtn.addEventListener("click", () => {
-
-    const code = codeOutput.textContent.trim();
-
-    if (
-        code === "" ||
-        code.includes("Generated code will appear here")
-    ) {
-        alert("There is no generated code to download.");
-        return;
-    }
-
-
-    let extension = "txt";
-
-    if (language.value === "Java") {
-        extension = "java";
-    }
-
-    else if (language.value === "Python") {
-        extension = "py";
-    }
-
-    else if (language.value === "JavaScript") {
-        extension = "js";
-    }
-
-    else if (language.value === "C") {
-        extension = "c";
-    }
-
-    else if (language.value === "C++") {
-        extension = "cpp";
-    }
-
-
-    const file = new Blob(
-        [code],
-        { type: "text/plain" }
-    );
-
-
-    const url = URL.createObjectURL(file);
-
-    const link = document.createElement("a");
-
-    link.href = url;
-
-    link.download = `generated-code.${extension}`;
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
 
 });

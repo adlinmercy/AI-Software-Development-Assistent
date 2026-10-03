@@ -1,303 +1,122 @@
-// =================================
-// DevCore AI - Project History
-// =================================
+const searchInput =
+    document.getElementById("searchInput");
 
-const projectSearch =
-    document.getElementById("projectSearch");
+const filterSelect =
+    document.getElementById("filterSelect");
 
-const projectFilter =
-    document.getElementById("projectFilter");
+const historyList =
+    document.getElementById("historyList");
 
-const projectList =
-    document.getElementById("projectList");
+const emptyState =
+    document.getElementById("emptyState");
 
-const noResults =
-    document.getElementById("noResults");
-
-const totalProjects =
-    document.getElementById("totalProjects");
-
-const completedProjects =
-    document.getElementById("completedProjects");
-
-const progressProjects =
-    document.getElementById("progressProjects");
-
-const aiTasks =
-    document.getElementById("aiTasks");
+const activityCount =
+    document.getElementById("activityCount");
 
 
-// =================================
-// Search Projects
-// =================================
+/* =========================
+   FILTER HISTORY
+========================= */
 
-projectSearch.addEventListener("input", filterProjects);
-
-
-// =================================
-// Filter Projects
-// =================================
-
-projectFilter.addEventListener("change", filterProjects);
-
-
-// =================================
-// Filter Function
-// =================================
-
-function filterProjects() {
+function filterHistory() {
 
     const searchText =
-        projectSearch.value
+        searchInput.value
             .toLowerCase()
             .trim();
 
     const selectedFilter =
-        projectFilter.value;
+        filterSelect.value;
 
-    const projects =
-        document.querySelectorAll(".project-item");
+    const items =
+        document.querySelectorAll(".history-item");
 
-    let visibleProjects = 0;
+    let visibleCount = 0;
 
 
-    projects.forEach(function(project) {
+    items.forEach(item => {
 
-        const projectName =
-            project.dataset.name.toLowerCase();
+        const name =
+            item.dataset.name.toLowerCase();
 
-        const projectStatus =
-            project.dataset.status;
+        const type =
+            item.dataset.type;
 
 
         const matchesSearch =
-            projectName.includes(searchText);
-
+            name.includes(searchText);
 
         const matchesFilter =
             selectedFilter === "all" ||
-            projectStatus === selectedFilter;
+            type === selectedFilter;
 
 
         if (matchesSearch && matchesFilter) {
 
-            project.style.display = "grid";
+            item.style.display = "flex";
 
-            visibleProjects++;
+            visibleCount++;
 
         } else {
 
-            project.style.display = "none";
+            item.style.display = "none";
 
         }
 
     });
 
 
-    // Show no results message
+    /* UPDATE COUNT */
 
-    if (visibleProjects === 0) {
+    activityCount.textContent =
+        `${visibleCount} ${visibleCount === 1 ? "activity" : "activities"}`;
 
-        noResults.style.display = "block";
+
+    /* EMPTY STATE */
+
+    if (visibleCount === 0) {
+
+        emptyState.style.display = "block";
 
     } else {
 
-        noResults.style.display = "none";
+        emptyState.style.display = "none";
 
     }
 
 }
 
 
-// =================================
-// Open Project
-// =================================
+/* =========================
+   SEARCH
+========================= */
 
-const openButtons =
-    document.querySelectorAll(".open-btn");
-
-openButtons.forEach(function(button) {
-
-    button.addEventListener("click", function() {
-
-        const projectName =
-            button.dataset.project;
-
-        alert(
-            "Opening project: " +
-            projectName +
-            "\n\nProject details will be available when the backend and database are connected."
-        );
-
-    });
-
-});
-
-
-// =================================
-// Delete Project
-// =================================
-
-function attachDeleteEvents() {
-
-    const deleteButtons =
-        document.querySelectorAll(".delete-btn");
-
-    deleteButtons.forEach(function(button) {
-
-        button.addEventListener("click", function() {
-
-            const projectName =
-                button.dataset.project;
-
-
-            const confirmDelete =
-                confirm(
-                    "Are you sure you want to delete \"" +
-                    projectName +
-                    "\"?"
-                );
-
-
-            if (confirmDelete) {
-
-                const projectItem =
-                    button.closest(".project-item");
-
-                projectItem.remove();
-
-                updateStatistics();
-
-                filterProjects();
-
-            }
-
-        });
-
-    });
-
-}
-
-attachDeleteEvents();
-
-
-// =================================
-// Update Statistics
-// =================================
-
-function updateStatistics() {
-
-    const projects =
-        document.querySelectorAll(".project-item");
-
-    let completed = 0;
-    let progress = 0;
-
-
-    projects.forEach(function(project) {
-
-        if (project.dataset.status === "completed") {
-
-            completed++;
-
-        }
-
-        if (project.dataset.status === "progress") {
-
-            progress++;
-
-        }
-
-    });
-
-
-    const total =
-        projects.length;
-
-
-    totalProjects.textContent =
-        total;
-
-    completedProjects.textContent =
-        completed;
-
-    progressProjects.textContent =
-        progress;
-
-}
-
-
-// =================================
-// New Project
-// =================================
-
-const newProjectBtn =
-    document.getElementById("newProjectBtn");
-
-newProjectBtn.addEventListener(
-    "click",
-    function() {
-
-        window.location.href =
-            "dashboard.html";
-
-    }
+searchInput.addEventListener(
+    "input",
+    filterHistory
 );
 
 
-// =================================
-// Logout
-// =================================
+/* =========================
+   FILTER
+========================= */
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
+filterSelect.addEventListener(
+    "change",
+    filterHistory
+);
 
 
-            const confirmLogout =
-                confirm(
-                    "Are you sure you want to logout?"
-                );
+/* =========================
+   VIEW ACTIVITY
+========================= */
 
+function viewActivity(projectName) {
 
-            if (confirmLogout) {
-
-                window.location.href =
-                    "login.html";
-
-            }
-
-        }
-    );
-
-}
-
-
-// =================================
-// Notification
-// =================================
-
-const notificationBtn =
-    document.querySelector(".notification-btn");
-
-if (notificationBtn) {
-
-    notificationBtn.addEventListener(
-        "click",
-        function() {
-
-            alert(
-                "No new notifications."
-            );
-
-        }
+    alert(
+        `Opening activity:\n\n${projectName}\n\n` +
+        `Detailed project history will be connected ` +
+        `to the backend in the next stage.`
     );
 
 }

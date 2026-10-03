@@ -1,347 +1,511 @@
-const reviewLanguage = document.getElementById("reviewLanguage");
-const reviewCode = document.getElementById("reviewCode");
-const reviewBtn = document.getElementById("reviewBtn");
-const reviewResult = document.getElementById("reviewResult");
+/* =========================================================
+   DEVCORE AI - CODE REVIEW
+   Frontend Demo
+   ========================================================= */
 
 
-// ========================================
-// UPDATE FILE NAME & LANGUAGE
-// ========================================
+/* ================= ELEMENTS ================= */
 
-reviewLanguage.addEventListener("change", () => {
+const codeInput =
+    document.getElementById("codeInput");
 
-    const language = reviewLanguage.value;
+const language =
+    document.getElementById("language");
 
-    const fileName =
-        document.querySelector(".editor-file-name");
+const reviewBtn =
+    document.getElementById("reviewBtn");
 
-    const languageLabel =
-        document.querySelector(".editor-language");
+const loadingSection =
+    document.getElementById("loadingSection");
 
+const resultsSection =
+    document.getElementById("resultsSection");
 
-    languageLabel.textContent =
-        language.toUpperCase();
+const reviewFindings =
+    document.getElementById("reviewFindings");
 
+const recommendations =
+    document.getElementById("recommendations");
 
-    if (language === "Java") {
-        fileName.textContent = "your-code.java";
-    }
+const reviewSummary =
+    document.getElementById("reviewSummary");
 
-    else if (language === "Python") {
-        fileName.textContent = "your-code.py";
-    }
+const qualityScore =
+    document.getElementById("qualityScore");
 
-    else if (language === "JavaScript") {
-        fileName.textContent = "your-code.js";
-    }
+const securityScore =
+    document.getElementById("securityScore");
 
-    else if (language === "C") {
-        fileName.textContent = "your-code.c";
-    }
+const performanceScore =
+    document.getElementById("performanceScore");
 
-    else if (language === "C++") {
-        fileName.textContent = "your-code.cpp";
-    }
-
-});
+const maintainabilityScore =
+    document.getElementById("maintainabilityScore");
 
 
-// ========================================
-// REVIEW CODE
-// ========================================
+/* ================= REVIEW BUTTON ================= */
 
-reviewBtn.addEventListener("click", () => {
+reviewBtn.addEventListener("click", function () {
 
-    const code = reviewCode.value.trim();
-    const language = reviewLanguage.value;
+    const code =
+        codeInput.value.trim();
 
 
-    // Validation
+    /* Validation */
 
-    if (code === "") {
+    if (code.length < 10) {
 
-        alert("Please paste your code first.");
+        alert(
+            "Please paste some code before starting the review."
+        );
 
-        reviewCode.focus();
+        codeInput.focus();
 
         return;
     }
 
 
-    // Loading
+    /* Get selected review categories */
+
+    const checks = {
+
+        quality:
+            document.getElementById("qualityCheck").checked,
+
+        security:
+            document.getElementById("securityCheck").checked,
+
+        performance:
+            document.getElementById("performanceCheck").checked,
+
+        maintainability:
+            document.getElementById("maintainabilityCheck").checked
+
+    };
+
+
+    /* Hide previous result */
+
+    resultsSection.style.display =
+        "none";
+
+
+    /* Show loading */
+
+    loadingSection.style.display =
+        "flex";
+
 
     reviewBtn.disabled = true;
 
-    reviewBtn.innerHTML = `
-        <span>⟳</span>
-        Reviewing...
-    `;
+    reviewBtn.innerHTML =
+        "<span>✓</span><span>Reviewing...</span>";
 
 
-    reviewResult.innerHTML = `
+    /*
+        Demo processing.
 
-        <div class="empty-review">
+        Later this will become:
 
-            <div class="empty-icon">
-                ⟳
-            </div>
+        Frontend
+            ↓
+        FastAPI
+            ↓
+        Gemini API
+            ↓
+        Code Review
+            ↓
+        Results
+    */
 
-            <h3>
-                Reviewing Your Code...
-            </h3>
+    setTimeout(function () {
 
-            <p>
-                DevCore AI is analyzing your code
-                for quality, security, performance,
-                and best practices.
-            </p>
+        const result =
+            generateReview(
+                code,
+                language.value,
+                checks
+            );
 
-        </div>
 
-    `;
+        /* Scores */
 
+        qualityScore.textContent =
+            result.scores.quality + "%";
 
-    // Temporary AI simulation
 
-    setTimeout(() => {
+        securityScore.textContent =
+            result.scores.security + "%";
 
 
-        reviewResult.innerHTML = `
+        performanceScore.textContent =
+            result.scores.performance + "%";
 
-            <div class="review-analysis">
 
+        maintainabilityScore.textContent =
+            result.scores.maintainability + "%";
 
-                <!-- OVERALL SCORE -->
 
-                <div class="review-summary">
+        /* Findings */
 
-                    <div>
+        reviewFindings.innerHTML =
+            createFindings(
+                result.findings
+            );
 
-                        <span class="summary-label">
-                            Overall Code Quality
-                        </span>
 
-                        <h2>
-                            82 / 100
-                        </h2>
+        /* Recommendations */
 
-                    </div>
+        recommendations.innerHTML =
+            createRecommendations(
+                result.recommendations
+            );
 
-                    <span class="summary-badge">
-                        Good
-                    </span>
 
-                </div>
+        /* Summary */
 
+        reviewSummary.textContent =
+            result.summary;
 
-                <!-- CODE QUALITY -->
 
-                <div class="analysis-section">
+        /* Hide loading */
 
-                    <div class="analysis-heading">
+        loadingSection.style.display =
+            "none";
 
-                        <div class="analysis-icon quality-icon">
-                            ✓
-                        </div>
 
-                        <div>
+        /* Show results */
 
-                            <h3>
-                                Code Quality
-                            </h3>
+        resultsSection.style.display =
+            "block";
 
-                            <span>
-                                Good
-                            </span>
 
-                        </div>
-
-                    </div>
-
-
-                    <p>
-                        The code structure is understandable
-                        and uses appropriate programming
-                        constructs. Variable naming and
-                        overall organization can be improved
-                        for better maintainability.
-                    </p>
-
-                </div>
-
-
-                <!-- SECURITY -->
-
-                <div class="analysis-section">
-
-                    <div class="analysis-heading">
-
-                        <div class="analysis-icon security-icon">
-                            🔒
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Security Analysis
-                            </h3>
-
-                            <span>
-                                Low Risk
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <p>
-                        No major security issue was detected
-                        in the submitted code. Input validation
-                        should be added when accepting data
-                        directly from users.
-                    </p>
-
-                </div>
-
-
-                <!-- PERFORMANCE -->
-
-                <div class="analysis-section">
-
-                    <div class="analysis-heading">
-
-                        <div class="analysis-icon performance-icon">
-                            ⚡
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Performance
-                            </h3>
-
-                            <span>
-                                Good
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <p>
-                        The current implementation has
-                        acceptable performance for normal
-                        input sizes. Avoid unnecessary loops
-                        and repeated calculations when working
-                        with larger datasets.
-                    </p>
-
-                </div>
-
-
-                <!-- BEST PRACTICES -->
-
-                <div class="analysis-section">
-
-                    <div class="analysis-heading">
-
-                        <div class="analysis-icon practice-icon">
-                            ★
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Best Practices
-                            </h3>
-
-                            <span>
-                                Improvements Available
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <ul class="suggestion-list">
-
-                        <li>
-                            Use meaningful and descriptive
-                            variable names.
-                        </li>
-
-                        <li>
-                            Add comments for complex logic.
-                        </li>
-
-                        <li>
-                            Validate user input before processing.
-                        </li>
-
-                        <li>
-                            Follow consistent coding standards
-                            for the selected language.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <!-- IMPROVEMENT SUGGESTIONS -->
-
-                <div class="suggestions-box">
-
-                    <h3>
-                        💡 Improvement Suggestions
-                    </h3>
-
-                    <p>
-                        DevCore AI recommends improving
-                        readability, adding proper input
-                        validation, handling possible edge
-                        cases, and following language-specific
-                        coding standards.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        `;
-
-
-        // Update status
-
-        const status =
-            document.querySelector(".review-status");
-
-        status.textContent = "Completed";
-
-
-        // Restore button
+        /* Reset button */
 
         reviewBtn.disabled = false;
 
-        reviewBtn.innerHTML = `
-            <span>✦</span>
-            Review Code
-        `;
+        reviewBtn.innerHTML =
+            "<span>✓</span><span>Review Code</span>";
 
 
-        // Console information
+        /* Scroll */
 
-        console.log("Code Review Completed");
+        resultsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-        console.log("Language:", language);
 
-        console.log("Code:", code);
-
-
-    }, 1500);
+    }, 1800);
 
 });
+
+
+/* ================= REVIEW LOGIC ================= */
+
+function generateReview(
+    code,
+    selectedLanguage,
+    checks
+) {
+
+    const lowerCode =
+        code.toLowerCase();
+
+
+    let findings = [];
+
+    let recommendations = [];
+
+
+    let scores = {
+
+        quality: 85,
+
+        security: 90,
+
+        performance: 82,
+
+        maintainability: 88
+
+    };
+
+
+    /* ================= QUALITY ================= */
+
+    if (checks.quality) {
+
+        if (
+            code.length > 1000
+        ) {
+
+            findings.push({
+
+                type: "Review",
+
+                badge: "badge-warning",
+
+                text:
+                    "The code is relatively large. Consider splitting the implementation into smaller functions or modules."
+
+            });
+
+            scores.quality = 78;
+
+        } else {
+
+            findings.push({
+
+                type: "Good",
+
+                badge: "badge-success",
+
+                text:
+                    "The submitted code has a manageable structure and can be improved further with clear function separation."
+
+            });
+
+        }
+
+
+        recommendations.push(
+            "Use meaningful variable and function names.",
+            "Keep individual functions focused on a single responsibility."
+        );
+
+    }
+
+
+    /* ================= SECURITY ================= */
+
+    if (checks.security) {
+
+        if (
+            lowerCode.includes("password") ||
+            lowerCode.includes("secret") ||
+            lowerCode.includes("api_key")
+        ) {
+
+            findings.push({
+
+                type: "Security",
+
+                badge: "badge-warning",
+
+                text:
+                    "Sensitive information may be present directly in the source code. Secrets should not be hard-coded."
+
+            });
+
+            scores.security = 65;
+
+        } else {
+
+            findings.push({
+
+                type: "Security",
+
+                badge: "badge-success",
+
+                text:
+                    "No obvious hard-coded sensitive information was detected in this basic review."
+
+            });
+
+        }
+
+
+        recommendations.push(
+            "Store API keys and credentials using environment variables.",
+            "Validate and sanitize external user input."
+        );
+
+    }
+
+
+    /* ================= PERFORMANCE ================= */
+
+    if (checks.performance) {
+
+        findings.push({
+
+            type: "Performance",
+
+            badge: "badge-info",
+
+            text:
+                "Review loops, repeated calculations, and unnecessary operations when working with larger datasets."
+
+        });
+
+
+        recommendations.push(
+            "Avoid unnecessary repeated calculations.",
+            "Choose suitable data structures for frequently accessed data."
+        );
+
+    }
+
+
+    /* ================= MAINTAINABILITY ================= */
+
+    if (checks.maintainability) {
+
+        findings.push({
+
+            type: "Maintainability",
+
+            badge: "badge-info",
+
+            text:
+                "Adding comments and separating reusable logic can make the code easier to understand and maintain."
+
+        });
+
+
+        recommendations.push(
+            "Add comments for important or complex logic.",
+            "Keep coding style consistent across the project."
+        );
+
+    }
+
+
+    /* ================= DEFAULT ================= */
+
+    if (findings.length === 0) {
+
+        findings.push({
+
+            type: "Info",
+
+            badge: "badge-info",
+
+            text:
+                "Select at least one review category to receive detailed findings."
+
+        });
+
+    }
+
+
+    if (recommendations.length === 0) {
+
+        recommendations.push(
+            "Select one or more review categories for additional recommendations."
+        );
+
+    }
+
+
+    /* ================= SUMMARY ================= */
+
+    const average =
+        Math.round(
+            (
+                scores.quality +
+                scores.security +
+                scores.performance +
+                scores.maintainability
+            ) / 4
+        );
+
+
+    let summary;
+
+
+    if (average >= 85) {
+
+        summary =
+            `The code received an overall review score of ${average}%. The structure is generally clear, but further improvements can be made in code organization, security practices, performance, and maintainability.`;
+
+    } else {
+
+        summary =
+            `The code received an overall review score of ${average}%. Several areas should be improved to make the implementation more secure, efficient, and maintainable.`;
+
+    }
+
+
+    return {
+
+        scores,
+        findings,
+        recommendations,
+        summary
+
+    };
+
+}
+
+
+/* ================= FINDINGS ================= */
+
+function createFindings(findings) {
+
+    let html = "";
+
+
+    findings.forEach(function (finding) {
+
+        html += `
+
+            <div class="finding">
+
+                <span class="finding-badge ${finding.badge}">
+                    ${escapeHTML(finding.type)}
+                </span>
+
+                <span class="finding-text">
+                    ${escapeHTML(finding.text)}
+                </span>
+
+            </div>
+
+        `;
+
+    });
+
+
+    return html;
+}
+
+
+/* ================= RECOMMENDATIONS ================= */
+
+function createRecommendations(items) {
+
+    let html =
+        '<ul class="recommendation-list">';
+
+
+    items.forEach(function (item) {
+
+        html += `
+            <li>
+                ${escapeHTML(item)}
+            </li>
+        `;
+
+    });
+
+
+    html += "</ul>";
+
+
+    return html;
+}
+
+
+/* ================= ESCAPE HTML ================= */
+
+function escapeHTML(value) {
+
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}

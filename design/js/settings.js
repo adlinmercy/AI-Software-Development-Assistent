@@ -1,38 +1,39 @@
-// =================================
-// DevCore AI - Settings
-// =================================
+/* ================================
+   DEVCORE AI - SETTINGS JS
+   ================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const saveAiBtn = document.getElementById("saveAiBtn");
+    const changePasswordBtn = document.getElementById("changePasswordBtn");
+
+    const profileMessage = document.getElementById("profileMessage");
+    const aiMessage = document.getElementById("aiMessage");
+    const passwordMessage = document.getElementById("passwordMessage");
 
 
-// =================================
-// Get Elements
-// =================================
+    /* ================================
+       SHOW MESSAGE
+       ================================ */
 
-const saveSettingsBtn =
-    document.getElementById("saveSettingsBtn");
+    function showMessage(element, message) {
 
-const saveMessage =
-    document.getElementById("saveMessage");
+        element.textContent = message;
 
-const themeSelect =
-    document.getElementById("themeSelect");
+        element.classList.add("show");
 
-const changePasswordBtn =
-    document.getElementById("changePasswordBtn");
-
-const notificationBtn =
-    document.getElementById("notificationBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
+        setTimeout(() => {
+            element.classList.remove("show");
+        }, 2500);
+    }
 
 
-// =================================
-// Save Settings
-// =================================
+    /* ================================
+       PROFILE
+       ================================ */
 
-saveSettingsBtn.addEventListener(
-    "click",
-    function () {
+    saveProfileBtn.addEventListener("click", () => {
 
         const fullName =
             document.getElementById("fullName").value.trim();
@@ -41,308 +42,161 @@ saveSettingsBtn.addEventListener(
             document.getElementById("email").value.trim();
 
 
-        // Validation
-
         if (fullName === "") {
-
             alert("Please enter your full name.");
-
             return;
         }
-
 
         if (email === "") {
-
             alert("Please enter your email address.");
+            return;
+        }
 
+        showMessage(
+            profileMessage,
+            "Profile updated successfully."
+        );
+
+    });
+
+
+    /* ================================
+       AI PREFERENCES
+       ================================ */
+
+    saveAiBtn.addEventListener("click", () => {
+
+        const language =
+            document.getElementById("programmingLanguage").value;
+
+        const style =
+            document.getElementById("responseStyle").value;
+
+        console.log("Default Language:", language);
+        console.log("Response Style:", style);
+
+        showMessage(
+            aiMessage,
+            "AI preferences updated successfully."
+        );
+
+    });
+
+
+    /* ================================
+       CHANGE PASSWORD
+       ================================ */
+
+    changePasswordBtn.addEventListener("click", () => {
+
+        const currentPassword =
+            document.getElementById("currentPassword").value;
+
+        const newPassword =
+            document.getElementById("newPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+
+        if (currentPassword === "") {
+            alert("Please enter your current password.");
+            return;
+        }
+
+        if (newPassword === "") {
+            alert("Please enter a new password.");
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            alert("New password must contain at least 6 characters.");
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            alert("New passwords do not match.");
             return;
         }
 
 
-        // Loading
-
-        saveSettingsBtn.disabled = true;
-
-        saveSettingsBtn.textContent =
-            "Saving...";
+        showMessage(
+            passwordMessage,
+            "Password changed successfully."
+        );
 
 
-        setTimeout(function () {
+        document.getElementById("currentPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
 
-            saveSettingsBtn.disabled = false;
-
-            saveSettingsBtn.textContent =
-                "✓ Save Settings";
-
-
-            saveMessage.textContent =
-                "✓ Your settings have been saved successfully.";
-
-            saveMessage.style.display =
-                "block";
+    });
 
 
-            setTimeout(function () {
+    /* ================================
+       THEME
+       ================================ */
 
-                saveMessage.style.display =
-                    "none";
+    const theme = document.getElementById("theme");
 
-            }, 3000);
+    theme.addEventListener("change", () => {
 
-
-            console.log("Settings saved.");
-
-        }, 1000);
-
-    }
-);
-
-
-// =================================
-// Theme
-// =================================
-
-themeSelect.addEventListener(
-    "change",
-    function () {
-
-        if (themeSelect.value === "dark") {
-
+        if (theme.value === "Dark") {
             alert(
-                "Dark theme will be available in the next version."
+                "Dark mode will be connected to the application theme in the future."
             );
 
-            themeSelect.value = "light";
+            theme.value = "Light";
+        }
+
+    });
+
+
+    /* ================================
+       COMPACT MODE
+       ================================ */
+
+    const compactMode =
+        document.getElementById("compactMode");
+
+    compactMode.addEventListener("change", () => {
+
+        if (compactMode.checked) {
+
+            document.body.style.fontSize = "98%";
+
+        } else {
+
+            document.body.style.fontSize = "100%";
 
         }
 
-    }
-);
+    });
 
 
-// =================================
-// Change Password
-// =================================
+    /* ================================
+       NOTIFICATION SETTINGS
+       ================================ */
 
-changePasswordBtn.addEventListener(
-    "click",
-    function () {
+    const notificationSettings = [
+        "emailNotifications",
+        "analysisNotifications",
+        "securityNotifications"
+    ];
 
-        alert(
-            "Password change functionality will be connected to the backend later."
-        );
+    notificationSettings.forEach(id => {
 
-    }
-);
+        const checkbox = document.getElementById(id);
 
+        checkbox.addEventListener("change", () => {
 
-// =================================
-// Notification
-// =================================
-
-notificationBtn.addEventListener(
-    "click",
-    function () {
-
-        alert(
-            "No new notifications."
-        );
-
-    }
-);
-
-
-// =================================
-// Logout
-// =================================
-
-logoutBtn.addEventListener(
-    "click",
-    function (event) {
-
-        event.preventDefault();
-
-
-        const confirmLogout =
-            confirm(
-                "Are you sure you want to logout?"
+            console.log(
+                id,
+                checkbox.checked ? "Enabled" : "Disabled"
             );
 
+        });
 
-        if (confirmLogout) {
+    });
 
-            window.location.href =
-                "login.html";
-
-        }
-
-    }
-);
-
-
-// =================================
-// Save Current Settings Locally
-// =================================
-
-function collectSettings() {
-
-    const settings = {
-
-        fullName:
-            document.getElementById("fullName").value,
-
-        email:
-            document.getElementById("email").value,
-
-        role:
-            document.getElementById("role").value,
-
-        language:
-            document.getElementById("language").value,
-
-        responseDetail:
-            document.getElementById("responseDetail").value,
-
-        codeSuggestions:
-            document.getElementById("codeSuggestions").checked,
-
-        securityAnalysis:
-            document.getElementById("securityAnalysis").checked,
-
-        projectNotifications:
-            document.getElementById("projectNotifications").checked,
-
-        taskNotifications:
-            document.getElementById("taskNotifications").checked,
-
-        emailNotifications:
-            document.getElementById("emailNotifications").checked
-
-    };
-
-
-    return settings;
-
-}
-
-
-// =================================
-// Save Settings to Browser
-// =================================
-
-saveSettingsBtn.addEventListener(
-    "click",
-    function () {
-
-        const settings =
-            collectSettings();
-
-        localStorage.setItem(
-            "devcoreSettings",
-            JSON.stringify(settings)
-        );
-
-    }
-);
-
-
-// =================================
-// Load Saved Settings
-// =================================
-
-function loadSettings() {
-
-    const savedSettings =
-        localStorage.getItem(
-            "devcoreSettings"
-        );
-
-
-    if (!savedSettings) {
-        return;
-    }
-
-
-    const settings =
-        JSON.parse(savedSettings);
-
-
-    if (settings.fullName) {
-
-        document.getElementById(
-            "fullName"
-        ).value = settings.fullName;
-
-    }
-
-
-    if (settings.email) {
-
-        document.getElementById(
-            "email"
-        ).value = settings.email;
-
-    }
-
-
-    if (settings.role) {
-
-        document.getElementById(
-            "role"
-        ).value = settings.role;
-
-    }
-
-
-    if (settings.language) {
-
-        document.getElementById(
-            "language"
-        ).value = settings.language;
-
-    }
-
-
-    if (settings.responseDetail) {
-
-        document.getElementById(
-            "responseDetail"
-        ).value =
-            settings.responseDetail;
-
-    }
-
-
-    document.getElementById(
-        "codeSuggestions"
-    ).checked =
-        settings.codeSuggestions;
-
-
-    document.getElementById(
-        "securityAnalysis"
-    ).checked =
-        settings.securityAnalysis;
-
-
-    document.getElementById(
-        "projectNotifications"
-    ).checked =
-        settings.projectNotifications;
-
-
-    document.getElementById(
-        "taskNotifications"
-    ).checked =
-        settings.taskNotifications;
-
-
-    document.getElementById(
-        "emailNotifications"
-    ).checked =
-        settings.emailNotifications;
-
-}
-
-
-loadSettings();
+});

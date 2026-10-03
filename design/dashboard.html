@@ -22,94 +22,173 @@
 
 <body>
 
-    <div class="dashboard-container">
+    <div class="app-layout">
 
-        <!-- =========================
+        <!-- =========================================
              SIDEBAR
-        ========================== -->
+        ========================================== -->
 
         <aside class="sidebar">
 
             <!-- Logo -->
-
             <div class="sidebar-logo">
+
                 <div class="logo-icon">
                     ✦
                 </div>
 
-                <span>
-                    DevCore AI
+                <span class="logo-text">
+                    DevCore <strong>AI</strong>
                 </span>
+
             </div>
 
 
             <!-- Navigation -->
-
             <nav class="sidebar-nav">
 
-                <p class="nav-title">
+                <p class="nav-section-title">
                     MAIN
                 </p>
 
+
                 <a href="dashboard.html" class="nav-item active">
-                    <span class="nav-icon">⌂</span>
-                    <span>Dashboard</span>
+
+                    <span class="nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
                 </a>
 
+
                 <a href="requirement.html" class="nav-item">
-    <span class="nav-icon">⌕</span>
-    <span>Requirement Analysis</span>
-</a>
 
-<a href="code-generation.html" class="nav-item">
-    <span class="nav-icon">&lt;/&gt;</span>
-    <span>Code Generation</span>
-</a>
+                    <span class="nav-icon">
+                        ⌕
+                    </span>
 
-<a href="code-debugging.html" class="nav-item">
-    <span class="nav-icon">⚙</span>
-    <span>Code Debugging</span>
-</a>
+                    <span>
+                        Requirement Analysis
+                    </span>
 
-<a href="code-review.html" class="nav-item">
-    <span class="nav-icon">✓</span>
-    <span>Code Review</span>
-</a>
+                </a>
 
-<a href="test-cases.html" class="nav-item">
-    <span class="nav-icon">□</span>
-    <span>Test Cases</span>
-</a>
 
-<a href="documentation.html" class="nav-item">
-    <span class="nav-icon">▤</span>
-    <span>Documentation</span>
-</a>
+                <a href="code-generation.html" class="nav-item">
 
-                <p class="nav-title second-title">
+                    <span class="nav-icon">
+                        &lt;/&gt;
+                    </span>
+
+                    <span>
+                        Code Generation
+                    </span>
+
+                </a>
+
+
+                <a href="code-debugging.html" class="nav-item">
+
+                    <span class="nav-icon">
+                        ⚙
+                    </span>
+
+                    <span>
+                        Code Debugging
+                    </span>
+
+                </a>
+
+
+                <a href="code-review.html" class="nav-item">
+
+                    <span class="nav-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Code Review
+                    </span>
+
+                </a>
+
+
+                <a href="test-cases.html" class="nav-item">
+
+                    <span class="nav-icon">
+                        □
+                    </span>
+
+                    <span>
+                        Test Cases
+                    </span>
+
+                </a>
+
+
+                <a href="documentation.html" class="nav-item">
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Documentation
+                    </span>
+
+                </a>
+
+
+                <p class="nav-section-title workspace-title">
                     WORKSPACE
                 </p>
 
+
                 <a href="project-history.html" class="nav-item">
-                    <span class="nav-icon">◷</span>
-                    <span>Project History</span>
+
+                    <span class="nav-icon">
+                        ◷
+                    </span>
+
+                    <span>
+                        Project History
+                    </span>
+
                 </a>
 
             </nav>
 
 
             <!-- Sidebar Bottom -->
-
             <div class="sidebar-bottom">
 
                 <a href="settings.html" class="nav-item">
-                    <span class="nav-icon">⚙</span>
-                    <span>Settings</span>
+
+                    <span class="nav-icon">
+                        ⚙
+                    </span>
+
+                    <span>
+                        Settings
+                    </span>
+
                 </a>
 
+
                 <a href="login.html" class="nav-item logout">
-                    <span class="nav-icon">↪</span>
-                    <span>Logout</span>
+
+                    <span class="nav-icon">
+                        ↪
+                    </span>
+
+                    <span>
+                        Logout
+                    </span>
+
                 </a>
 
             </div>
@@ -117,31 +196,66 @@
         </aside>
 
 
-        <!-- =========================
-             MAIN AREA
-        ========================== -->
+
+        <!-- =========================================
+             MAIN CONTENT
+        ========================================== -->
 
         <main class="main-content">
 
-            <!-- TOP NAVBAR -->
+
+            <!-- =========================================
+                 TOP NAVBAR
+            ========================================== -->
 
             <header class="top-navbar">
 
-                <div class="mobile-logo">
-                    DevCore AI
+                <!-- Desktop Page Title -->
+                <div class="topbar-title">
+
+                    <h2>
+                        Dashboard
+                    </h2>
+
+                    <p>
+                        Overview of your AI-powered development workspace
+                    </p>
+
                 </div>
 
-                <div class="top-right">
 
-                    <button class="notification-button">
+                <!-- Mobile Page Name -->
+                <div class="mobile-page-name">
+                    Dashboard
+                </div>
+
+
+                <div class="topbar-right">
+
+
+                    <!-- Notification -->
+
+                    <button
+                        type="button"
+                        class="notification-button"
+                        id="notificationButton"
+                        aria-label="Notifications"
+                    >
                         🔔
+
+                        <span class="notification-dot"></span>
+
                     </button>
+
+
+                    <!-- Profile -->
 
                     <div class="profile">
 
                         <div class="profile-avatar">
                             U
                         </div>
+
 
                         <div class="profile-info">
 
@@ -155,6 +269,11 @@
 
                         </div>
 
+
+                        <span class="profile-arrow">
+                            ▾
+                        </span>
+
                     </div>
 
                 </div>
@@ -162,58 +281,74 @@
             </header>
 
 
-            <!-- =========================
-                 PAGE CONTENT
-            ========================== -->
 
-            <section class="page-content">
+            <!-- =========================================
+                 PAGE CONTENT
+            ========================================== -->
+
+            <div class="page-content">
+
 
                 <!-- Welcome -->
 
-                <div class="welcome-section">
+                <section class="welcome-section">
 
                     <div>
 
-                        <p class="welcome-small">
-                            Welcome back 👋
+                        <p class="welcome-label">
+                            GOOD TO SEE YOU
                         </p>
 
                         <h1>
-                            Build smarter with DevCore AI
+                            Build smarter with
+                            <span>DevCore AI</span>
                         </h1>
 
                         <p class="welcome-description">
                             Your intelligent assistant for software
-                            development, from requirements to documentation.
+                            development, from requirements to
+                            documentation.
                         </p>
 
                     </div>
 
-                </div>
+                </section>
 
 
-                <!-- QUICK ACTIONS -->
 
-                <section class="quick-section">
+                <!-- Development Tools -->
+
+                <section class="tools-section">
 
                     <div class="section-heading">
 
-                        <h2>
-                            What do you want to build?
-                        </h2>
+                        <div>
 
-                        <p>
-                            Choose an AI-powered development tool to get started.
-                        </p>
+                            <h2>
+                                Development Tools
+                            </h2>
+
+                            <p>
+                                Choose an AI-powered tool to get started.
+                            </p>
+
+                        </div>
 
                     </div>
 
 
+
+                    <!-- Feature Grid -->
+
                     <div class="feature-grid">
 
-                        <!-- Requirement Analysis -->
 
-                        <a href="requirement.html" class="feature-card">
+                        <!-- Requirement -->
+
+                        <a
+                            href="requirement.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon requirement-icon">
                                 ⌕
@@ -226,8 +361,8 @@
                                 </h3>
 
                                 <p>
-                                    Analyze software requirements and
-                                    identify missing or unclear information.
+                                    Analyze requirements and identify
+                                    missing or unclear information.
                                 </p>
 
                             </div>
@@ -239,9 +374,13 @@
                         </a>
 
 
+
                         <!-- Code Generation -->
 
-                        <a href="code-generation.html" class="feature-card">
+                        <a
+                            href="code-generation.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon code-icon">
                                 &lt;/&gt;
@@ -254,8 +393,8 @@
                                 </h3>
 
                                 <p>
-                                    Generate code from natural language
-                                    requirements using AI.
+                                    Generate code from natural
+                                    language requirements.
                                 </p>
 
                             </div>
@@ -267,9 +406,13 @@
                         </a>
 
 
+
                         <!-- Debugging -->
 
-                        <a href="code-debugging.html" class="feature-card">
+                        <a
+                            href="code-debugging.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon debug-icon">
                                 ⚙
@@ -282,8 +425,8 @@
                                 </h3>
 
                                 <p>
-                                    Find coding errors, understand their
-                                    causes and get suggested fixes.
+                                    Find errors, understand causes
+                                    and get suggested fixes.
                                 </p>
 
                             </div>
@@ -295,9 +438,13 @@
                         </a>
 
 
+
                         <!-- Code Review -->
 
-                        <a href="code-review.html" class="feature-card">
+                        <a
+                            href="code-review.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon review-icon">
                                 ✓
@@ -310,8 +457,8 @@
                                 </h3>
 
                                 <p>
-                                    Improve code quality, security,
-                                    readability and maintainability.
+                                    Improve code quality, security
+                                    and maintainability.
                                 </p>
 
                             </div>
@@ -323,9 +470,13 @@
                         </a>
 
 
+
                         <!-- Test Cases -->
 
-                        <a href="test-cases.html" class="feature-card">
+                        <a
+                            href="test-cases.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon test-icon">
                                 □
@@ -338,8 +489,8 @@
                                 </h3>
 
                                 <p>
-                                    Generate test cases automatically
-                                    from your requirements and code.
+                                    Generate functional, negative
+                                    and edge test cases.
                                 </p>
 
                             </div>
@@ -351,9 +502,13 @@
                         </a>
 
 
+
                         <!-- Documentation -->
 
-                        <a href="documentation.html" class="feature-card">
+                        <a
+                            href="documentation.html"
+                            class="feature-card"
+                        >
 
                             <div class="feature-icon docs-icon">
                                 ▤
@@ -367,7 +522,7 @@
 
                                 <p>
                                     Generate technical documentation
-                                    from your software project.
+                                    for your software project.
                                 </p>
 
                             </div>
@@ -383,22 +538,39 @@
                 </section>
 
 
-                <!-- RECENT PROJECTS -->
+
+                <!-- Recent Projects -->
 
                 <section class="recent-section">
 
                     <div class="section-heading">
 
-                        <h2>
-                            Recent Projects
-                        </h2>
+                        <div>
 
-                        <a href="#">
+                            <h2>
+                                Recent Projects
+                            </h2>
+
+                            <p>
+                                Your recently created projects will
+                                appear here.
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="project-history.html"
+                            class="view-all"
+                        >
                             View all
                         </a>
 
                     </div>
 
+
+
+                    <!-- Empty State -->
 
                     <div class="empty-project">
 
@@ -406,16 +578,23 @@
                             +
                         </div>
 
+
                         <h3>
                             Start your first project
                         </h3>
+
 
                         <p>
                             Enter your software requirements and
                             let DevCore AI help you build it.
                         </p>
 
-                        <button class="start-button">
+
+                        <button
+                            type="button"
+                            class="primary-button"
+                            id="startProjectButton"
+                        >
                             Start New Project
                         </button>
 
@@ -423,7 +602,7 @@
 
                 </section>
 
-            </section>
+            </div>
 
         </main>
 
@@ -431,7 +610,6 @@
 
 
     <!-- Dashboard JavaScript -->
-
     <script src="js/dashboard.js"></script>
 
 </body>

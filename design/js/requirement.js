@@ -1,142 +1,468 @@
-const requirementInput = document.getElementById("requirementInput");
-const characterCount = document.getElementById("characterCount");
-const analyzeBtn = document.getElementById("analyzeBtn");
-const analysisResult = document.getElementById("analysisResult");
+/* =========================================================
+   DEVCORE AI - REQUIREMENT ANALYSIS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ================= ELEMENTS ================= */
+
+    const requirementInput =
+        document.getElementById("requirementInput");
+
+    const charCount =
+        document.getElementById("charCount");
+
+    const analyzeBtn =
+        document.getElementById("analyzeBtn");
+
+    const loadingSection =
+        document.getElementById("loadingSection");
+
+    const resultsSection =
+        document.getElementById("resultsSection");
+
+    const functionalRequirements =
+        document.getElementById("functionalRequirements");
+
+    const nonFunctionalRequirements =
+        document.getElementById("nonFunctionalRequirements");
+
+    const missingRequirements =
+        document.getElementById("missingRequirements");
+
+    const suggestions =
+        document.getElementById("suggestions");
+
+    const functionalCount =
+        document.getElementById("functionalCount");
+
+    const nonFunctionalCount =
+        document.getElementById("nonFunctionalCount");
 
 
-// ========================================
-// CHARACTER COUNTER
-// ========================================
+    /* ================= CHARACTER COUNTER ================= */
 
-requirementInput.addEventListener("input", () => {
-    const count = requirementInput.value.length;
+    requirementInput.addEventListener("input", function () {
 
-    characterCount.textContent = `${count} characters`;
-});
+        const currentLength = requirementInput.value.length;
+
+        charCount.textContent =
+            `${currentLength} / 5000 characters`;
+
+    });
 
 
-// ========================================
-// ANALYZE REQUIREMENTS
-// ========================================
+    /* ================= ANALYZE BUTTON ================= */
 
-analyzeBtn.addEventListener("click", () => {
+    analyzeBtn.addEventListener("click", function () {
 
-    const requirement = requirementInput.value.trim();
+        const requirement =
+            requirementInput.value.trim();
 
-    // Check empty input
-    if (requirement === "") {
-        alert("Please enter your project requirements first.");
-        requirementInput.focus();
-        return;
+
+        /* Empty validation */
+
+        if (requirement === "") {
+
+            alert(
+                "Please enter your software requirements before analyzing."
+            );
+
+            requirementInput.focus();
+
+            return;
+        }
+
+
+        /* Minimum input */
+
+        if (requirement.length < 20) {
+
+            alert(
+                "Please provide a little more information about your software requirement."
+            );
+
+            requirementInput.focus();
+
+            return;
+        }
+
+
+        /* Start analysis */
+
+        startAnalysis(requirement);
+
+    });
+
+
+    /* ================= START ANALYSIS ================= */
+
+    function startAnalysis(requirement) {
+
+        /* Disable button */
+
+        analyzeBtn.disabled = true;
+
+        analyzeBtn.innerHTML =
+            `<span class="btn-icon">◌</span>
+             <span>Analyzing...</span>`;
+
+
+        /* Hide previous results */
+
+        resultsSection.classList.remove("show");
+
+
+        /* Show loading */
+
+        loadingSection.classList.add("show");
+
+
+        /* Scroll to loading section */
+
+        loadingSection.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+
+        /*
+         * Frontend demo delay.
+         *
+         * Later this will be replaced with:
+         *
+         * fetch("/api/analyze-requirements", {...})
+         */
+
+        setTimeout(function () {
+
+            const analysis =
+                generateDemoAnalysis(requirement);
+
+            displayResults(analysis);
+
+            loadingSection.classList.remove("show");
+
+            resultsSection.classList.add("show");
+
+            analyzeBtn.disabled = false;
+
+            analyzeBtn.innerHTML =
+                `<span class="btn-icon">✦</span>
+                 <span>Analyze Requirements</span>`;
+
+
+            /* Scroll to results */
+
+            setTimeout(function () {
+
+                resultsSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }, 150);
+
+        }, 1800);
+
     }
 
 
-    // Loading state
-    analyzeBtn.disabled = true;
+    /* =====================================================
+       DEMO AI ANALYSIS
+       ===================================================== */
 
-    analyzeBtn.innerHTML = `
-        <span>⟳</span>
-        Analyzing...
-    `;
+    function generateDemoAnalysis(requirement) {
 
-    analysisResult.innerHTML = `
-        <div class="empty-analysis">
-            <div class="empty-icon">⟳</div>
-            <h3>Analyzing Requirements...</h3>
-            <p>
-                DevCore AI is analyzing your project requirements.
-            </p>
-        </div>
-    `;
+        const text =
+            requirement.toLowerCase();
 
 
-    // Temporary AI processing simulation
-    setTimeout(() => {
+        /* ---------------- Functional ---------------- */
 
-        analysisResult.innerHTML = `
-
-            <div class="analysis-content">
-
-                <div class="result-section">
-
-                    <h3>
-                        <span class="result-icon functional-icon">✓</span>
-                        Functional Requirements
-                    </h3>
-
-                    <ul>
-                        <li>Users should be able to enter software requirements.</li>
-                        <li>The system should analyze the provided requirements.</li>
-                        <li>The system should identify functional requirements.</li>
-                        <li>The system should identify non-functional requirements.</li>
-                        <li>The system should detect ambiguities and missing information.</li>
-                    </ul>
-
-                </div>
+        const functional = [];
 
 
-                <div class="result-section">
-
-                    <h3>
-                        <span class="result-icon quality-icon">◈</span>
-                        Non-Functional Requirements
-                    </h3>
-
-                    <ul>
-                        <li>The system should provide results quickly.</li>
-                        <li>The application should be easy to use.</li>
-                        <li>User requirements should be processed securely.</li>
-                        <li>The system should provide reliable analysis.</li>
-                    </ul>
-
-                </div>
+        if (
+            text.includes("login") ||
+            text.includes("sign in") ||
+            text.includes("authentication")
+        ) {
+            functional.push(
+                "The system should provide secure user authentication and login functionality."
+            );
+        }
 
 
-                <div class="result-section">
-
-                    <h3>
-                        <span class="result-icon warning-icon">!</span>
-                        Ambiguities & Missing Information
-                    </h3>
-
-                    <ul>
-                        <li>Specific user roles are not clearly defined.</li>
-                        <li>Required technologies are not specified.</li>
-                        <li>Security requirements need further clarification.</li>
-                        <li>Expected system performance is not specified.</li>
-                    </ul>
-
-                </div>
+        if (
+            text.includes("register") ||
+            text.includes("registration") ||
+            text.includes("signup")
+        ) {
+            functional.push(
+                "The system should allow new users to create an account."
+            );
+        }
 
 
-                <div class="result-section">
-
-                    <h3>
-                        <span class="result-icon suggestion-icon">✦</span>
-                        AI Suggestions
-                    </h3>
-
-                    <ul>
-                        <li>Clearly define all types of users and their permissions.</li>
-                        <li>Specify the expected system features and workflow.</li>
-                        <li>Define security and performance requirements.</li>
-                        <li>Specify the technologies or platforms to be used.</li>
-                    </ul>
-
-                </div>
-
-            </div>
-        `;
+        if (
+            text.includes("admin") ||
+            text.includes("administrator")
+        ) {
+            functional.push(
+                "The system should provide administrative functionality for managing system data and users."
+            );
+        }
 
 
-        // Restore button
-        analyzeBtn.disabled = false;
+        if (
+            text.includes("track") ||
+            text.includes("location") ||
+            text.includes("live")
+        ) {
+            functional.push(
+                "The system should provide real-time tracking or status information."
+            );
+        }
 
-        analyzeBtn.innerHTML = `
-            <span>✦</span>
-            Analyze Requirements
-        `;
 
-    }, 1500);
+        if (
+            text.includes("notification") ||
+            text.includes("alert")
+        ) {
+            functional.push(
+                "The system should provide notifications or alerts to relevant users."
+            );
+        }
+
+
+        if (
+            text.includes("report") ||
+            text.includes("reports")
+        ) {
+            functional.push(
+                "The system should generate reports based on available system data."
+            );
+        }
+
+
+        if (
+            text.includes("database") ||
+            text.includes("store") ||
+            text.includes("save")
+        ) {
+            functional.push(
+                "The system should store and retrieve required application data."
+            );
+        }
+
+
+        if (functional.length === 0) {
+
+            functional.push(
+                "The system should implement the functionality described in the provided software requirement."
+            );
+
+            functional.push(
+                "The system should accept user input and process it according to the defined business requirements."
+            );
+
+            functional.push(
+                "The system should provide appropriate output based on the user's request."
+            );
+
+        }
+
+
+        /* ---------------- Non Functional ---------------- */
+
+        const nonFunctional = [
+
+            "The system should provide a user-friendly and easy-to-use interface.",
+
+            "The system should provide reliable and consistent responses.",
+
+            "The system should protect user data and prevent unauthorized access.",
+
+            "The system should provide acceptable response time for normal user operations."
+
+        ];
+
+
+        /* ---------------- Missing Information ---------------- */
+
+        const missing = [];
+
+
+        if (
+            !text.includes("user") &&
+            !text.includes("student") &&
+            !text.includes("admin") &&
+            !text.includes("customer")
+        ) {
+            missing.push(
+                "The target users or user roles are not clearly specified."
+            );
+        }
+
+
+        if (
+            !text.includes("database") &&
+            !text.includes("data") &&
+            !text.includes("store")
+        ) {
+            missing.push(
+                "The required data storage and database details are not specified."
+            );
+        }
+
+
+        if (
+            !text.includes("security") &&
+            !text.includes("secure")
+        ) {
+            missing.push(
+                "Specific security requirements have not been defined."
+            );
+        }
+
+
+        if (
+            !text.includes("performance") &&
+            !text.includes("fast") &&
+            !text.includes("response")
+        ) {
+            missing.push(
+                "Performance and response-time expectations are not clearly defined."
+            );
+        }
+
+
+        if (missing.length === 0) {
+
+            missing.push(
+                "No major ambiguity was detected from the provided description. Detailed stakeholder validation is still recommended."
+            );
+
+        }
+
+
+        /* ---------------- Suggestions ---------------- */
+
+        const suggestionsList = [
+
+            "Clearly define all user roles and their permissions.",
+
+            "Specify the expected inputs and outputs for each major feature.",
+
+            "Define security, performance, and scalability requirements.",
+
+            "Identify important business rules and system constraints.",
+
+            "Break large requirements into smaller, testable requirements."
+
+        ];
+
+
+        return {
+            functional: functional,
+            nonFunctional: nonFunctional,
+            missing: missing,
+            suggestions: suggestionsList
+        };
+
+    }
+
+
+    /* =====================================================
+       DISPLAY RESULTS
+       ===================================================== */
+
+    function displayResults(analysis) {
+
+
+        /* Functional requirements */
+
+        functionalRequirements.innerHTML =
+            createList(analysis.functional);
+
+        functionalCount.textContent =
+            analysis.functional.length;
+
+
+        /* Non-functional requirements */
+
+        nonFunctionalRequirements.innerHTML =
+            createList(analysis.nonFunctional);
+
+        nonFunctionalCount.textContent =
+            analysis.nonFunctional.length;
+
+
+        /* Missing information */
+
+        missingRequirements.innerHTML =
+            createList(analysis.missing);
+
+
+        /* Suggestions */
+
+        suggestions.innerHTML =
+            createList(analysis.suggestions);
+
+    }
+
+
+    /* =====================================================
+       CREATE LIST
+       ===================================================== */
+
+    function createList(items) {
+
+        if (!items || items.length === 0) {
+
+            return `
+                <p class="empty-result">
+                    No information available.
+                </p>
+            `;
+
+        }
+
+
+        let html = '<ul class="result-list">';
+
+
+        items.forEach(function (item) {
+
+            html += `
+                <li>${escapeHTML(item)}</li>
+            `;
+
+        });
+
+
+        html += "</ul>";
+
+        return html;
+
+    }
+
+
+    /* =====================================================
+       SECURITY
+       Prevent raw HTML from user input appearing in results
+       ===================================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
 
 });

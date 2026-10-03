@@ -1,493 +1,348 @@
-const buggyCode = document.getElementById("buggyCode");
-const debugLanguage = document.getElementById("debugLanguage");
-const errorDescription = document.getElementById("errorDescription");
-
-const debugBtn = document.getElementById("debugBtn");
-const debugResult = document.getElementById("debugResult");
+/* =========================================================
+   DEVCORE AI - CODE DEBUGGING
+   Frontend Demo
+   ========================================================= */
 
 
-// ========================================
-// UPDATE FILE NAME WHEN LANGUAGE CHANGES
-// ========================================
+/* ================= ELEMENTS ================= */
 
-debugLanguage.addEventListener("change", () => {
+const codeInput =
+    document.getElementById("codeInput");
 
-    const language = debugLanguage.value;
+const errorInput =
+    document.getElementById("errorInput");
 
-    const fileName = document.querySelector(".input-file-name");
-    const languageLabel = document.querySelector(".input-language");
+const language =
+    document.getElementById("language");
 
-    languageLabel.textContent = language.toUpperCase();
+const debugBtn =
+    document.getElementById("debugBtn");
 
-    if (language === "Java") {
-        fileName.textContent = "your-code.java";
-    }
+const loadingSection =
+    document.getElementById("loadingSection");
 
-    else if (language === "Python") {
-        fileName.textContent = "your-code.py";
-    }
+const resultsSection =
+    document.getElementById("resultsSection");
 
-    else if (language === "JavaScript") {
-        fileName.textContent = "your-code.js";
-    }
+const errorSummary =
+    document.getElementById("errorSummary");
 
-    else if (language === "C") {
-        fileName.textContent = "your-code.c";
-    }
+const errorExplanation =
+    document.getElementById("errorExplanation");
 
-    else if (language === "C++") {
-        fileName.textContent = "your-code.cpp";
-    }
+const fixedCode =
+    document.getElementById("fixedCode");
 
-});
+const debugSuggestions =
+    document.getElementById("debugSuggestions");
 
 
-// ========================================
-// ANALYZE & DEBUG
-// ========================================
+/* ================= DEBUG BUTTON ================= */
 
-debugBtn.addEventListener("click", () => {
+debugBtn.addEventListener("click", function () {
 
-    const code = buggyCode.value.trim();
-    const language = debugLanguage.value;
-    const problem = errorDescription.value.trim();
+    const code =
+        codeInput.value.trim();
+
+    const error =
+        errorInput.value.trim();
+
+    const selectedLanguage =
+        language.value;
 
 
-    // Empty code validation
+    /* Validation */
 
-    if (code === "") {
+    if (code.length < 5) {
 
-        alert("Please paste your code first.");
+        alert(
+            "Please paste your code before debugging."
+        );
 
-        buggyCode.focus();
+        codeInput.focus();
 
         return;
     }
 
 
-    // Loading state
+    /* Hide old results */
+
+    resultsSection.style.display = "none";
+
+
+    /* Show loading */
+
+    loadingSection.style.display = "flex";
 
     debugBtn.disabled = true;
 
-    debugBtn.innerHTML = `
-        <span>⟳</span>
-        Analyzing...
-    `;
+    debugBtn.innerHTML =
+        "<span>⚙</span><span>Analyzing...</span>";
 
 
-    debugResult.innerHTML = `
+    /*
+        Demo delay.
 
-        <div class="empty-debug">
+        Later:
 
-            <div class="debug-icon">
-                ⟳
-            </div>
+        Frontend
+            ↓
+        FastAPI
+            ↓
+        Gemini API
+            ↓
+        Code analysis
+            ↓
+        Suggested fix
+    */
 
-            <h3>
-                Analyzing Your Code...
-            </h3>
+    setTimeout(function () {
 
-            <p>
-                DevCore AI is checking your code for errors
-                and possible improvements.
-            </p>
+        const analysis =
+            analyzeCode(
+                code,
+                error,
+                selectedLanguage
+            );
 
-        </div>
 
-    `;
+        errorSummary.innerHTML =
+            `<div class="error-message">
+                ${escapeHTML(analysis.error)}
+            </div>`;
 
 
-    // Temporary AI simulation
+        errorExplanation.textContent =
+            analysis.explanation;
 
-    setTimeout(() => {
 
-        let correctedCode = code;
+        fixedCode.textContent =
+            analysis.fixedCode;
 
 
-        // ========================================
-        // SAMPLE JAVA FIX
-        // ========================================
+        debugSuggestions.innerHTML =
+            createSuggestionList(
+                analysis.suggestions
+            );
 
-        if (language === "Java") {
 
-            correctedCode =
-`import java.util.Scanner;
+        /* Hide loading */
 
-public class Main {
+        loadingSection.style.display =
+            "none";
 
-    public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        /* Show results */
 
-        System.out.print("Enter a number: ");
+        resultsSection.style.display =
+            "block";
 
-        int number = scanner.nextInt();
 
-        long factorial = 1;
-
-        for (int i = 1; i <= number; i++) {
-
-            factorial *= i;
-
-        }
-
-        System.out.println(
-            "Factorial = " + factorial
-        );
-
-        scanner.close();
-    }
-}`;
-
-        }
-
-
-        // ========================================
-        // SAMPLE PYTHON FIX
-        // ========================================
-
-        else if (language === "Python") {
-
-            correctedCode =
-`def factorial(number):
-
-    result = 1
-
-    for i in range(1, number + 1):
-        result *= i
-
-    return result
-
-
-number = int(input("Enter a number: "))
-
-result = factorial(number)
-
-print("Factorial =", result)`;
-
-        }
-
-
-        // ========================================
-        // SAMPLE JAVASCRIPT FIX
-        // ========================================
-
-        else if (language === "JavaScript") {
-
-            correctedCode =
-`function factorial(number) {
-
-    let result = 1;
-
-    for (let i = 1; i <= number; i++) {
-
-        result *= i;
-
-    }
-
-    return result;
-}
-
-
-const number = Number(
-    prompt("Enter a number:")
-);
-
-console.log(
-    "Factorial =",
-    factorial(number)
-);`;
-
-        }
-
-
-        // ========================================
-        // C FIX
-        // ========================================
-
-        else if (language === "C") {
-
-            correctedCode =
-`#include <stdio.h>
-
-int main() {
-
-    int number;
-
-    long factorial = 1;
-
-    printf("Enter a number: ");
-
-    scanf("%d", &number);
-
-    for (int i = 1; i <= number; i++) {
-
-        factorial *= i;
-
-    }
-
-    printf(
-        "Factorial = %ld\\n",
-        factorial
-    );
-
-    return 0;
-}`;
-
-        }
-
-
-        // ========================================
-        // C++ FIX
-        // ========================================
-
-        else if (language === "C++") {
-
-            correctedCode =
-`#include <iostream>
-
-using namespace std;
-
-int main() {
-
-    int number;
-
-    long long factorial = 1;
-
-    cout << "Enter a number: ";
-
-    cin >> number;
-
-    for (int i = 1; i <= number; i++) {
-
-        factorial *= i;
-
-    }
-
-    cout << "Factorial = "
-         << factorial
-         << endl;
-
-    return 0;
-}`;
-
-        }
-
-
-        // ========================================
-        // DISPLAY RESULT
-        // ========================================
-
-        debugResult.innerHTML = `
-
-            <div class="debug-content">
-
-
-                <!-- ERROR DETECTION -->
-
-                <div class="debug-section">
-
-                    <div class="section-heading">
-
-                        <span class="result-icon error-result">
-                            !
-                        </span>
-
-                        <div>
-
-                            <h3>
-                                Error Detected
-                            </h3>
-
-                            <span class="severity">
-                                Needs Attention
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <p>
-                        The provided code may contain a
-                        logical or implementation issue.
-                        DevCore AI has identified a possible
-                        problem that should be reviewed.
-                    </p>
-
-                </div>
-
-
-                <!-- EXPLANATION -->
-
-                <div class="debug-section">
-
-                    <div class="section-heading">
-
-                        <span class="result-icon explanation-result">
-                            ?
-                        </span>
-
-                        <h3>
-                            Error Explanation
-                        </h3>
-
-                    </div>
-
-
-                    <p>
-
-                        The code should correctly handle the
-                        input, processing logic, and output.
-                        Check variable initialization, loop
-                        conditions, input handling, and data
-                        types to avoid unexpected results.
-
-                    </p>
-
-
-                    ${
-                        problem
-                            ? `<div class="problem-box">
-                                <strong>Your Problem:</strong>
-                                ${escapeHTML(problem)}
-                               </div>`
-                            : ""
-                    }
-
-                </div>
-
-
-                <!-- CORRECTED CODE -->
-
-                <div class="debug-section corrected-section">
-
-                    <div class="section-heading">
-
-                        <span class="result-icon fix-result">
-                            ✓
-                        </span>
-
-                        <h3>
-                            Suggested Fix
-                        </h3>
-
-                    </div>
-
-
-                    <div class="fixed-code">
-
-                        <div class="fixed-code-header">
-
-                            <span>
-                                corrected-code.${getExtension(language)}
-                            </span>
-
-                            <button
-                                id="copyFixedCode"
-                                class="copy-fixed"
-                            >
-                                Copy
-                            </button>
-
-                        </div>
-
-
-                        <pre><code id="correctedCode">${escapeHTML(correctedCode)}</code></pre>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        `;
-
-
-        // ========================================
-        // COPY CORRECTED CODE
-        // ========================================
-
-        const copyFixedCode =
-            document.getElementById("copyFixedCode");
-
-        copyFixedCode.addEventListener("click", async () => {
-
-            const fixedCode =
-                document.getElementById("correctedCode").textContent;
-
-            try {
-
-                await navigator.clipboard.writeText(fixedCode);
-
-                copyFixedCode.textContent = "Copied!";
-
-                setTimeout(() => {
-
-                    copyFixedCode.textContent = "Copy";
-
-                }, 1500);
-
-            }
-
-            catch (error) {
-
-                alert("Unable to copy the corrected code.");
-
-            }
-
-        });
-
-
-        // Restore button
+        /* Reset button */
 
         debugBtn.disabled = false;
 
-        debugBtn.innerHTML = `
-            <span>✦</span>
-            Analyze & Debug
-        `;
+        debugBtn.innerHTML =
+            "<span>⚙</span><span>Debug Code</span>";
 
 
-    }, 1500);
+        /* Scroll */
+
+        resultsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+
+    }, 1800);
 
 });
 
 
-// ========================================
-// HELPER FUNCTIONS
-// ========================================
+/* ================= CODE ANALYSIS ================= */
 
-function getExtension(language) {
+function analyzeCode(
+    code,
+    error,
+    selectedLanguage
+) {
 
-    if (language === "Java") {
-        return "java";
+    const lowerCode =
+        code.toLowerCase();
+
+    const lowerError =
+        error.toLowerCase();
+
+
+    /* ---------- PYTHON ---------- */
+
+    if (selectedLanguage === "Python") {
+
+        if (
+            lowerCode.includes("print(") &&
+            lowerCode.includes("name")
+        ) {
+
+            return {
+                error:
+                    error ||
+                    "Possible NameError: a variable may be used before it is defined.",
+
+                explanation:
+                    "The code appears to use a variable that may not have been initialized before it is accessed. Python raises a NameError when a variable does not exist in the current scope.",
+
+                fixedCode:
+                    `# Example corrected structure
+
+name = "Developer"
+
+print(name)
+`,
+
+                suggestions: [
+                    "Make sure all variables are initialized before use.",
+                    "Check variable names for spelling mistakes.",
+                    "Keep variable names consistent throughout the program."
+                ]
+            };
+
+        }
+
+
+        if (
+            lowerCode.includes("/ 0") ||
+            lowerError.includes("zero division")
+        ) {
+
+            return {
+                error:
+                    error ||
+                    "ZeroDivisionError: division by zero.",
+
+                explanation:
+                    "The program may be attempting to divide a value by zero. Python does not allow division by zero and raises ZeroDivisionError.",
+
+                fixedCode:
+                    `if divisor != 0:
+    result = number / divisor
+else:
+    print("Cannot divide by zero")
+`,
+
+                suggestions: [
+                    "Check the divisor before performing division.",
+                    "Handle invalid input from the user.",
+                    "Use appropriate exception handling when required."
+                ]
+            };
+
+        }
+
     }
 
-    if (language === "Python") {
-        return "py";
+
+    /* ---------- JAVA ---------- */
+
+    if (selectedLanguage === "Java") {
+
+        if (
+            lowerCode.includes("system.out.println") &&
+            lowerCode.includes("string")
+        ) {
+
+            return {
+                error:
+                    error ||
+                    "Possible compilation error caused by an undeclared or incorrectly declared variable.",
+
+                explanation:
+                    "The code may be referring to a variable that has not been declared in the current scope. Java requires variables to be declared with a valid data type before they are used.",
+
+                fixedCode:
+                    `public class Main {
+
+    public static void main(String[] args) {
+
+        String name = "Developer";
+
+        System.out.println(name);
+    }
+}
+`,
+
+                suggestions: [
+                    "Declare variables before using them.",
+                    "Check the variable data type.",
+                    "Make sure the variable is inside the correct scope."
+                ]
+            };
+
+        }
+
     }
 
-    if (language === "JavaScript") {
-        return "js";
-    }
 
-    if (language === "C") {
-        return "c";
-    }
+    /* ---------- GENERIC ---------- */
 
-    if (language === "C++") {
-        return "cpp";
-    }
+    return {
 
-    return "txt";
+        error:
+            error ||
+            "Potential code issue detected. Further analysis is required to identify the exact error.",
+
+        explanation:
+            "DevCore AI has analyzed the submitted code structure. The exact problem may depend on the runtime environment, input values, compiler output, or additional project files.",
+
+        fixedCode:
+            `// Review the code carefully.
+
+// Recommended debugging steps:
+// 1. Check the error message.
+// 2. Identify the affected line.
+// 3. Verify variables and data types.
+// 4. Check the program logic.
+// 5. Test the corrected code again.
+`,
+
+        suggestions: [
+            "Check the exact compiler or runtime error message.",
+            "Review the line where the error occurs.",
+            "Verify variable names, data types, and input values.",
+            "Test the program with simple sample inputs."
+        ]
+    };
+
 }
 
 
-function escapeHTML(text) {
+/* ================= SUGGESTION LIST ================= */
 
-    return text
+function createSuggestionList(suggestions) {
+
+    let html =
+        '<ul class="suggestion-list">';
+
+
+    suggestions.forEach(function (suggestion) {
+
+        html +=
+            `<li>${escapeHTML(suggestion)}</li>`;
+
+    });
+
+
+    html += "</ul>";
+
+
+    return html;
+}
+
+
+/* ================= ESCAPE HTML ================= */
+
+function escapeHTML(value) {
+
+    return value
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")

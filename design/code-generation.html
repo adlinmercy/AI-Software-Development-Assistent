@@ -5,8 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Code Generation - DevCore AI</title>
+    <title>Code Generation | DevCore AI</title>
 
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Page CSS -->
     <link rel="stylesheet" href="css/code-generation.css">
 </head>
 
@@ -16,65 +26,71 @@
 
     <aside class="sidebar">
 
-        <div class="logo">
+        <div class="sidebar-logo">
             <div class="logo-icon">✦</div>
-            <span>DevCore <strong>AI</strong></span>
+            <span>DevCore AI</span>
         </div>
 
         <nav class="sidebar-nav">
 
+            <p class="nav-section-title">MAIN</p>
+
             <a href="dashboard.html" class="nav-item">
-                <span>⌂</span>
-                Dashboard
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
             </a>
 
             <a href="requirement.html" class="nav-item">
-                <span>▣</span>
-                Requirement Analysis
+                <span class="nav-icon">⌕</span>
+                <span>Requirement Analysis</span>
             </a>
 
             <a href="code-generation.html" class="nav-item active">
-                <span>&lt;/&gt;</span>
-                Code Generation
+                <span class="nav-icon">&lt;/&gt;</span>
+                <span>Code Generation</span>
             </a>
 
             <a href="code-debugging.html" class="nav-item">
-                <span>⚙</span>
-                Code Debugging
+                <span class="nav-icon">⚙</span>
+                <span>Code Debugging</span>
             </a>
 
             <a href="code-review.html" class="nav-item">
-                <span>✓</span>
-                Code Review
+                <span class="nav-icon">✓</span>
+                <span>Code Review</span>
             </a>
 
             <a href="test-cases.html" class="nav-item">
-                <span>□</span>
-                Test Cases
+                <span class="nav-icon">□</span>
+                <span>Test Cases</span>
             </a>
 
             <a href="documentation.html" class="nav-item">
-                <span>▤</span>
-                Documentation
+                <span class="nav-icon">▤</span>
+                <span>Documentation</span>
             </a>
+
+            <p class="nav-section-title workspace-title">
+                WORKSPACE
+            </p>
 
             <a href="project-history.html" class="nav-item">
-                <span>◷</span>
-                Project History
-            </a>
-
-            <a href="settings.html" class="nav-item">
-                <span>⚙</span>
-                Settings
+                <span class="nav-icon">◷</span>
+                <span>Project History</span>
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
 
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
             <a href="login.html" class="nav-item logout">
-                <span>↪</span>
-                Logout
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
             </a>
 
         </div>
@@ -86,38 +102,44 @@
 
     <main class="main-content">
 
-        <!-- TOPBAR -->
+        <!-- TOP NAVBAR -->
 
-        <header class="topbar">
+        <header class="top-navbar">
 
-            <div class="page-title">
+            <div class="topbar-title">
 
-                <h1>Code Generation</h1>
+                <h2>Code Generation</h2>
 
                 <p>
-                    Generate code from your software requirements using AI.
+                    Generate code from your software requirements
                 </p>
 
             </div>
 
+            <div class="mobile-page-name">
+                Code Generation
+            </div>
 
             <div class="topbar-right">
 
-                <button class="notification-btn">
+                <button
+                    class="notification-btn"
+                    title="Notifications"
+                >
                     🔔
+                    <span class="notification-dot"></span>
                 </button>
-
 
                 <div class="profile">
 
                     <div class="profile-avatar">
-                        A
+                        U
                     </div>
 
                     <div class="profile-info">
 
                         <span class="profile-name">
-                            Adlin Mercy
+                            User
                         </span>
 
                         <span class="profile-role">
@@ -126,6 +148,10 @@
 
                     </div>
 
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
                 </div>
 
             </div>
@@ -133,16 +159,36 @@
         </header>
 
 
-        <!-- ================= WORKSPACE ================= -->
+        <!-- ================= PAGE CONTENT ================= -->
 
-        <section class="workspace">
+        <section class="page-content">
+
+            <!-- PAGE HEADING -->
+
+            <div class="page-heading">
+
+                <h1>
+                    Code Generation
+                </h1>
+
+                <p>
+                    Describe what you want to build and let DevCore AI generate the code for you.
+                </p>
+
+            </div>
 
 
-            <!-- GENERATION INPUT -->
+            <!-- ================= GENERATOR CARD ================= -->
 
             <div class="generator-card">
 
-                <div class="card-header">
+                <!-- CARD HEADER -->
+
+                <div class="generator-card-header">
+
+                    <div class="generator-card-icon">
+                        &lt;/&gt;
+                    </div>
 
                     <div>
 
@@ -151,8 +197,7 @@
                         </h2>
 
                         <p>
-                            Describe what you want to build and DevCore AI
-                            will generate the required code.
+                            Provide your requirements and select the programming language.
                         </p>
 
                     </div>
@@ -160,162 +205,171 @@
                 </div>
 
 
-                <div class="generator-body">
+                <!-- INPUT AREA -->
+
+                <div class="generator-input-area">
+
+                    <label for="codeRequirement">
+                        What do you want to build?
+                    </label>
+
+                    <textarea
+                        id="codeRequirement"
+                        maxlength="5000"
+                        placeholder="Example: Create a Python program that reads a list of numbers and finds the largest number..."
+                    ></textarea>
 
 
-                    <!-- REQUIREMENT -->
+                    <div class="input-bottom">
 
-                    <div class="input-group">
+                        <span id="charCount">
+                            0 / 5000 characters
+                        </span>
 
-                        <label for="codeRequirement">
-                            Software Requirement
+                        <span class="input-tip">
+                            Describe the expected functionality clearly
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OPTIONS -->
+
+                <div class="generation-options">
+
+                    <div class="option-group">
+
+                        <label for="language">
+                            Programming Language
                         </label>
 
-                        <textarea
-                            id="codeRequirement"
-                            placeholder="Example:
+                        <select id="language">
 
-Create a Java program to calculate the factorial of a number entered by the user."
-                        ></textarea>
+                            <option value="Python">
+                                Python
+                            </option>
 
-                    </div>
+                            <option value="Java">
+                                Java
+                            </option>
 
+                            <option value="JavaScript">
+                                JavaScript
+                            </option>
 
-                    <!-- OPTIONS -->
+                            <option value="C">
+                                C
+                            </option>
 
-                    <div class="options-grid">
+                            <option value="C++">
+                                C++
+                            </option>
 
+                            <option value="HTML">
+                                HTML
+                            </option>
 
-                        <div class="input-group">
+                            <option value="CSS">
+                                CSS
+                            </option>
 
-                            <label for="language">
-                                Programming Language
-                            </label>
-
-                            <select id="language">
-
-                                <option value="Java">
-                                    Java
-                                </option>
-
-                                <option value="Python">
-                                    Python
-                                </option>
-
-                                <option value="JavaScript">
-                                    JavaScript
-                                </option>
-
-                                <option value="C">
-                                    C
-                                </option>
-
-                                <option value="C++">
-                                    C++
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="input-group">
-
-                            <label for="framework">
-                                Framework / Technology
-                            </label>
-
-                            <select id="framework">
-
-                                <option value="None">
-                                    None
-                                </option>
-
-                                <option value="React">
-                                    React
-                                </option>
-
-                                <option value="Node.js">
-                                    Node.js
-                                </option>
-
-                                <option value="FastAPI">
-                                    FastAPI
-                                </option>
-
-                                <option value="Spring Boot">
-                                    Spring Boot
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="input-group">
-
-                            <label for="codeType">
-                                Code Type
-                            </label>
-
-                            <select id="codeType">
-
-                                <option value="Complete Program">
-                                    Complete Program
-                                </option>
-
-                                <option value="Function">
-                                    Function
-                                </option>
-
-                                <option value="Class">
-                                    Class
-                                </option>
-
-                                <option value="API">
-                                    API
-                                </option>
-
-                                <option value="Component">
-                                    Component
-                                </option>
-
-                            </select>
-
-                        </div>
-
+                        </select>
 
                     </div>
 
 
-                    <!-- BUTTON -->
+                    <div class="option-group">
 
-                    <div class="generate-area">
+                        <label for="framework">
+                            Framework / Technology
+                        </label>
 
-                        <button
-                            id="generateBtn"
-                            class="generate-btn"
-                        >
+                        <select id="framework">
 
-                            <span>✦</span>
+                            <option value="None">
+                                None
+                            </option>
 
+                            <option value="React">
+                                React
+                            </option>
+
+                            <option value="Node.js">
+                                Node.js
+                            </option>
+
+                            <option value="FastAPI">
+                                FastAPI
+                            </option>
+
+                            <option value="Spring Boot">
+                                Spring Boot
+                            </option>
+
+                            <option value="Django">
+                                Django
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="generator-action">
+
+                    <button id="generateBtn">
+
+                        <span>✦</span>
+
+                        <span>
                             Generate Code
+                        </span>
 
-                        </button>
-
-                    </div>
+                    </button>
 
                 </div>
 
             </div>
 
 
-            <!-- ================= CODE OUTPUT ================= -->
+            <!-- ================= LOADING ================= -->
 
-            <div class="code-card">
+            <div
+                id="loadingSection"
+                class="loading-section"
+            >
+
+                <div class="loading-spinner"></div>
+
+                <div>
+
+                    <h3>
+                        Generating code...
+                    </h3>
+
+                    <p>
+                        DevCore AI is creating code based on your requirements.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-                <div class="code-header">
+            <!-- ================= RESULT ================= -->
+
+            <div
+                id="resultSection"
+                class="result-section"
+            >
+
+                <div class="result-heading">
 
                     <div>
 
@@ -324,136 +378,81 @@ Create a Java program to calculate the factorial of a number entered by the user
                         </h2>
 
                         <p>
-                            AI-generated code will appear here.
+                            AI-generated code based on your requirements
                         </p>
 
                     </div>
 
+                    <div class="result-actions">
 
-                    <div class="code-actions">
+                        <span class="generation-status">
+                            Generation Complete
+                        </span>
 
                         <button
                             id="copyBtn"
-                            class="code-action"
+                            class="copy-btn"
                         >
                             Copy
                         </button>
 
-                        <button
-                            id="downloadBtn"
-                            class="code-action"
-                        >
-                            Download
-                        </button>
-
                     </div>
 
                 </div>
 
 
-                <!-- CODE EDITOR -->
+                <!-- CODE WINDOW -->
 
-                <div class="code-editor">
+                <div class="code-card">
 
+                    <div class="code-card-header">
 
-                    <div class="editor-top">
+                        <div class="code-language">
 
-                        <span class="file-name">
-                            generated-code.java
-                        </span>
+                            <span class="language-dot"></span>
 
-                        <span class="language-label">
-                            JAVA
+                            <span id="languageLabel">
+                                Python
+                            </span>
+
+                        </div>
+
+                        <span class="code-file">
+                            generated_code
                         </span>
 
                     </div>
 
 
-                    <pre id="codeOutput"><code>
-/*
- * Generated code will appear here.
- *
- * Enter a software requirement above
- * and click "Generate Code".
- */
-                    </code></pre>
-
+                    <pre
+                        id="codeOutput"
+                        class="code-output"
+                    ></pre>
 
                 </div>
 
-            </div>
 
+                <!-- EXPLANATION -->
 
-            <!-- ================= AI INFO ================= -->
+                <div class="explanation-card">
 
-            <div class="generation-info">
-
-
-                <div class="info-item">
-
-                    <div class="info-icon">
+                    <div class="explanation-icon">
                         ✦
                     </div>
 
                     <div>
 
                         <h3>
-                            AI-Powered Generation
+                            Code Explanation
                         </h3>
 
-                        <p>
-                            Generate code based on your requirements
-                            and selected technology.
+                        <p id="codeExplanation">
+                            The generated code will be explained here.
                         </p>
 
                     </div>
 
                 </div>
-
-
-                <div class="info-item">
-
-                    <div class="info-icon">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Requirement Based
-                        </h3>
-
-                        <p>
-                            The generated code is created according
-                            to the provided software requirement.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <div class="info-icon">
-                        ◈
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Multiple Languages
-                        </h3>
-
-                        <p>
-                            Generate code using different programming
-                            languages and technologies.
-                        </p>
-
-                    </div>
-
-                </div>
-
 
             </div>
 
@@ -461,6 +460,8 @@ Create a Java program to calculate the factorial of a number entered by the user
 
     </main>
 
+
+    <!-- JavaScript -->
 
     <script src="js/code-generation.js"></script>
 

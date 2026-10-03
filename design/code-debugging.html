@@ -5,7 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Code Debugging - DevCore AI</title>
+    <title>Code Debugging | DevCore AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="css/code-debugging.css">
 </head>
@@ -16,65 +24,71 @@
 
     <aside class="sidebar">
 
-        <div class="logo">
-            <div class="logo-icon">D</div>
-            <span>DevCore <strong>AI</strong></span>
+        <div class="sidebar-logo">
+            <div class="logo-icon">✦</div>
+            <span>DevCore AI</span>
         </div>
 
         <nav class="sidebar-nav">
 
+            <p class="nav-section-title">MAIN</p>
+
             <a href="dashboard.html" class="nav-item">
-                <span>⌂</span>
-                Dashboard
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
             </a>
 
             <a href="requirement.html" class="nav-item">
-                <span>▣</span>
-                Requirement Analysis
+                <span class="nav-icon">⌕</span>
+                <span>Requirement Analysis</span>
             </a>
 
             <a href="code-generation.html" class="nav-item">
-                <span>&lt;/&gt;</span>
-                Code Generation
+                <span class="nav-icon">&lt;/&gt;</span>
+                <span>Code Generation</span>
             </a>
 
             <a href="code-debugging.html" class="nav-item active">
-                <span>⚙</span>
-                Code Debugging
+                <span class="nav-icon">⚙</span>
+                <span>Code Debugging</span>
             </a>
 
             <a href="code-review.html" class="nav-item">
-                <span>✓</span>
-                Code Review
+                <span class="nav-icon">✓</span>
+                <span>Code Review</span>
             </a>
 
             <a href="test-cases.html" class="nav-item">
-                <span>□</span>
-                Test Cases
+                <span class="nav-icon">□</span>
+                <span>Test Cases</span>
             </a>
 
             <a href="documentation.html" class="nav-item">
-                <span>▤</span>
-                Documentation
+                <span class="nav-icon">▤</span>
+                <span>Documentation</span>
             </a>
+
+            <p class="nav-section-title workspace-title">
+                WORKSPACE
+            </p>
 
             <a href="project-history.html" class="nav-item">
-                <span>◷</span>
-                Project History
-            </a>
-
-            <a href="settings.html" class="nav-item">
-                <span>⚙</span>
-                Settings
+                <span class="nav-icon">◷</span>
+                <span>Project History</span>
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
 
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
             <a href="login.html" class="nav-item logout">
-                <span>↪</span>
-                Logout
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
             </a>
 
         </div>
@@ -86,38 +100,44 @@
 
     <main class="main-content">
 
-        <!-- TOPBAR -->
+        <!-- TOP NAVBAR -->
 
-        <header class="topbar">
+        <header class="top-navbar">
 
-            <div class="page-title">
+            <div class="topbar-title">
 
-                <h1>Code Debugging</h1>
+                <h2>Code Debugging</h2>
 
                 <p>
-                    Find errors, understand problems, and fix your code with AI.
+                    Detect errors and get AI-powered debugging suggestions
                 </p>
 
             </div>
 
+            <div class="mobile-page-name">
+                Code Debugging
+            </div>
 
             <div class="topbar-right">
 
-                <button class="notification-btn">
+                <button
+                    class="notification-btn"
+                    title="Notifications"
+                >
                     🔔
+                    <span class="notification-dot"></span>
                 </button>
-
 
                 <div class="profile">
 
                     <div class="profile-avatar">
-                        A
+                        U
                     </div>
 
                     <div class="profile-info">
 
                         <span class="profile-name">
-                            Adlin Mercy
+                            User
                         </span>
 
                         <span class="profile-role">
@@ -126,6 +146,10 @@
 
                     </div>
 
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
                 </div>
 
             </div>
@@ -133,16 +157,32 @@
         </header>
 
 
-        <!-- ================= WORKSPACE ================= -->
+        <!-- ================= PAGE CONTENT ================= -->
 
-        <section class="workspace">
+        <section class="page-content">
+
+            <div class="page-heading">
+
+                <h1>
+                    Code Debugging
+                </h1>
+
+                <p>
+                    Find coding errors, understand the problem, and get possible fixes.
+                </p>
+
+            </div>
 
 
-            <!-- DEBUG INPUT CARD -->
+            <!-- ================= DEBUG CARD ================= -->
 
             <div class="debug-card">
 
-                <div class="card-header">
+                <div class="debug-card-header">
+
+                    <div class="debug-card-icon">
+                        ⚙
+                    </div>
 
                     <div>
 
@@ -151,8 +191,7 @@
                         </h2>
 
                         <p>
-                            Paste your code and describe the problem.
-                            DevCore AI will identify errors and suggest fixes.
+                            Paste your code and provide the error message if available.
                         </p>
 
                     </div>
@@ -160,244 +199,285 @@
                 </div>
 
 
-                <div class="debug-body">
+                <!-- CODE INPUT -->
 
+                <div class="code-input-area">
 
-                    <!-- LANGUAGE + ERROR -->
+                    <div class="input-header">
 
-                    <div class="debug-options">
-
-                        <div class="input-group">
-
-                            <label for="debugLanguage">
-                                Programming Language
-                            </label>
-
-                            <select id="debugLanguage">
-
-                                <option value="Java">
-                                    Java
-                                </option>
-
-                                <option value="Python">
-                                    Python
-                                </option>
-
-                                <option value="JavaScript">
-                                    JavaScript
-                                </option>
-
-                                <option value="C">
-                                    C
-                                </option>
-
-                                <option value="C++">
-                                    C++
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="input-group">
-
-                            <label for="errorDescription">
-                                Error / Problem
-                            </label>
-
-                            <input
-                                type="text"
-                                id="errorDescription"
-                                placeholder="Example: The program gives an error when calculating the factorial."
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- CODE INPUT -->
-
-                    <div class="input-group code-input-group">
-
-                        <label for="buggyCode">
-                            Your Code
+                        <label for="codeInput">
+                            Source Code
                         </label>
 
+                        <select id="language">
 
-                        <div class="code-input-wrapper">
+                            <option value="Python">
+                                Python
+                            </option>
 
-                            <div class="editor-top">
+                            <option value="Java">
+                                Java
+                            </option>
 
-                                <span class="input-file-name">
-                                    your-code.java
-                                </span>
+                            <option value="JavaScript">
+                                JavaScript
+                            </option>
 
-                                <span class="input-language">
-                                    JAVA
-                                </span>
+                            <option value="C">
+                                C
+                            </option>
 
-                            </div>
+                            <option value="C++">
+                                C++
+                            </option>
 
-
-                            <textarea
-                                id="buggyCode"
-                                class="code-textarea"
-                                spellcheck="false"
-                                placeholder="Paste your code here..."
-                            ></textarea>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- DEBUG BUTTON -->
-
-                    <div class="debug-action">
-
-                        <button
-                            id="debugBtn"
-                            class="debug-btn"
-                        >
-
-                            <span>✦</span>
-
-                            Analyze & Debug
-
-                        </button>
+                        </select>
 
                     </div>
+
+                    <textarea
+                        id="codeInput"
+                        placeholder="Paste your code here..."
+                        spellcheck="false"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ERROR INPUT -->
+
+                <div class="error-input-area">
+
+                    <label for="errorInput">
+                        Error Message
+                        <span>(Optional)</span>
+                    </label>
+
+                    <textarea
+                        id="errorInput"
+                        placeholder="Paste the error message or describe the problem..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="debug-action">
+
+                    <button id="debugBtn">
+
+                        <span>⚙</span>
+
+                        <span>
+                            Debug Code
+                        </span>
+
+                    </button>
 
                 </div>
 
             </div>
 
 
-            <!-- ================= DEBUG RESULT ================= -->
+            <!-- ================= LOADING ================= -->
 
-            <div class="result-card">
+            <div
+                id="loadingSection"
+                class="loading-section"
+            >
 
-                <div class="result-header">
+                <div class="loading-spinner"></div>
+
+                <div>
+
+                    <h3>
+                        Analyzing code...
+                    </h3>
+
+                    <p>
+                        DevCore AI is checking your code for possible errors.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESULTS ================= -->
+
+            <div
+                id="resultsSection"
+                class="results-section"
+            >
+
+                <div class="results-heading">
 
                     <div>
 
                         <h2>
-                            Debugging Result
+                            Debugging Results
                         </h2>
 
                         <p>
-                            AI analysis and corrected code will appear here.
+                            Analysis of the submitted code
                         </p>
 
                     </div>
 
-                    <span class="ai-status">
-                        AI Ready
+                    <span class="analysis-status">
+                        Analysis Complete
                     </span>
 
                 </div>
 
 
-                <div
-                    id="debugResult"
-                    class="debug-result"
-                >
+                <!-- ERROR SUMMARY -->
 
-                    <div class="empty-debug">
+                <div class="result-card">
 
-                        <div class="debug-icon">
-                            🐛
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon error-icon">
+                                !
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Error Detected
+                                </h3>
+
+                                <p>
+                                    Possible issue identified in the code
+                                </p>
+
+                            </div>
+
                         </div>
 
-                        <h3>
-                            No Code Analysis Yet
-                        </h3>
+                    </div>
 
-                        <p>
-                            Enter your code above and click
-                            <strong>Analyze & Debug</strong>
-                            to find and fix errors.
-                        </p>
+                    <div
+                        id="errorSummary"
+                        class="result-content"
+                    ></div>
+
+                </div>
+
+
+                <!-- EXPLANATION -->
+
+                <div class="result-card">
+
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon explanation-icon">
+                                ?
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Error Explanation
+                                </h3>
+
+                                <p>
+                                    Understanding why the error occurred
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="errorExplanation"
+                        class="result-content"
+                    ></div>
+
+                </div>
+
+
+                <!-- FIX -->
+
+                <div class="result-card">
+
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon fix-icon">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Suggested Fix
+                                </h3>
+
+                                <p>
+                                    Possible correction for the identified issue
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="fixed-code-wrapper">
+
+                        <pre
+                            id="fixedCode"
+                            class="fixed-code"
+                        ></pre>
 
                     </div>
 
                 </div>
 
-            </div>
 
+                <!-- TIPS -->
 
-            <!-- ================= DEBUG FEATURES ================= -->
+                <div class="result-card">
 
-            <div class="debug-features">
+                    <div class="result-card-header">
 
+                        <div class="result-title">
 
-                <div class="feature-box">
+                            <div class="result-icon tip-icon">
+                                ✦
+                            </div>
 
-                    <div class="feature-icon error">
-                        !
+                            <div>
+
+                                <h3>
+                                    Debugging Suggestions
+                                </h3>
+
+                                <p>
+                                    Recommendations for improving the code
+                                </p>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div>
-
-                        <h3>
-                            Error Detection
-                        </h3>
-
-                        <p>
-                            Identify syntax, logical, and runtime errors
-                            in your code.
-                        </p>
-
-                    </div>
+                    <div
+                        id="debugSuggestions"
+                        class="result-content"
+                    ></div>
 
                 </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon explanation">
-                        ?
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Error Explanation
-                        </h3>
-
-                        <p>
-                            Understand why the error occurs and
-                            how it affects your program.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon fix">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Suggested Fix
-                        </h3>
-
-                        <p>
-                            Get corrected code and AI suggestions
-                            to solve the identified problem.
-                        </p>
-
-                    </div>
-
-                </div>
-
 
             </div>
 

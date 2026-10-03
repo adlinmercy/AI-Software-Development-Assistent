@@ -1,280 +1,823 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requirement Analysis - DevCore AI</title>
 
-    <link rel="stylesheet" href="css/requirement.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Requirement Analysis | DevCore AI</title>
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Requirement Analysis CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/requirement.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- Sidebar -->
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
     <aside class="sidebar">
 
-        <div class="logo">
-            <div class="logo-icon">✦</div>
-            <span>DevCore <strong>AI</strong></span>
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <div class="logo-icon">
+                ✦
+            </div>
+
+            <span>
+                DevCore AI
+            </span>
+
         </div>
+
+
+
+        <!-- =================================================
+             NAVIGATION
+        ================================================== -->
 
         <nav class="sidebar-nav">
 
-            <a href="dashboard.html" class="nav-item">
-                <span>⌂</span>
-                Dashboard
+
+            <!-- MAIN -->
+
+            <p class="nav-section-title">
+                MAIN
+            </p>
+
+
+            <!-- Dashboard -->
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
             </a>
 
-            <a href="requirement.html" class="nav-item active">
-                <span>▣</span>
-                Requirement Analysis
+
+
+            <!-- Requirement Analysis -->
+
+            <a
+                href="requirement.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ⌕
+                </span>
+
+                <span>
+                    Requirement Analysis
+                </span>
+
             </a>
 
-            <a href="code-generation.html" class="nav-item">
-                <span>&lt;/&gt;</span>
-                Code Generation
+
+
+            <!-- Code Generation -->
+
+            <a
+                href="code-generation.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    &lt;/&gt;
+                </span>
+
+                <span>
+                    Code Generation
+                </span>
+
             </a>
 
-            <a href="code-debugging.html" class="nav-item">
-                <span>⚙</span>
-                Code Debugging
+
+
+            <!-- Code Debugging -->
+
+            <a
+                href="code-debugging.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span>
+                    Code Debugging
+                </span>
+
             </a>
 
-            <a href="code-review.html" class="nav-item">
-                <span>✓</span>
-                Code Review
+
+
+            <!-- Code Review -->
+
+            <a
+                href="code-review.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Code Review
+                </span>
+
             </a>
 
-            <a href="test-cases.html" class="nav-item">
-                <span>□</span>
-                Test Cases
+
+
+            <!-- Test Cases -->
+
+            <a
+                href="test-cases.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    □
+                </span>
+
+                <span>
+                    Test Cases
+                </span>
+
             </a>
 
-            <a href="documentation.html" class="nav-item">
-                <span>▤</span>
-                Documentation
+
+
+            <!-- Documentation -->
+
+            <a
+                href="documentation.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ▤
+                </span>
+
+                <span>
+                    Documentation
+                </span>
+
             </a>
 
-            <a href="project-history.html" class="nav-item">
-                <span>◷</span>
-                Project History
+
+
+            <!-- WORKSPACE -->
+
+            <p class="nav-section-title workspace-title">
+                WORKSPACE
+            </p>
+
+
+
+            <!-- Project History -->
+
+            <a
+                href="project-history.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Project History
+                </span>
+
             </a>
 
-            <a href="settings.html" class="nav-item">
-                <span>⚙</span>
-                Settings
-            </a>
 
         </nav>
 
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
         <div class="sidebar-bottom">
-            <a href="login.html" class="nav-item logout">
-                <span>↪</span>
-                Logout
+
+
+            <!-- Settings -->
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span>
+                    Settings
+                </span>
+
             </a>
+
+
+
+            <!-- Logout -->
+
+            <a
+                href="login.html"
+                class="nav-item logout"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+
         </div>
+
 
     </aside>
 
 
-    <!-- Main Content -->
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
     <main class="main-content">
 
-        <!-- Top Navbar -->
-        <header class="topbar">
 
-            <div class="page-title">
-                <h1>Requirement Analysis</h1>
-                <p>Analyze and understand your software requirements with AI.</p>
+
+        <!-- =================================================
+             TOP NAVBAR
+        ================================================== -->
+
+        <header class="top-navbar">
+
+
+            <!-- Desktop Page Title -->
+
+            <div class="topbar-title">
+
+                <h2>
+                    Requirement Analysis
+                </h2>
+
+                <p>
+                    Analyze and clarify your software requirements
+                </p>
+
             </div>
+
+
+
+            <!-- Mobile Page Title -->
+
+            <div class="mobile-page-name">
+                Requirement Analysis
+            </div>
+
+
+
+            <!-- Right Side -->
 
             <div class="topbar-right">
 
-                <button class="notification-btn">
+
+                <!-- Notification -->
+
+                <button
+                    class="notification-btn"
+                    title="Notifications"
+                >
+
                     🔔
+
+                    <span class="notification-dot"></span>
+
                 </button>
 
+
+
+                <!-- Profile -->
+
                 <div class="profile">
-                    <div class="profile-avatar">A</div>
+
+
+                    <div class="profile-avatar">
+                        U
+                    </div>
+
 
                     <div class="profile-info">
-                        <span class="profile-name">Adlin Mercy</span>
-                        <span class="profile-role">Developer</span>
+
+                        <span class="profile-name">
+                            User
+                        </span>
+
+                        <span class="profile-role">
+                            Developer
+                        </span>
+
                     </div>
+
+
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
+
                 </div>
 
+
             </div>
+
 
         </header>
 
 
-        <!-- Requirement Workspace -->
-        <section class="workspace">
 
-            <!-- Input Section -->
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+        <section class="page-content">
+
+
+
+            <!-- =================================================
+                 PAGE HEADING
+            ================================================== -->
+
+            <div class="page-heading">
+
+                <h1>
+                    Requirement Analysis
+                </h1>
+
+                <p>
+                    Analyze your software requirements and identify
+                    functional, non-functional, and missing requirements.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 REQUIREMENT INPUT CARD
+            ================================================== -->
+
             <div class="requirement-card">
 
-                <div class="card-header">
+
+                <!-- Card Header -->
+
+                <div class="requirement-card-header">
+
+
+                    <div class="requirement-card-icon">
+                        ⌕
+                    </div>
+
 
                     <div>
-                        <h2>Enter Your Requirements</h2>
+
+                        <h2>
+                            Software Requirements
+                        </h2>
+
                         <p>
-                            Describe your software project or problem statement.
-                            DevCore AI will analyze it and provide structured requirements.
+                            Enter your project description or problem statement
                         </p>
+
                     </div>
+
 
                 </div>
 
 
-                <div class="input-area">
+
+                <!-- Input Area -->
+
+                <div class="requirement-input-area">
+
 
                     <label for="requirementInput">
-                        Project Requirements
+                        Requirement Description
                     </label>
+
 
                     <textarea
                         id="requirementInput"
-                        placeholder="Example:
-
-I want to develop a college bus tracking system where students can view the live location of buses. Drivers can share their location through the mobile application. Management can manage bus and driver details.
-
-Enter your requirements here..."
+                        maxlength="5000"
+                        placeholder="Describe your software project, its users, features, and expected functionality..."
                     ></textarea>
 
-                    <div class="input-footer">
 
-                        <span id="characterCount">
-                            0 characters
+
+                    <!-- Input Bottom -->
+
+                    <div class="input-bottom">
+
+
+                        <span id="charCount">
+                            0 / 5000 characters
                         </span>
 
-                        <button id="analyzeBtn" class="analyze-btn">
-                            <span>✦</span>
-                            Analyze Requirements
-                        </button>
+
+                        <span class="input-tip">
+                            Provide detailed requirements for better analysis
+                        </span>
+
 
                     </div>
 
+
                 </div>
+
+
+
+                <!-- Action Button -->
+
+                <div class="requirement-action">
+
+
+                    <button
+                        id="analyzeBtn"
+                    >
+
+                        <span>
+                            ✦
+                        </span>
+
+                        <span>
+                            Analyze Requirements
+                        </span>
+
+                    </button>
+
+
+                </div>
+
 
             </div>
 
 
-            <!-- Analysis Result -->
-            <div class="result-card">
 
-                <div class="result-header">
+            <!-- =================================================
+                 LOADING SECTION
+            ================================================== -->
+
+            <div
+                id="loadingSection"
+                class="loading-section"
+            >
+
+
+                <div class="loading-spinner"></div>
+
+
+                <div>
+
+                    <h3>
+                        Analyzing requirements...
+                    </h3>
+
+                    <p>
+                        DevCore AI is analyzing your software requirements.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RESULTS SECTION
+            ================================================== -->
+
+            <div
+                id="resultsSection"
+                class="results-section"
+            >
+
+
+
+                <!-- Results Heading -->
+
+                <div class="results-heading">
+
 
                     <div>
-                        <h2>AI Analysis</h2>
+
+                        <h2>
+                            Analysis Results
+                        </h2>
+
                         <p>
-                            Your analyzed requirements will appear here.
+                            Structured insights generated from your requirements
                         </p>
+
                     </div>
 
-                    <span class="ai-status">
-                        AI Ready
+
+                    <span class="analysis-status">
+                        Analysis Complete
                     </span>
 
+
                 </div>
 
 
-                <div id="analysisResult" class="analysis-result">
 
-                    <div class="empty-analysis">
+                <!-- =================================================
+                     FUNCTIONAL REQUIREMENTS
+                ================================================== -->
 
-                        <div class="empty-icon">
-                            ✦
+                <div class="result-card">
+
+
+                    <div class="result-card-header">
+
+
+                        <div class="result-title">
+
+
+                            <div class="result-icon functional-icon">
+                                ✓
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Functional Requirements
+                                </h3>
+
+                                <p>
+                                    Features and operations the system should perform
+                                </p>
+
+                            </div>
+
+
                         </div>
 
-                        <h3>No Analysis Yet</h3>
 
-                        <p>
-                            Enter your project requirements above and click
-                            <strong>Analyze Requirements</strong> to get started.
-                        </p>
+                        <span
+                            class="result-count"
+                            id="functionalCount"
+                        >
+                            0
+                        </span>
+
 
                     </div>
 
+
+
+                    <div
+                        id="functionalRequirements"
+                        class="result-content"
+                    >
+
+                    </div>
+
+
                 </div>
+
+
+
+                <!-- =================================================
+                     NON-FUNCTIONAL REQUIREMENTS
+                ================================================== -->
+
+                <div class="result-card">
+
+
+                    <div class="result-card-header">
+
+
+                        <div class="result-title">
+
+
+                            <div class="result-icon nonfunctional-icon">
+                                ◈
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Non-Functional Requirements
+                                </h3>
+
+                                <p>
+                                    Quality, security, and performance requirements
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <span
+                            class="result-count"
+                            id="nonFunctionalCount"
+                        >
+                            0
+                        </span>
+
+
+                    </div>
+
+
+
+                    <div
+                        id="nonFunctionalRequirements"
+                        class="result-content"
+                    >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MISSING / AMBIGUOUS INFORMATION
+                ================================================== -->
+
+                <div class="result-card">
+
+
+                    <div class="result-card-header">
+
+
+                        <div class="result-title">
+
+
+                            <div class="result-icon warning-icon">
+                                !
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Missing or Ambiguous Information
+                                </h3>
+
+                                <p>
+                                    Requirements that may need clarification
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div
+                        id="missingRequirements"
+                        class="result-content"
+                    >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUGGESTIONS
+                ================================================== -->
+
+                <div class="result-card">
+
+
+                    <div class="result-card-header">
+
+
+                        <div class="result-title">
+
+
+                            <div class="result-icon suggestion-icon">
+                                ✦
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Suggestions
+                                </h3>
+
+                                <p>
+                                    Recommendations to improve the requirements
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div
+                        id="suggestions"
+                        class="result-content"
+                    >
+
+                    </div>
+
+
+                </div>
+
 
             </div>
 
-
-            <!-- Analysis Categories -->
-            <div class="analysis-grid">
-
-                <div class="analysis-box">
-
-                    <div class="box-icon functional">
-                        ✓
-                    </div>
-
-                    <div>
-                        <h3>Functional Requirements</h3>
-                        <p>
-                            Features and functions identified from your requirements.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-box">
-
-                    <div class="box-icon non-functional">
-                        ◈
-                    </div>
-
-                    <div>
-                        <h3>Non-Functional Requirements</h3>
-                        <p>
-                            Performance, security, reliability and usability requirements.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-box">
-
-                    <div class="box-icon ambiguity">
-                        !
-                    </div>
-
-                    <div>
-                        <h3>Ambiguities</h3>
-                        <p>
-                            Unclear or incomplete information detected in the requirements.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-box">
-
-                    <div class="box-icon suggestions">
-                        ✦
-                    </div>
-
-                    <div>
-                        <h3>AI Suggestions</h3>
-                        <p>
-                            Suggestions to improve and clarify your requirements.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
 
         </section>
+
 
     </main>
 
 
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
     <script src="js/requirement.js"></script>
 
+
 </body>
+
 </html>

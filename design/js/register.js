@@ -1,218 +1,330 @@
-/* =========================
-   PASSWORD SHOW / HIDE
-========================= */
-
-const passwordInput = document.getElementById("password");
-const passwordToggle = document.getElementById("password-toggle");
-
-passwordToggle.addEventListener("click", function () {
-
-    if (passwordInput.type === "password") {
-
-        passwordInput.type = "text";
-
-        passwordToggle.textContent = "🙈";
-
-        passwordToggle.setAttribute(
-            "aria-label",
-            "Hide password"
-        );
-
-    } else {
-
-        passwordInput.type = "password";
-
-        passwordToggle.textContent = "👁";
-
-        passwordToggle.setAttribute(
-            "aria-label",
-            "Show password"
-        );
-    }
-
-});
+/* =========================================
+   DEVCORE AI
+   REGISTER JAVASCRIPT
+========================================= */
 
 
-/* =========================
-   CONFIRM PASSWORD SHOW / HIDE
-========================= */
-
-const confirmPasswordInput =
-    document.getElementById("confirm-password");
-
-const confirmPasswordToggle =
-    document.getElementById("confirm-password-toggle");
-
-confirmPasswordToggle.addEventListener("click", function () {
-
-    if (confirmPasswordInput.type === "password") {
-
-        confirmPasswordInput.type = "text";
-
-        confirmPasswordToggle.textContent = "🙈";
-
-        confirmPasswordToggle.setAttribute(
-            "aria-label",
-            "Hide password"
-        );
-
-    } else {
-
-        confirmPasswordInput.type = "password";
-
-        confirmPasswordToggle.textContent = "👁";
-
-        confirmPasswordToggle.setAttribute(
-            "aria-label",
-            "Show password"
-        );
-    }
-
-});
-
-
-/* =========================
-   REGISTER FORM
-========================= */
+/* =========================================
+   ELEMENTS
+========================================= */
 
 const registerForm =
-    document.getElementById("register-form");
+    document.getElementById("registerForm");
 
-registerForm.addEventListener("submit", function (event) {
+const fullNameInput =
+    document.getElementById("fullName");
 
-    event.preventDefault();
+const emailInput =
+    document.getElementById("email");
 
-    /* Get values */
+const passwordInput =
+    document.getElementById("password");
 
-    const name =
-        document.getElementById("name").value.trim();
+const confirmPasswordInput =
+    document.getElementById("confirmPassword");
 
-    const email =
-        document.getElementById("email").value.trim();
+const termsInput =
+    document.getElementById("terms");
 
-    const password =
-        document.getElementById("password").value;
+const passwordToggle =
+    document.getElementById("passwordToggle");
 
-    const confirmPassword =
-        document.getElementById("confirm-password").value;
+const confirmPasswordToggle =
+    document.getElementById("confirmPasswordToggle");
 
-    const terms =
-        document.getElementById("terms").checked;
+const registerButton =
+    document.getElementById("registerButton");
+
+const registerButtonText =
+    document.getElementById("registerButtonText");
+
+const statusMessage =
+    document.getElementById("statusMessage");
+
+const nameError =
+    document.getElementById("nameError");
+
+const emailError =
+    document.getElementById("emailError");
+
+const passwordError =
+    document.getElementById("passwordError");
+
+const confirmPasswordError =
+    document.getElementById("confirmPasswordError");
+
+const termsError =
+    document.getElementById("termsError");
 
 
-    /* Error elements */
+/* =========================================
+   STATUS
+========================================= */
 
-    const nameError =
-        document.getElementById("name-error");
+function showStatus(message, type) {
 
-    const emailError =
-        document.getElementById("email-error");
+    statusMessage.textContent = message;
 
-    const passwordError =
-        document.getElementById("password-error");
+    statusMessage.className =
+        "status-message " + type;
 
-    const confirmPasswordError =
-        document.getElementById("confirm-password-error");
-
-    const formMessage =
-        document.getElementById("form-message");
+}
 
 
-    /* Clear previous errors */
+function clearStatus() {
+
+    statusMessage.textContent = "";
+
+    statusMessage.className =
+        "status-message";
+
+}
+
+
+/* =========================================
+   CLEAR ERRORS
+========================================= */
+
+function clearErrors() {
 
     nameError.textContent = "";
+
     emailError.textContent = "";
+
     passwordError.textContent = "";
+
     confirmPasswordError.textContent = "";
 
-    formMessage.textContent = "";
-    formMessage.style.display = "none";
+    termsError.textContent = "";
+
+}
 
 
-    /* =========================
-       VALIDATION
-    ========================== */
+/* =========================================
+   EMAIL VALIDATION
+========================================= */
 
-    let isValid = true;
+function isValidEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+}
 
 
-    /* Name */
+/* =========================================
+   PASSWORD TOGGLE
+========================================= */
 
-    if (name.length < 3) {
+passwordToggle.addEventListener(
+    "click",
+    function () {
 
-        nameError.textContent =
-            "Please enter your full name.";
+        if (passwordInput.type === "password") {
 
-        isValid = false;
+            passwordInput.type = "text";
+
+            passwordToggle.textContent = "🙈";
+
+        } else {
+
+            passwordInput.type = "password";
+
+            passwordToggle.textContent = "👁";
+
+        }
+
     }
+);
 
 
-    /* Email */
+/* =========================================
+   CONFIRM PASSWORD TOGGLE
+========================================= */
 
-    if (!email) {
+confirmPasswordToggle.addEventListener(
+    "click",
+    function () {
 
-        emailError.textContent =
-            "Please enter your email.";
+        if (confirmPasswordInput.type === "password") {
 
-        isValid = false;
+            confirmPasswordInput.type = "text";
+
+            confirmPasswordToggle.textContent = "🙈";
+
+        } else {
+
+            confirmPasswordInput.type = "password";
+
+            confirmPasswordToggle.textContent = "👁";
+
+        }
+
     }
+);
 
 
-    /* Password */
+/* =========================================
+   REGISTER
+========================================= */
 
-    if (password.length < 8) {
+registerForm.addEventListener(
+    "submit",
+    function (event) {
 
-        passwordError.textContent =
-            "Password must contain at least 8 characters.";
+        event.preventDefault();
 
-        isValid = false;
+        clearErrors();
+
+        clearStatus();
+
+
+        const fullName =
+            fullNameInput.value.trim();
+
+        const email =
+            emailInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+        const confirmPassword =
+            confirmPasswordInput.value;
+
+
+        let valid = true;
+
+
+        /* Full Name */
+
+        if (fullName === "") {
+
+            nameError.textContent =
+                "Please enter your full name.";
+
+            valid = false;
+
+        } else if (fullName.length < 2) {
+
+            nameError.textContent =
+                "Please enter a valid name.";
+
+            valid = false;
+
+        }
+
+
+        /* Email */
+
+        if (email === "") {
+
+            emailError.textContent =
+                "Please enter your email address.";
+
+            valid = false;
+
+        } else if (!isValidEmail(email)) {
+
+            emailError.textContent =
+                "Please enter a valid email address.";
+
+            valid = false;
+
+        }
+
+
+        /* Password */
+
+        if (password === "") {
+
+            passwordError.textContent =
+                "Please create a password.";
+
+            valid = false;
+
+        } else if (password.length < 6) {
+
+            passwordError.textContent =
+                "Password must contain at least 6 characters.";
+
+            valid = false;
+
+        }
+
+
+        /* Confirm Password */
+
+        if (confirmPassword === "") {
+
+            confirmPasswordError.textContent =
+                "Please confirm your password.";
+
+            valid = false;
+
+        } else if (password !== confirmPassword) {
+
+            confirmPasswordError.textContent =
+                "Passwords do not match.";
+
+            valid = false;
+
+        }
+
+
+        /* Terms */
+
+        if (!termsInput.checked) {
+
+            termsError.textContent =
+                "Please accept the Terms of Service.";
+
+            valid = false;
+
+        }
+
+
+        if (!valid) {
+
+            return;
+
+        }
+
+
+        /* Loading */
+
+        registerButton.disabled = true;
+
+        registerButtonText.textContent =
+            "Creating account...";
+
+
+        /*
+         * Temporary frontend simulation.
+         *
+         * Firebase authentication will be
+         * connected later.
+         */
+
+        setTimeout(function () {
+
+            showStatus(
+                "Account created successfully!",
+                "success"
+            );
+
+
+            registerButtonText.textContent =
+                "Account created";
+
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1000);
+
+
+        }, 1000);
+
     }
-
-
-    /* Confirm Password */
-
-    if (password !== confirmPassword) {
-
-        confirmPasswordError.textContent =
-            "Passwords do not match.";
-
-        isValid = false;
-    }
-
-
-    /* Terms */
-
-    if (!terms) {
-
-        formMessage.textContent =
-            "Please agree to the Terms of Service and Privacy Policy.";
-
-        formMessage.style.display = "block";
-
-        isValid = false;
-    }
-
-
-    /* Stop if validation failed */
-
-    if (!isValid) {
-        return;
-    }
-
-
-    /* =========================
-       TEMPORARY SUCCESS
-    ========================== */
-
-    formMessage.textContent =
-        "Account created successfully!";
-
-    formMessage.style.display = "block";
-
-
-    /*
-       Backend authentication
-       will be connected later.
-    */
-
-});
+);

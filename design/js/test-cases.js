@@ -1,74 +1,48 @@
-const testInputType = document.getElementById("testInputType");
-const testLanguage = document.getElementById("testLanguage");
 const testInput = document.getElementById("testInput");
 const charCount = document.getElementById("charCount");
 
-const generateTestBtn =
-    document.getElementById("generateTestBtn");
+const generateBtn = document.getElementById("generateBtn");
 
-const testResult =
-    document.getElementById("testResult");
+const loadingSection = document.getElementById("loadingSection");
+const resultsSection = document.getElementById("resultsSection");
 
-const testStatus =
-    document.getElementById("testStatus");
+const testCasesBody = document.getElementById("testCasesBody");
+
+const totalTests = document.getElementById("totalTests");
+const positiveTests = document.getElementById("positiveTests");
+const negativeTests = document.getElementById("negativeTests");
+const coverage = document.getElementById("coverage");
+
+const testingSummary = document.getElementById("testingSummary");
+
+const language = document.getElementById("language");
+const testType = document.getElementById("testType");
 
 
-// ========================================
-// CHARACTER COUNT
-// ========================================
+/* =========================
+   CHARACTER COUNTER
+========================= */
 
 testInput.addEventListener("input", () => {
 
-    charCount.textContent = testInput.value.length;
+    const length = testInput.value.length;
+
+    charCount.textContent = `${length} / 5000 characters`;
 
 });
 
 
-// ========================================
-// CHANGE PLACEHOLDER
-// ========================================
+/* =========================
+   GENERATE TEST CASES
+========================= */
 
-testInputType.addEventListener("change", () => {
-
-    if (testInputType.value === "Requirement") {
-
-        testInput.placeholder =
-            "Enter your software requirement here...\n\nExample:\nThe system should allow users to login using email and password.";
-
-    }
-
-    else {
-
-        testInput.placeholder =
-            "Paste your source code here...";
-
-    }
-
-});
-
-
-// ========================================
-// GENERATE TEST CASES
-// ========================================
-
-generateTestBtn.addEventListener("click", () => {
+generateBtn.addEventListener("click", () => {
 
     const input = testInput.value.trim();
 
-    const inputType = testInputType.value;
+    if (input.length < 10) {
 
-    const language = testLanguage.value;
-
-
-    // ------------------------------------
-    // VALIDATION
-    // ------------------------------------
-
-    if (input === "") {
-
-        alert(
-            "Please enter a requirement or paste your code first."
-        );
+        alert("Please enter a detailed requirement or source code.");
 
         testInput.focus();
 
@@ -76,432 +50,384 @@ generateTestBtn.addEventListener("click", () => {
     }
 
 
-    // ------------------------------------
-    // LOADING STATE
-    // ------------------------------------
+    generateBtn.disabled = true;
 
-    generateTestBtn.disabled = true;
+    loadingSection.classList.add("show");
 
-    generateTestBtn.innerHTML = `
-        <span>⟳</span>
-        Generating...
-    `;
+    resultsSection.classList.remove("show");
 
-    testStatus.textContent = "Analyzing";
-
-
-    testResult.innerHTML = `
-
-        <div class="empty-test">
-
-            <div class="empty-test-icon">
-                ⟳
-            </div>
-
-            <h3>
-                Generating Test Cases...
-            </h3>
-
-            <p>
-                DevCore AI is analyzing your
-                ${inputType.toLowerCase()} and
-                creating meaningful test scenarios.
-            </p>
-
-        </div>
-
-    `;
-
-
-    // ------------------------------------
-    // AI SIMULATION
-    // ------------------------------------
 
     setTimeout(() => {
 
-        testResult.innerHTML = `
+        const testCases = generateDemoTestCases(input);
 
-            <div class="generated-tests">
+        displayTestCases(testCases);
 
+        loadingSection.classList.remove("show");
 
-                <!-- SUMMARY -->
+        resultsSection.classList.add("show");
 
-                <div class="test-summary">
+        generateBtn.disabled = false;
 
-                    <div>
+        resultsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-                        <span class="summary-label">
-                            Test Cases Generated
-                        </span>
-
-                        <h2>
-                            6 Test Cases
-                        </h2>
-
-                    </div>
-
-                    <span class="summary-badge">
-                        ${language}
-                    </span>
-
-                </div>
-
-
-                <!-- TEST CASE 1 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-001
-                            </span>
-
-                            <h3>
-                                Valid Input Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority high">
-                            High
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify that the system works correctly
-                            with valid input.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Valid and correctly formatted data.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should process the input
-                            successfully and display the expected output.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEST CASE 2 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-002
-                            </span>
-
-                            <h3>
-                                Empty Input Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority high">
-                            High
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify how the system handles empty input.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Empty or blank input.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should display a suitable
-                            validation message instead of processing
-                            the empty input.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEST CASE 3 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-003
-                            </span>
-
-                            <h3>
-                                Invalid Input Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority high">
-                            High
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify that invalid or incorrectly formatted
-                            data is handled properly.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Invalid data or incorrect format.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should reject the invalid input
-                            and display an appropriate error message.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEST CASE 4 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-004
-                            </span>
-
-                            <h3>
-                                Boundary Value Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority medium">
-                            Medium
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify system behavior at minimum and
-                            maximum acceptable input values.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Minimum and maximum boundary values.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should correctly process valid
-                            boundary values without errors.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEST CASE 5 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-005
-                            </span>
-
-                            <h3>
-                                Special Character Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority medium">
-                            Medium
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify how the application handles
-                            special characters.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Special characters such as
-                            @, #, %, &, or symbols.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should safely handle the
-                            input without crashing.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TEST CASE 6 -->
-
-                <div class="test-case">
-
-                    <div class="test-case-header">
-
-                        <div>
-
-                            <span class="test-id">
-                                TC-006
-                            </span>
-
-                            <h3>
-                                Large Input Test
-                            </h3>
-
-                        </div>
-
-                        <span class="priority low">
-                            Low
-                        </span>
-
-                    </div>
-
-                    <div class="test-details">
-
-                        <p>
-                            <strong>Test Description:</strong>
-                            Verify the system behavior when a large
-                            amount of data is provided.
-                        </p>
-
-                        <p>
-                            <strong>Input:</strong>
-                            Large input exceeding normal usage.
-                        </p>
-
-                        <p>
-                            <strong>Expected Result:</strong>
-                            The system should handle the input
-                            efficiently without crashing or freezing.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- AI RECOMMENDATION -->
-
-                <div class="test-recommendation">
-
-                    <h3>
-                        💡 AI Testing Recommendation
-                    </h3>
-
-                    <p>
-                        DevCore AI recommends combining functional,
-                        negative, and boundary testing to improve
-                        test coverage and identify unexpected
-                        application behavior.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        `;
-
-
-        // ------------------------------------
-        // UPDATE STATUS
-        // ------------------------------------
-
-        testStatus.textContent = "Completed";
-
-
-        // ------------------------------------
-        // RESTORE BUTTON
-        // ------------------------------------
-
-        generateTestBtn.disabled = false;
-
-        generateTestBtn.innerHTML = `
-            <span>✦</span>
-            Generate Test Cases
-        `;
-
-
-        // ------------------------------------
-        // CONSOLE
-        // ------------------------------------
-
-        console.log(
-            "Test Case Generation Completed"
-        );
-
-        console.log(
-            "Input Type:",
-            inputType
-        );
-
-        console.log(
-            "Language:",
-            language
-        );
-
-        console.log(
-            "Input:",
-            input
-        );
-
-
-    }, 1500);
+    }, 1800);
 
 });
+
+
+/* =========================
+   DEMO TEST GENERATOR
+========================= */
+
+function generateDemoTestCases(input) {
+
+    const text = input.toLowerCase();
+
+    const cases = [];
+
+
+    /*
+       LOGIN
+    */
+
+    if (
+        text.includes("login") ||
+        text.includes("password") ||
+        text.includes("email")
+    ) {
+
+        cases.push(
+            {
+                id: "TC-001",
+                test: "Login with valid credentials",
+                input: "Valid email and valid password",
+                expected: "User should be successfully logged in",
+                priority: "High",
+                type: "positive"
+            },
+
+            {
+                id: "TC-002",
+                test: "Login with invalid password",
+                input: "Valid email and incorrect password",
+                expected: "System should display an error message",
+                priority: "High",
+                type: "negative"
+            },
+
+            {
+                id: "TC-003",
+                test: "Login with invalid email",
+                input: "Unregistered email address",
+                expected: "System should reject the login attempt",
+                priority: "High",
+                type: "negative"
+            },
+
+            {
+                id: "TC-004",
+                test: "Login with empty fields",
+                input: "Email and password are empty",
+                expected: "Validation message should be displayed",
+                priority: "Medium",
+                type: "negative"
+            }
+        );
+
+    }
+
+
+    /*
+       REGISTRATION
+    */
+
+    if (
+        text.includes("register") ||
+        text.includes("registration") ||
+        text.includes("signup")
+    ) {
+
+        cases.push(
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Register with valid information",
+                input: "Valid name, email and password",
+                expected: "New user account should be created",
+                priority: "High",
+                type: "positive"
+            },
+
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Register with existing email",
+                input: "Email already registered",
+                expected: "System should show account already exists message",
+                priority: "Medium",
+                type: "negative"
+            }
+        );
+
+    }
+
+
+    /*
+       PAYMENT
+    */
+
+    if (
+        text.includes("payment") ||
+        text.includes("transaction") ||
+        text.includes("checkout")
+    ) {
+
+        cases.push(
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Complete payment successfully",
+                input: "Valid payment details",
+                expected: "Payment should be processed successfully",
+                priority: "High",
+                type: "positive"
+            },
+
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Payment with invalid details",
+                input: "Invalid card or payment information",
+                expected: "Payment should be rejected",
+                priority: "High",
+                type: "negative"
+            }
+        );
+
+    }
+
+
+    /*
+       SEARCH
+    */
+
+    if (
+        text.includes("search") ||
+        text.includes("find")
+    ) {
+
+        cases.push(
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Search with valid keyword",
+                input: "Enter a valid search keyword",
+                expected: "Relevant search results should be displayed",
+                priority: "Medium",
+                type: "positive"
+            },
+
+            {
+                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
+                test: "Search with empty keyword",
+                input: "Empty search field",
+                expected: "Validation message should be displayed",
+                priority: "Low",
+                type: "negative"
+            }
+        );
+
+    }
+
+
+    /*
+       DEFAULT CASES
+    */
+
+    if (cases.length === 0) {
+
+        cases.push(
+            {
+                id: "TC-001",
+                test: "Verify valid input",
+                input: "Enter valid input data",
+                expected: "System should process the input successfully",
+                priority: "High",
+                type: "positive"
+            },
+
+            {
+                id: "TC-002",
+                test: "Verify invalid input",
+                input: "Enter invalid input data",
+                expected: "System should display an appropriate error message",
+                priority: "High",
+                type: "negative"
+            },
+
+            {
+                id: "TC-003",
+                test: "Verify empty input",
+                input: "Leave required fields empty",
+                expected: "System should display validation messages",
+                priority: "Medium",
+                type: "negative"
+            },
+
+            {
+                id: "TC-004",
+                test: "Verify normal system operation",
+                input: "Provide valid data according to requirements",
+                expected: "System should perform the expected operation",
+                priority: "Medium",
+                type: "positive"
+            },
+
+            {
+                id: "TC-005",
+                test: "Verify boundary condition",
+                input: "Provide minimum or maximum allowed value",
+                expected: "System should handle the boundary value correctly",
+                priority: "Low",
+                type: "positive"
+            }
+        );
+
+    }
+
+
+    return cases;
+}
+
+
+/* =========================
+   DISPLAY TEST CASES
+========================= */
+
+function displayTestCases(cases) {
+
+    testCasesBody.innerHTML = "";
+
+    let positive = 0;
+    let negative = 0;
+
+
+    cases.forEach(testCase => {
+
+        if (testCase.type === "positive") {
+            positive++;
+        }
+
+        if (testCase.type === "negative") {
+            negative++;
+        }
+
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>
+                <span class="test-id">${testCase.id}</span>
+            </td>
+
+            <td>
+                ${escapeHTML(testCase.test)}
+            </td>
+
+            <td>
+                ${escapeHTML(testCase.input)}
+            </td>
+
+            <td>
+                ${escapeHTML(testCase.expected)}
+            </td>
+
+            <td>
+                <span class="priority ${testCase.priority.toLowerCase()}">
+                    ${testCase.priority}
+                </span>
+            </td>
+        `;
+
+        testCasesBody.appendChild(row);
+
+    });
+
+
+    const total = cases.length;
+
+    const coverageValue = Math.min(
+        98,
+        70 + (total * 4)
+    );
+
+
+    totalTests.textContent = total;
+
+    positiveTests.textContent = positive;
+
+    negativeTests.textContent = negative;
+
+    coverage.textContent = `${coverageValue}%`;
+
+
+    displayTestingSummary(
+        total,
+        positive,
+        negative,
+        coverageValue
+    );
+}
+
+
+/* =========================
+   TESTING SUMMARY
+========================= */
+
+function displayTestingSummary(
+    total,
+    positive,
+    negative,
+    coverageValue
+) {
+
+    const selectedLanguage =
+        language.options[language.selectedIndex].text;
+
+    const selectedType =
+        testType.options[testType.selectedIndex].text;
+
+
+    testingSummary.innerHTML = `
+
+        <p>
+            DevCore AI generated
+            <strong>${total} test cases</strong>
+            using ${selectedType}.
+            The selected programming language is
+            <strong>${selectedLanguage}</strong>.
+        </p>
+
+        <ul>
+            <li>${positive} positive test cases were generated.</li>
+            <li>${negative} negative and validation test cases were generated.</li>
+            <li>Estimated requirement coverage is ${coverageValue}%.</li>
+            <li>Test cases should be reviewed and updated according to the final system implementation.</li>
+        </ul>
+
+    `;
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value) {
+
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}

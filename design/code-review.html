@@ -7,6 +7,14 @@
 
     <title>Code Review | DevCore AI</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="css/code-review.css">
 </head>
 
@@ -16,67 +24,71 @@
 
     <aside class="sidebar">
 
-        <div class="logo">
+        <div class="sidebar-logo">
             <div class="logo-icon">✦</div>
             <span>DevCore AI</span>
         </div>
 
-
         <nav class="sidebar-nav">
 
+            <p class="nav-section-title">MAIN</p>
+
             <a href="dashboard.html" class="nav-item">
-                <span>⌂</span>
-                Dashboard
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
             </a>
 
             <a href="requirement.html" class="nav-item">
-                <span>▤</span>
-                Requirement Analysis
+                <span class="nav-icon">⌕</span>
+                <span>Requirement Analysis</span>
             </a>
 
             <a href="code-generation.html" class="nav-item">
-                <span>&lt;/&gt;</span>
-                Code Generation
+                <span class="nav-icon">&lt;/&gt;</span>
+                <span>Code Generation</span>
             </a>
 
             <a href="code-debugging.html" class="nav-item">
-                <span>⚙</span>
-                Code Debugging
+                <span class="nav-icon">⚙</span>
+                <span>Code Debugging</span>
             </a>
 
             <a href="code-review.html" class="nav-item active">
-                <span>✓</span>
-                Code Review
+                <span class="nav-icon">✓</span>
+                <span>Code Review</span>
             </a>
 
             <a href="test-cases.html" class="nav-item">
-                <span>☑</span>
-                Test Cases
+                <span class="nav-icon">□</span>
+                <span>Test Cases</span>
             </a>
 
             <a href="documentation.html" class="nav-item">
-                <span>▧</span>
-                Documentation
+                <span class="nav-icon">▤</span>
+                <span>Documentation</span>
             </a>
+
+            <p class="nav-section-title workspace-title">
+                WORKSPACE
+            </p>
 
             <a href="project-history.html" class="nav-item">
-                <span>◷</span>
-                Project History
-            </a>
-
-            <a href="settings.html" class="nav-item">
-                <span>⚙</span>
-                Settings
+                <span class="nav-icon">◷</span>
+                <span>Project History</span>
             </a>
 
         </nav>
 
-
         <div class="sidebar-bottom">
 
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
             <a href="login.html" class="nav-item logout">
-                <span>↪</span>
-                Logout
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
             </a>
 
         </div>
@@ -84,45 +96,59 @@
     </aside>
 
 
-    <!-- ================= MAIN AREA ================= -->
+    <!-- ================= MAIN CONTENT ================= -->
 
     <main class="main-content">
 
-
         <!-- TOP NAVBAR -->
 
-        <header class="topbar">
+        <header class="top-navbar">
 
-            <div class="page-title">
+            <div class="topbar-title">
 
                 <h2>Code Review</h2>
 
                 <p>
-                    Analyze your code and improve its quality
+                    Analyze code quality, security, and maintainability
                 </p>
 
             </div>
 
+            <div class="mobile-page-name">
+                Code Review
+            </div>
 
             <div class="topbar-right">
 
-                <button class="notification-btn">
+                <button
+                    class="notification-btn"
+                    title="Notifications"
+                >
                     🔔
+                    <span class="notification-dot"></span>
                 </button>
 
                 <div class="profile">
 
-                    <div class="avatar">
-                        A
+                    <div class="profile-avatar">
+                        U
                     </div>
 
                     <div class="profile-info">
 
-                        <strong>Adlin</strong>
+                        <span class="profile-name">
+                            User
+                        </span>
 
-                        <span>Developer</span>
+                        <span class="profile-role">
+                            Developer
+                        </span>
 
                     </div>
+
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
 
                 </div>
 
@@ -131,55 +157,66 @@
         </header>
 
 
-        <!-- ================= WORKSPACE ================= -->
+        <!-- ================= PAGE CONTENT ================= -->
 
-        <section class="workspace">
+        <section class="page-content">
 
+            <div class="page-heading">
 
-            <!-- INTRO -->
+                <h1>
+                    Code Review
+                </h1>
 
-            <div class="review-intro">
-
-                <div>
-
-                    <h1>
-                        Improve Your Code Quality
-                    </h1>
-
-                    <p>
-                        Paste your code below and let DevCore AI
-                        analyze quality, security, performance,
-                        and best practices.
-                    </p>
-
-                </div>
+                <p>
+                    Review your code for quality, security, performance, and maintainability.
+                </p>
 
             </div>
 
 
-            <!-- CODE INPUT CARD -->
+            <!-- ================= REVIEW CARD ================= -->
 
             <div class="review-card">
 
+                <div class="review-card-header">
 
-                <!-- LANGUAGE -->
+                    <div class="review-card-icon">
+                        ✓
+                    </div>
 
-                <div class="review-controls">
+                    <div>
 
-                    <div class="control-group">
+                        <h2>
+                            Review Your Code
+                        </h2>
 
-                        <label for="reviewLanguage">
-                            Programming Language
+                        <p>
+                            Paste your source code and let DevCore AI analyze it.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CODE INPUT -->
+
+                <div class="code-input-area">
+
+                    <div class="input-header">
+
+                        <label for="codeInput">
+                            Source Code
                         </label>
 
-                        <select id="reviewLanguage">
-
-                            <option value="Java">
-                                Java
-                            </option>
+                        <select id="language">
 
                             <option value="Python">
                                 Python
+                            </option>
+
+                            <option value="Java">
+                                Java
                             </option>
 
                             <option value="JavaScript">
@@ -198,183 +235,334 @@
 
                     </div>
 
-                </div>
-
-
-                <!-- CODE EDITOR -->
-
-                <div class="code-editor">
-
-                    <div class="editor-header">
-
-                        <span class="editor-file-name">
-                            your-code.java
-                        </span>
-
-                        <span class="editor-language">
-                            JAVA
-                        </span>
-
-                    </div>
-
-
                     <textarea
-                        id="reviewCode"
-                        placeholder="Paste your code here..."
+                        id="codeInput"
                         spellcheck="false"
+                        placeholder="Paste your code here..."
                     ></textarea>
 
                 </div>
 
 
-                <!-- REVIEW BUTTON -->
+                <!-- REVIEW OPTIONS -->
 
-                <button
-                    id="reviewBtn"
-                    class="review-btn"
-                >
+                <div class="review-options">
 
-                    <span>✦</span>
+                    <label class="checkbox-option">
 
-                    Review Code
+                        <input
+                            type="checkbox"
+                            id="qualityCheck"
+                            checked
+                        >
 
-                </button>
+                        <span>
+                            Code Quality
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkbox-option">
+
+                        <input
+                            type="checkbox"
+                            id="securityCheck"
+                            checked
+                        >
+
+                        <span>
+                            Security
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkbox-option">
+
+                        <input
+                            type="checkbox"
+                            id="performanceCheck"
+                            checked
+                        >
+
+                        <span>
+                            Performance
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkbox-option">
+
+                        <input
+                            type="checkbox"
+                            id="maintainabilityCheck"
+                            checked
+                        >
+
+                        <span>
+                            Maintainability
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="review-action">
+
+                    <button id="reviewBtn">
+
+                        <span>✓</span>
+
+                        <span>
+                            Review Code
+                        </span>
+
+                    </button>
+
+                </div>
 
             </div>
 
 
-            <!-- ================= REVIEW RESULT ================= -->
+            <!-- ================= LOADING ================= -->
 
-            <div class="result-card">
+            <div
+                id="loadingSection"
+                class="loading-section"
+            >
 
-                <div class="result-header">
+                <div class="loading-spinner"></div>
+
+                <div>
+
+                    <h3>
+                        Reviewing code...
+                    </h3>
+
+                    <p>
+                        DevCore AI is analyzing your code quality and security.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESULTS ================= -->
+
+            <div
+                id="resultsSection"
+                class="results-section"
+            >
+
+                <div class="results-heading">
 
                     <div>
 
                         <h2>
-                            AI Code Review
+                            Code Review Results
                         </h2>
 
                         <p>
-                            Review results will appear here
+                            AI-generated analysis of your source code
                         </p>
 
                     </div>
 
-                    <span class="review-status">
-                        Ready
+                    <span class="analysis-status">
+                        Review Complete
                     </span>
 
                 </div>
 
 
-                <div
-                    id="reviewResult"
-                    class="review-result"
-                >
+                <!-- SUMMARY -->
 
-                    <div class="empty-review">
+                <div class="summary-grid">
 
-                        <div class="empty-icon">
-                            ✓
+                    <div class="summary-card">
+
+                        <span class="summary-label">
+                            Quality
+                        </span>
+
+                        <strong id="qualityScore">
+                            85%
+                        </strong>
+
+                        <span class="summary-description">
+                            Good
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-label">
+                            Security
+                        </span>
+
+                        <strong id="securityScore">
+                            90%
+                        </strong>
+
+                        <span class="summary-description">
+                            Good
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-label">
+                            Performance
+                        </span>
+
+                        <strong id="performanceScore">
+                            80%
+                        </strong>
+
+                        <span class="summary-description">
+                            Good
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-label">
+                            Maintainability
+                        </span>
+
+                        <strong id="maintainabilityScore">
+                            88%
+                        </strong>
+
+                        <span class="summary-description">
+                            Good
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FINDINGS -->
+
+                <div class="result-card">
+
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon issue-icon">
+                                !
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Review Findings
+                                </h3>
+
+                                <p>
+                                    Issues and observations identified in the code
+                                </p>
+
+                            </div>
+
                         </div>
 
-                        <h3>
-                            No Review Available
-                        </h3>
+                    </div>
 
-                        <p>
-                            Submit your code to receive
-                            AI-powered quality and security
-                            recommendations.
-                        </p>
+                    <div
+                        id="reviewFindings"
+                        class="result-content"
+                    ></div>
+
+                </div>
+
+
+                <!-- RECOMMENDATIONS -->
+
+                <div class="result-card">
+
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon recommendation-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Recommendations
+                                </h3>
+
+                                <p>
+                                    Suggestions to improve the code
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
+
+                    <div
+                        id="recommendations"
+                        class="result-content"
+                    ></div>
+
+                </div>
+
+
+                <!-- REVIEW SUMMARY -->
+
+                <div class="result-card">
+
+                    <div class="result-card-header">
+
+                        <div class="result-title">
+
+                            <div class="result-icon summary-icon">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Review Summary
+                                </h3>
+
+                                <p>
+                                    Overall observations from the AI review
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="reviewSummary"
+                        class="result-content"
+                    ></div>
 
                 </div>
 
             </div>
-
-
-            <!-- ================= FEATURE CARDS ================= -->
-
-            <div class="feature-grid">
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon">
-                        ✓
-                    </div>
-
-                    <h3>
-                        Code Quality
-                    </h3>
-
-                    <p>
-                        Analyze readability, structure,
-                        and maintainability.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon">
-                        🔒
-                    </div>
-
-                    <h3>
-                        Security Analysis
-                    </h3>
-
-                    <p>
-                        Identify potential security
-                        vulnerabilities in your code.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon">
-                        ⚡
-                    </div>
-
-                    <h3>
-                        Performance
-                    </h3>
-
-                    <p>
-                        Find inefficient code and
-                        performance improvement areas.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-box">
-
-                    <div class="feature-icon">
-                        ★
-                    </div>
-
-                    <h3>
-                        Best Practices
-                    </h3>
-
-                    <p>
-                        Get recommendations based on
-                        programming best practices.
-                    </p>
-
-                </div>
-
-
-            </div>
-
 
         </section>
 

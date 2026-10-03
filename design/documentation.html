@@ -4,382 +4,496 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Documentation Generation - DevCore AI</title>
+    <title>Documentation | DevCore AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="css/documentation.css">
 </head>
 
 <body>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
+<!-- ================= SIDEBAR ================= -->
 
-        <div class="logo">
-            <div class="logo-icon">D</div>
-            <div>
-                <h2>DevCore</h2>
-            </div>
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <div class="logo-icon">✦</div>
+        <span>DevCore AI</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <p class="nav-section-title">MAIN</p>
+
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">⌂</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="requirement.html" class="nav-item">
+            <span class="nav-icon">⌕</span>
+            <span>Requirement Analysis</span>
+        </a>
+
+        <a href="code-generation.html" class="nav-item">
+            <span class="nav-icon">&lt;/&gt;</span>
+            <span>Code Generation</span>
+        </a>
+
+        <a href="code-debugging.html" class="nav-item">
+            <span class="nav-icon">⚙</span>
+            <span>Code Debugging</span>
+        </a>
+
+        <a href="code-review.html" class="nav-item">
+            <span class="nav-icon">✓</span>
+            <span>Code Review</span>
+        </a>
+
+        <a href="test-cases.html" class="nav-item">
+            <span class="nav-icon">□</span>
+            <span>Test Cases</span>
+        </a>
+
+        <a href="documentation.html" class="nav-item active">
+            <span class="nav-icon">▤</span>
+            <span>Documentation</span>
+        </a>
+
+        <p class="nav-section-title workspace-title">
+            WORKSPACE
+        </p>
+
+        <a href="project-history.html" class="nav-item">
+            <span class="nav-icon">◷</span>
+            <span>Project History</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <a href="settings.html" class="nav-item">
+            <span class="nav-icon">⚙</span>
+            <span>Settings</span>
+        </a>
+
+        <a href="login.html" class="nav-item logout">
+            <span class="nav-icon">↪</span>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-content">
+
+    <!-- TOP NAVBAR -->
+
+    <header class="top-navbar">
+
+        <div class="topbar-title">
+            <h2>Documentation</h2>
+            <p>Generate technical documentation for your software project</p>
         </div>
 
-        <nav class="sidebar-nav">
-
-            <a href="dashboard.html">
-                <span>⌂</span>
-                Dashboard
-            </a>
-
-            <a href="requirement.html">
-                <span>▤</span>
-                Requirement Analysis
-            </a>
-
-            <a href="code-generation.html">
-                <span>&lt;/&gt;</span>
-                Code Generation
-            </a>
-
-            <a href="code-debugging.html">
-                <span>⚙</span>
-                Code Debugging
-            </a>
-
-            <a href="code-review.html">
-                <span>✓</span>
-                Code Review
-            </a>
-
-            <a href="test-cases.html">
-                <span>☑</span>
-                Test Case Generation
-            </a>
-
-            <a href="documentation.html" class="active">
-                <span>▧</span>
-                Documentation
-            </a>
-
-            <a href="project-history.html">
-                <span>◫</span>
-                Project History
-            </a>
-
-            <a href="settings.html">
-                <span>⚙</span>
-                Settings
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-            <a href="login.html" id="logoutBtn">
-                <span>↪</span>
-                Logout
-            </a>
+        <div class="mobile-page-name">
+            Documentation
         </div>
 
-    </aside>
+        <div class="topbar-right">
 
+            <button class="notification-btn" title="Notifications">
+                🔔
+                <span class="notification-dot"></span>
+            </button>
 
-    <!-- Main Content -->
-    <main class="main-content">
+            <div class="profile">
 
-        <!-- Top Navbar -->
-        <header class="topbar">
-
-            <div class="topbar-left">
-                <h3>Documentation Generation</h3>
-            </div>
-
-            <div class="topbar-right">
-
-                <button class="notification-btn">🔔</button>
-
-                <div class="profile">
-                    <div class="profile-avatar">A</div>
-
-                    <div class="profile-info">
-                        <strong>Adlin</strong>
-                        <span>Developer</span>
-                    </div>
+                <div class="profile-avatar">
+                    U
                 </div>
 
+                <div class="profile-info">
+                    <span class="profile-name">User</span>
+                    <span class="profile-role">Developer</span>
+                </div>
+
+                <span class="profile-arrow">⌄</span>
+
             </div>
 
-        </header>
+        </div>
+
+    </header>
 
 
-        <!-- Page Content -->
-        <section class="page-content">
+    <!-- ================= PAGE CONTENT ================= -->
 
-            <div class="page-heading">
+    <section class="page-content">
+
+        <div class="page-heading">
+
+            <h1>Documentation</h1>
+
+            <p>
+                Generate clear and structured technical documentation
+                from your requirements or source code.
+            </p>
+
+        </div>
+
+
+        <!-- ================= INPUT CARD ================= -->
+
+        <div class="documentation-card">
+
+            <div class="documentation-card-header">
+
+                <div class="documentation-card-icon">
+                    ▤
+                </div>
+
                 <div>
-                    <h1>Generate Technical Documentation</h1>
+
+                    <h2>Documentation Generator</h2>
 
                     <p>
-                        Create clear and structured documentation from your
-                        software requirements or source code.
+                        Enter your project details or source code
+                        to generate documentation
                     </p>
-                </div>
-            </div>
-
-
-            <!-- Documentation Generator -->
-            <div class="documentation-card">
-
-                <div class="card-header">
-                    <div>
-                        <h2>Documentation Generator</h2>
-
-                        <p>
-                            Provide your requirement or source code and
-                            select the type of documentation you need.
-                        </p>
-                    </div>
-                </div>
-
-
-                <!-- Options -->
-                <div class="form-row">
-
-                    <div class="form-group">
-
-                        <label for="docInputType">
-                            Input Type
-                        </label>
-
-                        <select id="docInputType">
-
-                            <option value="requirement">
-                                Software Requirement
-                            </option>
-
-                            <option value="code">
-                                Source Code
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="documentationType">
-                            Documentation Type
-                        </label>
-
-                        <select id="documentationType">
-
-                            <option value="readme">
-                                README Documentation
-                            </option>
-
-                            <option value="api">
-                                API Documentation
-                            </option>
-
-                            <option value="code">
-                                Code Documentation
-                            </option>
-
-                            <option value="setup">
-                                Setup / Deployment Guide
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="docLanguage">
-                            Programming Language
-                        </label>
-
-                        <select id="docLanguage">
-
-                            <option value="Java">
-                                Java
-                            </option>
-
-                            <option value="Python">
-                                Python
-                            </option>
-
-                            <option value="JavaScript">
-                                JavaScript
-                            </option>
-
-                            <option value="C">
-                                C
-                            </option>
-
-                            <option value="C++">
-                                C++
-                            </option>
-
-                        </select>
-
-                    </div>
 
                 </div>
-
-
-                <!-- Input -->
-                <div class="form-group full-width">
-
-                    <label for="documentationInput">
-                        Requirement / Source Code
-                    </label>
-
-                    <textarea
-                        id="documentationInput"
-                        maxlength="5000"
-                        placeholder="Enter your software requirement here..."
-                    ></textarea>
-
-                    <div class="character-count">
-                        <span id="docCharCount">0</span> / 5000
-                    </div>
-
-                </div>
-
-
-                <!-- Generate Button -->
-                <button
-                    id="generateDocumentationBtn"
-                    class="generate-btn"
-                >
-                    <span>✨</span>
-                    Generate Documentation
-                </button>
 
             </div>
 
 
-            <!-- Result -->
-            <div
-                class="documentation-result"
-                id="documentationResult"
-            >
+            <div class="input-area">
 
-                <div class="result-header">
+                <label for="documentationInput">
+                    Requirements / Source Code
+                </label>
 
-                    <div>
-                        <h2>Generated Documentation</h2>
+                <textarea
+                    id="documentationInput"
+                    maxlength="5000"
+                    placeholder="Describe your software project or paste your source code here...
 
-                        <p>
-                            AI-generated technical documentation will appear
-                            here.
-                        </p>
-                    </div>
+Example:
+Create a login system where users can register, login using email and password, and receive an error message for invalid credentials."
+                ></textarea>
 
-                    <span
-                        class="status-badge"
-                        id="documentationStatus"
-                    >
-                        Ready
+                <div class="input-bottom">
+
+                    <span id="charCount">
+                        0 / 5000 characters
+                    </span>
+
+                    <span class="input-tip">
+                        Provide detailed project information for better documentation
                     </span>
 
                 </div>
 
+            </div>
 
-                <!-- Empty State -->
-                <div
-                    class="documentation-empty"
-                    id="documentationEmpty"
-                >
 
-                    <div class="empty-icon">📄</div>
+            <!-- DOCUMENTATION TYPE -->
 
-                    <h3>No Documentation Generated Yet</h3>
+            <div class="documentation-options">
 
-                    <p>
-                        Enter your requirement or source code above and
-                        click "Generate Documentation".
-                    </p>
+                <div class="option-group">
+
+                    <label for="documentationType">
+                        Documentation Type
+                    </label>
+
+                    <select id="documentationType">
+
+                        <option value="project">
+                            Project Documentation
+                        </option>
+
+                        <option value="readme">
+                            README
+                        </option>
+
+                        <option value="api">
+                            API Documentation
+                        </option>
+
+                        <option value="technical">
+                            Technical Documentation
+                        </option>
+
+                        <option value="code">
+                            Code Documentation
+                        </option>
+
+                    </select>
 
                 </div>
 
 
-                <!-- Generated Documentation -->
-                <div
-                    class="generated-documentation"
-                    id="generatedDocumentation"
-                >
+                <div class="option-group">
+
+                    <label for="language">
+                        Programming Language
+                    </label>
+
+                    <select id="language">
+
+                        <option value="general">
+                            General
+                        </option>
+
+                        <option value="python">
+                            Python
+                        </option>
+
+                        <option value="java">
+                            Java
+                        </option>
+
+                        <option value="javascript">
+                            JavaScript
+                        </option>
+
+                        <option value="cpp">
+                            C++
+                        </option>
+
+                        <option value="c">
+                            C
+                        </option>
+
+                    </select>
 
                 </div>
 
             </div>
 
 
-            <!-- Features -->
-            <div class="feature-grid">
+            <div class="documentation-action">
 
-                <div class="feature-card">
+                <button id="generateBtn">
 
-                    <div class="feature-icon">📘</div>
+                    <span>✦</span>
 
-                    <h3>README</h3>
+                    <span>
+                        Generate Documentation
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= LOADING ================= -->
+
+        <div id="loadingSection" class="loading-section">
+
+            <div class="loading-spinner"></div>
+
+            <div>
+
+                <h3>
+                    Generating documentation...
+                </h3>
+
+                <p>
+                    DevCore AI is analyzing your project and preparing documentation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= RESULTS ================= -->
+
+        <div id="resultsSection" class="results-section">
+
+            <div class="results-heading">
+
+                <div>
+
+                    <h2>
+                        Generated Documentation
+                    </h2>
 
                     <p>
-                        Generate structured project README files
-                        automatically.
+                        Structured documentation generated from your project input
                     </p>
 
                 </div>
 
+                <div class="result-actions">
 
-                <div class="feature-card">
+                    <span class="analysis-status">
+                        Generation Complete
+                    </span>
 
-                    <div class="feature-icon">🔗</div>
-
-                    <h3>API Documentation</h3>
-
-                    <p>
-                        Create clear documentation for APIs,
-                        endpoints, parameters and responses.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-card">
-
-                    <div class="feature-icon">💻</div>
-
-                    <h3>Code Documentation</h3>
-
-                    <p>
-                        Generate explanations for functions,
-                        classes and important code sections.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-card">
-
-                    <div class="feature-icon">🚀</div>
-
-                    <h3>Setup Guide</h3>
-
-                    <p>
-                        Generate installation, configuration and
-                        deployment instructions.
-                    </p>
+                    <button id="copyBtn" class="copy-btn">
+                        Copy
+                    </button>
 
                 </div>
 
             </div>
 
-        </section>
 
-    </main>
+            <!-- DOCUMENTATION PREVIEW -->
+
+            <div class="result-card">
+
+                <div class="result-card-header">
+
+                    <div class="result-title">
+
+                        <div class="result-icon">
+                            ▤
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Documentation Preview
+                            </h3>
+
+                            <p>
+                                Generated project documentation
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-    <script src="js/documentation.js"></script>
+                <div
+                    id="documentationOutput"
+                    class="documentation-output"
+                ></div>
+
+            </div>
+
+
+            <!-- DOCUMENTATION SECTIONS -->
+
+            <div class="documentation-sections">
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        #
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Project Overview
+                        </h3>
+
+                        <p>
+                            Description of the project,
+                            purpose, and main functionality.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        ⚙
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            System Features
+                        </h3>
+
+                        <p>
+                            Major features and capabilities
+                            implemented by the system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Technical Details
+                        </h3>
+
+                        <p>
+                            Technologies, modules, and implementation
+                            information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="section-card">
+
+                    <div class="section-icon">
+                        ▶
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Setup & Usage
+                        </h3>
+
+                        <p>
+                            Instructions for installing,
+                            configuring, and using the project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/documentation.js"></script>
 
 </body>
 </html>

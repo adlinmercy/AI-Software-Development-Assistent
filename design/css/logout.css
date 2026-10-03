@@ -1,0 +1,212 @@
+/* ================================
+   DEVCORE AI - LOGOUT
+   ================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+
+    min-height: 100vh;
+
+    background: #f8fafc;
+
+    color: #0f172a;
+}
+
+
+/* ================================
+   CONTAINER
+   ================================ */
+
+.logout-container {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+/* ================================
+   CARD
+   ================================ */
+
+.logout-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+
+/* ================================
+   LOGO
+   ================================ */
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-bottom: 35px;
+
+    color: #0f172a;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #2563eb;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+}
+
+
+/* ================================
+   LOGOUT ICON
+   ================================ */
+
+.logout-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    border-radius: 50%;
+
+    color: #2563eb;
+
+    font-size: 25px;
+}
+
+
+/* ================================
+   TEXT
+   ================================ */
+
+.logout-card h1 {
+    font-size: 20px;
+    font-weight: 650;
+
+    color: #0f172a;
+
+    margin-bottom: 10px;
+}
+
+.logout-card p {
+    color: #64748b;
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    margin-bottom: 28px;
+}
+
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+.logout-actions {
+    display: flex;
+
+    gap: 10px;
+}
+
+.cancel-btn,
+.logout-btn {
+    flex: 1;
+
+    height: 40px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.cancel-btn {
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+
+    color: #334155;
+}
+
+.cancel-btn:hover {
+    background: #f8fafc;
+}
+
+.logout-btn {
+    background: #2563eb;
+
+    border: 1px solid #2563eb;
+
+    color: #ffffff;
+}
+
+.logout-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 500px) {
+
+    .logout-card {
+        padding: 30px 22px;
+    }
+
+    .logout-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .logout-btn {
+        width: 100%;
+    }
+}

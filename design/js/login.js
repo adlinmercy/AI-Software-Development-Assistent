@@ -3,6 +3,28 @@
    LOGIN JAVASCRIPT
 ========================================= */
 
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    sendPasswordResetEmail,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+import { app } from "./firebase-config.js";
+
+
+/* =========================================
+   FIREBASE AUTH
+========================================= */
+
+const auth = getAuth(app);
+
+const googleProvider = new GoogleAuthProvider();
+
 
 /* =========================================
    ELEMENTS
@@ -12,9 +34,11 @@ const loginForm = document.getElementById("loginForm");
 
 const emailInput = document.getElementById("email");
 
-const passwordInput = document.getElementById("password");
+const passwordInput =
+    document.getElementById("password");
 
-const rememberMe = document.getElementById("rememberMe");
+const rememberMe =
+    document.getElementById("rememberMe");
 
 const passwordToggle =
     document.getElementById("passwordToggle");
@@ -51,7 +75,6 @@ function showStatus(message, type) {
 
     statusMessage.className =
         "status-message " + type;
-
 }
 
 
@@ -65,7 +88,6 @@ function clearStatus() {
 
     statusMessage.className =
         "status-message";
-
 }
 
 
@@ -78,7 +100,6 @@ function clearErrors() {
     emailError.textContent = "";
 
     passwordError.textContent = "";
-
 }
 
 
@@ -90,6 +111,41 @@ function isValidEmail(email) {
 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+}
+
+
+/* =========================================
+   FIREBASE ERROR MESSAGE
+========================================= */
+
+function getFirebaseErrorMessage(error) {
+
+    switch (error.code) {
+
+        case "auth/invalid-credential":
+            return "Invalid email or password.";
+
+        case "auth/user-not-found":
+            return "No account found with this email.";
+
+        case "auth/wrong-password":
+            return "Incorrect password.";
+
+        case "auth/invalid-email":
+            return "Invalid email address.";
+
+        case "auth/too-many-requests":
+            return "Too many attempts. Please try again later.";
+
+        case "auth/network-request-failed":
+            return "Network error. Please check your internet connection.";
+
+        case "auth/popup-closed-by-user":
+            return "Google sign-in was cancelled.";
+
+        default:
+            return "Something went wrong. Please try again.";
+    }
 }
 
 
@@ -122,7 +178,6 @@ passwordToggle.addEventListener(
                 "aria-label",
                 "Show password"
             );
-
         }
 
     }
@@ -130,17 +185,16 @@ passwordToggle.addEventListener(
 
 
 /* =========================================
-   LOGIN
+   EMAIL / PASSWORD LOGIN
 ========================================= */
 
 loginForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
         clearErrors();
-
         clearStatus();
 
 
@@ -169,7 +223,6 @@ loginForm.addEventListener(
                 "Please enter a valid email address.";
 
             valid = false;
-
         }
 
 
@@ -188,14 +241,11 @@ loginForm.addEventListener(
                 "Password must contain at least 6 characters.";
 
             valid = false;
-
         }
 
 
         if (!valid) {
-
             return;
-
         }
 
 
@@ -207,7 +257,26 @@ loginForm.addEventListener(
             "Signing in...";
 
 
-        setTimeout(function () {
+        try {
+
+            /* Remember Me */
+
+            await setPersistence(
+                auth,
+                rememberMe.checked
+                    ? browserLocalPersistence
+                    : browserSessionPersistence
+            );
+
+
+            /* Firebase Login */
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
 
             showStatus(
                 "Login successful. Welcome to DevCore AI!",
@@ -219,14 +288,9 @@ loginForm.addEventListener(
                 "Signed in";
 
 
-            /*
-             * Temporary navigation.
-             *
-             * Later this will be replaced
-             * with real authentication.
-             */
+            /* Go to Dashboard */
 
-            setTimeout(function () {
+            setTimeout(() => {
 
                 window.location.href =
                     "dashboard.html";
@@ -234,7 +298,20 @@ loginForm.addEventListener(
             }, 800);
 
 
-        }, 1000);
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                getFirebaseErrorMessage(error),
+                "error"
+            );
+
+            loginButton.disabled = false;
+
+            loginButtonText.textContent =
+                "Sign in";
+        }
 
     }
 );
@@ -246,14 +323,66 @@ loginForm.addEventListener(
 
 forgotPassword.addEventListener(
     "click",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
-        showStatus(
-            "Password reset will be available after authentication is connected.",
-            "error"
-        );
+        clearErrors();
+        clearStatus();
+
+
+        const email =
+            emailInput.value.trim();
+
+
+        if (email === "") {
+
+            showStatus(
+                "Enter your email address first.",
+                "error"
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        if (!isValidEmail(email)) {
+
+            showStatus(
+                "Please enter a valid email address.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            await sendPasswordResetEmail(
+                auth,
+                email
+            );
+
+
+            showStatus(
+                "Password reset email sent. Check your inbox.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                getFirebaseErrorMessage(error),
+                "error"
+            );
+
+        }
 
     }
 );
@@ -265,12 +394,58 @@ forgotPassword.addEventListener(
 
 googleButton.addEventListener(
     "click",
-    function () {
+    async function () {
 
-        showStatus(
-            "Google sign-in will be connected later.",
-            "error"
-        );
+        clearErrors();
+        clearStatus();
+
+
+        googleButton.disabled = true;
+
+        googleButton.textContent =
+            "Signing in with Google...";
+
+
+        try {
+
+            await signInWithPopup(
+                auth,
+                googleProvider
+            );
+
+
+            showStatus(
+                "Google sign-in successful!",
+                "success"
+            );
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 800);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                getFirebaseErrorMessage(error),
+                "error"
+            );
+
+
+            googleButton.disabled = false;
+
+            googleButton.innerHTML = `
+                <span class="google-icon">G</span>
+                Continue with Google
+            `;
+
+        }
 
     }
 );
@@ -284,19 +459,10 @@ rememberMe.addEventListener(
     "change",
     function () {
 
-        if (rememberMe.checked) {
-
-            console.log(
-                "Remember me enabled"
-            );
-
-        } else {
-
-            console.log(
-                "Remember me disabled"
-            );
-
-        }
+        console.log(
+            "Remember me:",
+            rememberMe.checked
+        );
 
     }
 );

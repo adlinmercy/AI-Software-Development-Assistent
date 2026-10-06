@@ -1,7 +1,6 @@
-/* =========================================
-   DEVCORE AI
-   LOGIN JAVASCRIPT
-========================================= */
+// ==========================================
+// DevCore AI - Firebase Login
+// ==========================================
 
 import {
     getAuth,
@@ -17,57 +16,71 @@ import {
 import { app } from "./firebase-config.js";
 
 
-/* =========================================
-   FIREBASE AUTH
-========================================= */
+// ==========================================
+// Firebase Authentication
+// ==========================================
 
 const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
 
-/* =========================================
-   ELEMENTS
-========================================= */
+// ==========================================
+// DOM Elements
+// ==========================================
 
 const loginForm = document.getElementById("loginForm");
 
 const emailInput = document.getElementById("email");
 
-const passwordInput =
-    document.getElementById("password");
+const passwordInput = document.getElementById("password");
 
-const rememberMe =
-    document.getElementById("rememberMe");
+const rememberMe = document.getElementById("rememberMe");
 
-const passwordToggle =
-    document.getElementById("passwordToggle");
+const passwordToggle = document.getElementById("passwordToggle");
 
-const forgotPassword =
-    document.getElementById("forgotPassword");
+const forgotPassword = document.getElementById("forgotPassword");
 
-const googleButton =
-    document.getElementById("googleButton");
+const googleButton = document.getElementById("googleButton");
 
-const loginButton =
-    document.getElementById("loginButton");
+const loginButton = document.getElementById("loginButton");
 
-const loginButtonText =
-    document.getElementById("loginButtonText");
+const loginButtonText = document.getElementById("loginButtonText");
 
-const statusMessage =
-    document.getElementById("statusMessage");
+const statusMessage = document.getElementById("statusMessage");
 
-const emailError =
-    document.getElementById("emailError");
+const emailError = document.getElementById("emailError");
 
-const passwordError =
-    document.getElementById("passwordError");
+const passwordError = document.getElementById("passwordError");
 
 
-/* =========================================
-   SHOW STATUS
-========================================= */
+// ==========================================
+// Safety Check
+// ==========================================
+
+if (
+    !loginForm ||
+    !emailInput ||
+    !passwordInput ||
+    !rememberMe ||
+    !passwordToggle ||
+    !forgotPassword ||
+    !googleButton ||
+    !loginButton ||
+    !loginButtonText ||
+    !statusMessage ||
+    !emailError ||
+    !passwordError
+) {
+    console.error(
+        "DevCore AI Login Error: One or more HTML elements are missing."
+    );
+}
+
+
+// ==========================================
+// Status Message
+// ==========================================
 
 function showStatus(message, type) {
 
@@ -78,10 +91,6 @@ function showStatus(message, type) {
 }
 
 
-/* =========================================
-   CLEAR STATUS
-========================================= */
-
 function clearStatus() {
 
     statusMessage.textContent = "";
@@ -91,9 +100,9 @@ function clearStatus() {
 }
 
 
-/* =========================================
-   CLEAR ERRORS
-========================================= */
+// ==========================================
+// Clear Validation Errors
+// ==========================================
 
 function clearErrors() {
 
@@ -103,20 +112,19 @@ function clearErrors() {
 }
 
 
-/* =========================================
-   EMAIL VALIDATION
-========================================= */
+// ==========================================
+// Email Validation
+// ==========================================
 
 function isValidEmail(email) {
 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
 }
 
 
-/* =========================================
-   FIREBASE ERROR MESSAGE
-========================================= */
+// ==========================================
+// Firebase Error Messages
+// ==========================================
 
 function getFirebaseErrorMessage(error) {
 
@@ -143,15 +151,30 @@ function getFirebaseErrorMessage(error) {
         case "auth/popup-closed-by-user":
             return "Google sign-in was cancelled.";
 
+        case "auth/popup-blocked":
+            return "Google sign-in popup was blocked. Please allow popups.";
+
+        case "auth/cancelled-popup-request":
+            return "Google sign-in was cancelled.";
+
+        case "auth/user-disabled":
+            return "This account has been disabled.";
+
         default:
+
+            console.error(
+                "Firebase Error:",
+                error
+            );
+
             return "Something went wrong. Please try again.";
     }
 }
 
 
-/* =========================================
-   PASSWORD VISIBILITY
-========================================= */
+// ==========================================
+// Password Show / Hide
+// ==========================================
 
 passwordToggle.addEventListener(
     "click",
@@ -179,14 +202,13 @@ passwordToggle.addEventListener(
                 "Show password"
             );
         }
-
     }
 );
 
 
-/* =========================================
-   EMAIL / PASSWORD LOGIN
-========================================= */
+// ==========================================
+// Email + Password Login
+// ==========================================
 
 loginForm.addEventListener(
     "submit",
@@ -195,6 +217,7 @@ loginForm.addEventListener(
         event.preventDefault();
 
         clearErrors();
+
         clearStatus();
 
 
@@ -208,7 +231,9 @@ loginForm.addEventListener(
         let valid = true;
 
 
-        /* Email */
+        // ----------------------------------
+        // Validate Email
+        // ----------------------------------
 
         if (email === "") {
 
@@ -226,7 +251,9 @@ loginForm.addEventListener(
         }
 
 
-        /* Password */
+        // ----------------------------------
+        // Validate Password
+        // ----------------------------------
 
         if (password === "") {
 
@@ -249,7 +276,9 @@ loginForm.addEventListener(
         }
 
 
-        /* Loading */
+        // ----------------------------------
+        // Login Button Loading
+        // ----------------------------------
 
         loginButton.disabled = true;
 
@@ -259,7 +288,9 @@ loginForm.addEventListener(
 
         try {
 
-            /* Remember Me */
+            // ----------------------------------
+            // Remember Me
+            // ----------------------------------
 
             await setPersistence(
                 auth,
@@ -269,7 +300,9 @@ loginForm.addEventListener(
             );
 
 
-            /* Firebase Login */
+            // ----------------------------------
+            // Firebase Login
+            // ----------------------------------
 
             await signInWithEmailAndPassword(
                 auth,
@@ -278,19 +311,24 @@ loginForm.addEventListener(
             );
 
 
+            // ----------------------------------
+            // Login Success
+            // ----------------------------------
+
             showStatus(
                 "Login successful. Welcome to DevCore AI!",
                 "success"
             );
 
-
             loginButtonText.textContent =
                 "Signed in";
 
 
-            /* Go to Dashboard */
+            // ----------------------------------
+            // Redirect
+            // ----------------------------------
 
-            setTimeout(() => {
+            setTimeout(function () {
 
                 window.location.href =
                     "dashboard.html";
@@ -300,7 +338,10 @@ loginForm.addEventListener(
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Login Error:",
+                error
+            );
 
             showStatus(
                 getFirebaseErrorMessage(error),
@@ -312,14 +353,13 @@ loginForm.addEventListener(
             loginButtonText.textContent =
                 "Sign in";
         }
-
     }
 );
 
 
-/* =========================================
-   FORGOT PASSWORD
-========================================= */
+// ==========================================
+// Forgot Password
+// ==========================================
 
 forgotPassword.addEventListener(
     "click",
@@ -328,12 +368,17 @@ forgotPassword.addEventListener(
         event.preventDefault();
 
         clearErrors();
+
         clearStatus();
 
 
         const email =
             emailInput.value.trim();
 
+
+        // ----------------------------------
+        // Check Email
+        // ----------------------------------
 
         if (email === "") {
 
@@ -355,9 +400,15 @@ forgotPassword.addEventListener(
                 "error"
             );
 
+            emailInput.focus();
+
             return;
         }
 
+
+        // ----------------------------------
+        // Send Reset Email
+        // ----------------------------------
 
         try {
 
@@ -375,38 +426,44 @@ forgotPassword.addEventListener(
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Password Reset Error:",
+                error
+            );
 
             showStatus(
                 getFirebaseErrorMessage(error),
                 "error"
             );
-
         }
-
     }
 );
 
 
-/* =========================================
-   GOOGLE LOGIN
-========================================= */
+// ==========================================
+// Google Login
+// ==========================================
 
 googleButton.addEventListener(
     "click",
     async function () {
 
         clearErrors();
+
         clearStatus();
 
 
         googleButton.disabled = true;
 
-        googleButton.textContent =
+        googleButton.innerHTML =
             "Signing in with Google...";
 
 
         try {
+
+            // ----------------------------------
+            // Google Authentication
+            // ----------------------------------
 
             await signInWithPopup(
                 auth,
@@ -414,13 +471,21 @@ googleButton.addEventListener(
             );
 
 
+            // ----------------------------------
+            // Success
+            // ----------------------------------
+
             showStatus(
                 "Google sign-in successful!",
                 "success"
             );
 
 
-            setTimeout(() => {
+            // ----------------------------------
+            // Redirect
+            // ----------------------------------
+
+            setTimeout(function () {
 
                 window.location.href =
                     "dashboard.html";
@@ -430,7 +495,10 @@ googleButton.addEventListener(
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Google Login Error:",
+                error
+            );
 
             showStatus(
                 getFirebaseErrorMessage(error),
@@ -438,22 +506,24 @@ googleButton.addEventListener(
             );
 
 
+            // ----------------------------------
+            // Restore Google Button
+            // ----------------------------------
+
             googleButton.disabled = false;
 
             googleButton.innerHTML = `
                 <span class="google-icon">G</span>
                 Continue with Google
             `;
-
         }
-
     }
 );
 
 
-/* =========================================
-   REMEMBER ME
-========================================= */
+// ==========================================
+// Remember Me
+// ==========================================
 
 rememberMe.addEventListener(
     "change",
@@ -463,6 +533,5 @@ rememberMe.addEventListener(
             "Remember me:",
             rememberMe.checked
         );
-
     }
 );

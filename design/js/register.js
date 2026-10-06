@@ -1,7 +1,23 @@
 /* =========================================
    DEVCORE AI
-   REGISTER JAVASCRIPT
+   REGISTER JAVASCRIPT - FIREBASE
 ========================================= */
+
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+import { app } from "./firebase-config.js";
+
+
+const auth = getAuth(app);
 
 
 /* =========================================
@@ -67,7 +83,6 @@ function showStatus(message, type) {
 
     statusMessage.className =
         "status-message " + type;
-
 }
 
 
@@ -77,7 +92,6 @@ function clearStatus() {
 
     statusMessage.className =
         "status-message";
-
 }
 
 
@@ -96,7 +110,6 @@ function clearErrors() {
     confirmPasswordError.textContent = "";
 
     termsError.textContent = "";
-
 }
 
 
@@ -107,7 +120,41 @@ function clearErrors() {
 function isValidEmail(email) {
 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
+
+/* =========================================
+   FIREBASE ERROR MESSAGE
+========================================= */
+
+function getFirebaseErrorMessage(error) {
+
+    switch (error.code) {
+
+        case "auth/email-already-in-use":
+            return "An account already exists with this email.";
+
+        case "auth/invalid-email":
+            return "Please enter a valid email address.";
+
+        case "auth/weak-password":
+            return "Password is too weak. Please use a stronger password.";
+
+        case "auth/network-request-failed":
+            return "Network error. Please check your internet connection.";
+
+        case "auth/operation-not-allowed":
+            return "Email/password authentication is not enabled.";
+
+        default:
+
+            console.error(
+                "Firebase Registration Error:",
+                error
+            );
+
+            return "Something went wrong. Please try again.";
+    }
 }
 
 
@@ -125,14 +172,22 @@ passwordToggle.addEventListener(
 
             passwordToggle.textContent = "🙈";
 
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
         } else {
 
             passwordInput.type = "password";
 
             passwordToggle.textContent = "👁";
 
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Show password"
+            );
         }
-
     }
 );
 
@@ -151,14 +206,22 @@ confirmPasswordToggle.addEventListener(
 
             confirmPasswordToggle.textContent = "🙈";
 
+            confirmPasswordToggle.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
         } else {
 
             confirmPasswordInput.type = "password";
 
             confirmPasswordToggle.textContent = "👁";
 
+            confirmPasswordToggle.setAttribute(
+                "aria-label",
+                "Show password"
+            );
         }
-
     }
 );
 
@@ -169,7 +232,7 @@ confirmPasswordToggle.addEventListener(
 
 registerForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
@@ -177,6 +240,10 @@ registerForm.addEventListener(
 
         clearStatus();
 
+
+        /* =====================================
+           GET VALUES
+        ===================================== */
 
         const fullName =
             fullNameInput.value.trim();
@@ -194,7 +261,9 @@ registerForm.addEventListener(
         let valid = true;
 
 
-        /* Full Name */
+        /* =====================================
+           FULL NAME
+        ===================================== */
 
         if (fullName === "") {
 
@@ -209,11 +278,12 @@ registerForm.addEventListener(
                 "Please enter a valid name.";
 
             valid = false;
-
         }
 
 
-        /* Email */
+        /* =====================================
+           EMAIL
+        ===================================== */
 
         if (email === "") {
 
@@ -228,11 +298,12 @@ registerForm.addEventListener(
                 "Please enter a valid email address.";
 
             valid = false;
-
         }
 
 
-        /* Password */
+        /* =====================================
+           PASSWORD
+        ===================================== */
 
         if (password === "") {
 
@@ -247,11 +318,12 @@ registerForm.addEventListener(
                 "Password must contain at least 6 characters.";
 
             valid = false;
-
         }
 
 
-        /* Confirm Password */
+        /* =====================================
+           CONFIRM PASSWORD
+        ===================================== */
 
         if (confirmPassword === "") {
 
@@ -266,11 +338,12 @@ registerForm.addEventListener(
                 "Passwords do not match.";
 
             valid = false;
-
         }
 
 
-        /* Terms */
+        /* =====================================
+           TERMS
+        ===================================== */
 
         if (!termsInput.checked) {
 
@@ -278,18 +351,21 @@ registerForm.addEventListener(
                 "Please accept the Terms of Service.";
 
             valid = false;
-
         }
 
+
+        /* =====================================
+           STOP IF INVALID
+        ===================================== */
 
         if (!valid) {
-
             return;
-
         }
 
 
-        /* Loading */
+        /* =====================================
+           LOADING
+        ===================================== */
 
         registerButton.disabled = true;
 
@@ -297,14 +373,39 @@ registerForm.addEventListener(
             "Creating account...";
 
 
-        /*
-         * Temporary frontend simulation.
-         *
-         * Firebase authentication will be
-         * connected later.
-         */
+        try {
 
-        setTimeout(function () {
+            /* =================================
+               CREATE FIREBASE ACCOUNT
+            ================================= */
+
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /* =================================
+               SAVE USER DISPLAY NAME
+            ================================= */
+
+            await updateProfile(
+                user,
+                {
+                    displayName: fullName
+                }
+            );
+
+
+            /* =================================
+               SUCCESS
+            ================================= */
 
             showStatus(
                 "Account created successfully!",
@@ -316,6 +417,10 @@ registerForm.addEventListener(
                 "Account created";
 
 
+            /* =================================
+               REDIRECT TO LOGIN
+            ================================= */
+
             setTimeout(function () {
 
                 window.location.href =
@@ -324,7 +429,30 @@ registerForm.addEventListener(
             }, 1000);
 
 
-        }, 1000);
+        } catch (error) {
+
+            console.error(error);
+
+
+            /* ================================
+               FIREBASE ERROR
+            ================================= */
+
+            showStatus(
+                getFirebaseErrorMessage(error),
+                "error"
+            );
+
+
+            /* ================================
+               ENABLE BUTTON AGAIN
+            ================================= */
+
+            registerButton.disabled = false;
+
+            registerButtonText.textContent =
+                "Create account";
+        }
 
     }
 );

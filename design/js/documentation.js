@@ -26,17 +26,139 @@ const language =
     document.getElementById("language");
 
 
+// Backend API URL
+const API_URL = "http://127.0.0.1:8000";
+
+/* =========================
+   RENDER MARKDOWN OUTPUT
+========================= */
+
+function renderMarkdown(markdown) {
+    if (typeof marked === "undefined") {
+        throw new Error(
+            "Markdown library did not load. Check your internet connection."
+        );
+    }
+
+    // Convert Markdown into HTML.
+    const html = marked.parse(markdown);
+
+    // Parse the generated HTML.
+    const parsedDocument = new DOMParser().parseFromString(
+        html,
+        "text/html"
+    );
+
+    // Remove potentially unsafe elements.
+    parsedDocument.querySelectorAll(
+        "script, iframe, object, embed, form"
+    ).forEach(element => element.remove());
+
+    // Remove unsafe event handlers and URLs.
+    parsedDocument.querySelectorAll("*").forEach(element => {
+        [...element.attributes].forEach(attribute => {
+            const name = attribute.name.toLowerCase();
+            const value = attribute.value.trim();
+
+            if (name.startsWith("on")) {
+                element.removeAttribute(attribute.name);
+            }
+
+            if (
+                ["href", "src", "xlink:href", "formaction"].includes(name) &&
+                /^(javascript:|vbscript:|data:)/i.test(value)
+            ) {
+                element.removeAttribute(attribute.name);
+            }
+        });
+    });
+
+    // Give headings IDs so table-of-contents links can find them.
+    const headings = parsedDocument.querySelectorAll(
+        "h1, h2, h3, h4, h5, h6"
+    );
+
+    const usedIds = new Set();
+
+    headings.forEach(heading => {
+        let id = heading.textContent
+            .trim()
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}\s-]/gu, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-");
+
+        if (!id) {
+            id = "section";
+        }
+
+        const baseId = id;
+        let counter = 1;
+
+        while (usedIds.has(id)) {
+            id = `${baseId}-${counter++}`;
+        }
+
+        usedIds.add(id);
+        heading.id = id;
+    });
+
+    // Fix links in the generated table of contents.
+    parsedDocument.querySelectorAll('a[href*="#"]').forEach(link => {
+        const href = link.getAttribute("href");
+
+        if (!href) return;
+
+        const hashIndex = href.indexOf("#");
+
+        if (hashIndex === -1) return;
+
+        const rawHash = href.slice(hashIndex + 1);
+
+        let decodedHash;
+
+        try {
+            decodedHash = decodeURIComponent(rawHash);
+        } catch {
+            decodedHash = rawHash;
+        }
+
+        // Match the link to a generated heading.
+        const matchingHeading = [...headings].find(heading => {
+            const headingText = heading.textContent
+                .trim()
+                .toLowerCase()
+                .replace(/[^\p{L}\p{N}\s-]/gu, "")
+                .replace(/\s+/g, "-")
+                .replace(/-+/g, "-");
+
+            return (
+                heading.id === decodedHash ||
+                headingText === decodedHash.toLowerCase()
+            );
+        });
+
+        if (matchingHeading) {
+            link.setAttribute("href", `#${matchingHeading.id}`);
+        }
+    });
+
+    // Insert the generated documentation.
+    documentationOutput.replaceChildren(
+        ...Array.from(parsedDocument.body.childNodes)
+    );
+}
+
+
 /* =========================
    CHARACTER COUNTER
 ========================= */
 
 documentationInput.addEventListener("input", () => {
-
     const length = documentationInput.value.length;
 
     charCount.textContent =
         `${length} / 5000 characters`;
-
 });
 
 
@@ -44,257 +166,85 @@ documentationInput.addEventListener("input", () => {
    GENERATE DOCUMENTATION
 ========================= */
 
-generateBtn.addEventListener("click", () => {
-
-    const input =
-        documentationInput.value.trim();
+generateBtn.addEventListener("click", async () => {
+    const input = documentationInput.value.trim();
 
     if (input.length < 10) {
-
         alert(
             "Please enter a detailed requirement or source code."
         );
 
         documentationInput.focus();
-
         return;
     }
 
-
     generateBtn.disabled = true;
-
     loadingSection.classList.add("show");
-
     resultsSection.classList.remove("show");
 
+    try {
+        const response = await fetch(
+            `${API_URL}/api/documentation-generation`,
+            {
+                method: "POST",
 
-    setTimeout(() => {
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        const documentation =
-            generateDemoDocumentation(input);
+                body: JSON.stringify({
+                    requirement: input,
+                    documentation_type: documentationType.value,
+                    language: language.value
+                })
+            }
+        );
 
-        documentationOutput.innerHTML =
-            documentation;
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Documentation generation failed."
+            );
+        }
+
+        // Display the generated documentation safely as text.
+        const generatedText =
+            data.documentation ||
+            data.generated_documentation ||
+            data.result ||
+            data.response;
+
+        if (!generatedText) {
+            throw new Error(
+                "The API responded, but no documentation text was found."
+            );
+        }
+
+        renderMarkdown(generatedText);
 
         loadingSection.classList.remove("show");
-
         resultsSection.classList.add("show");
-
-        generateBtn.disabled = false;
-
 
         resultsSection.scrollIntoView({
             behavior: "smooth",
             block: "start"
         });
 
-    }, 1800);
+    } catch (error) {
+        console.error("Documentation error:", error);
 
-});
+        alert(
+            "Unable to generate documentation.\n\n" +
+            error.message +
+            "\n\nCheck that your backend is running and the API endpoint exists."
+        );
 
-
-/* =========================
-   DEMO DOCUMENTATION
-========================= */
-
-function generateDemoDocumentation(input) {
-
-    const text =
-        input.toLowerCase();
-
-    const selectedType =
-        documentationType
-            .options[documentationType.selectedIndex]
-            .text;
-
-    const selectedLanguage =
-        language
-            .options[language.selectedIndex]
-            .text;
-
-
-    let projectName =
-        "Software Development Project";
-
-
-    if (text.includes("login")) {
-
-        projectName =
-            "User Login Management System";
-
-    } else if (text.includes("bus")) {
-
-        projectName =
-            "College Bus Management System";
-
-    } else if (text.includes("library")) {
-
-        projectName =
-            "Library Management System";
-
-    } else if (text.includes("shopping")) {
-
-        projectName =
-            "Online Shopping System";
-
+    } finally {
+        loadingSection.classList.remove("show");
+        generateBtn.disabled = false;
     }
-
-
-    return `
-
-        <h1>${projectName}</h1>
-
-        <p>
-            This document provides a structured overview of the
-            software project, its functionality, technical details,
-            and usage information.
-        </p>
-
-
-        <h2>1. Project Overview</h2>
-
-        <p>
-            The ${projectName} is designed to provide users with
-            a simple and efficient solution for managing the
-            required software operations.
-        </p>
-
-
-        <h2>2. Project Requirements</h2>
-
-        <p>
-            The system should process user inputs and perform the
-            required operations according to the defined software
-            requirements.
-        </p>
-
-        <ul>
-
-            <li>
-                The system should provide a user-friendly interface.
-            </li>
-
-            <li>
-                The system should validate user input.
-            </li>
-
-            <li>
-                The system should process valid requests correctly.
-            </li>
-
-            <li>
-                The system should display appropriate messages
-                when an error occurs.
-            </li>
-
-        </ul>
-
-
-        <h2>3. Main Features</h2>
-
-        <ul>
-
-            <li>
-                User input and data processing
-            </li>
-
-            <li>
-                Input validation and error handling
-            </li>
-
-            <li>
-                Core application functionality
-            </li>
-
-            <li>
-                User-friendly result presentation
-            </li>
-
-        </ul>
-
-
-        <h2>4. Technology</h2>
-
-        <p>
-            Programming Language:
-            <strong>${selectedLanguage}</strong>
-        </p>
-
-        <p>
-            Documentation Type:
-            <strong>${selectedType}</strong>
-        </p>
-
-
-        <h2>5. System Workflow</h2>
-
-        <ol>
-
-            <li>
-                User provides the required input.
-            </li>
-
-            <li>
-                The system validates the input.
-            </li>
-
-            <li>
-                Application logic processes the request.
-            </li>
-
-            <li>
-                The system generates the required result.
-            </li>
-
-            <li>
-                The result is displayed to the user.
-            </li>
-
-        </ol>
-
-
-        <h2>6. Error Handling</h2>
-
-        <p>
-            The system should validate input data and provide
-            meaningful error messages when invalid or incomplete
-            information is provided.
-        </p>
-
-
-        <h2>7. Testing</h2>
-
-        <p>
-            The application should be tested using positive,
-            negative, boundary, and validation test cases to
-            verify expected system behavior.
-        </p>
-
-
-        <h2>8. Future Enhancements</h2>
-
-        <ul>
-
-            <li>
-                Integration with an AI-powered backend
-            </li>
-
-            <li>
-                Database integration
-            </li>
-
-            <li>
-                Authentication and user management
-            </li>
-
-            <li>
-                Project history and version management
-            </li>
-
-        </ul>
-
-    `;
-}
+});
 
 
 /* =========================
@@ -302,28 +252,18 @@ function generateDemoDocumentation(input) {
 ========================= */
 
 copyBtn.addEventListener("click", async () => {
-
-    const text =
-        documentationOutput.innerText;
+    const text = documentationOutput.innerText;
 
     try {
-
         await navigator.clipboard.writeText(text);
 
         copyBtn.textContent = "Copied";
 
         setTimeout(() => {
-
             copyBtn.textContent = "Copy";
-
         }, 1500);
 
     } catch (error) {
-
-        alert(
-            "Unable to copy documentation."
-        );
-
+        alert("Unable to copy documentation.");
     }
-
 });

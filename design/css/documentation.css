@@ -1011,3 +1011,127 @@ textarea:focus {
     }
 
 }
+
+/* =========================
+   DOCUMENTATION OUTPUT
+========================= */
+
+#documentationOutput {
+    line-height: 1.8;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+#documentationOutput h1,
+#documentationOutput h2,
+#documentationOutput h3,
+#documentationOutput h4 {
+    line-height: 1.4;
+    margin: 24px 0 12px;
+}
+
+#documentationOutput h1 {
+    font-size: 28px;
+}
+
+#documentationOutput h2 {
+    font-size: 23px;
+}
+
+#documentationOutput h3 {
+    font-size: 19px;
+}
+
+#documentationOutput p {
+    margin: 12px 0;
+}
+
+#documentationOutput ul,
+#documentationOutput ol {
+    padding-left: 28px;
+    margin: 12px 0;
+}
+
+#documentationOutput li {
+    margin-bottom: 8px;
+}
+
+#documentationOutput table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    display: block;
+    overflow-x: auto;
+}
+
+#documentationOutput th,
+#documentationOutput td {
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+    min-width: 100px;
+}
+
+#documentationOutput th {
+    font-weight: 700;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+#documentationOutput tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+/* Code blocks */
+#documentationOutput pre {
+    background: #1e293b;
+    color: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 16px 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Preserve spacing in code and ASCII diagrams */
+#documentationOutput pre code {
+    display: block;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border: none;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre;
+}
+
+#documentationOutput pre code {
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    white-space: pre;
+}
+
+#documentationOutput :not(pre) > code {
+    background: #e5e7eb;
+    color: #be123c;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+}
+
+#documentationOutput blockquote {
+    border-left: 4px solid #9ca3af;
+    margin: 16px 0;
+    padding: 8px 16px;
+    background: #f9fafb;
+}
+
+#documentationOutput hr {
+    border: 0;
+    border-top: 1px solid #d1d5db;
+    margin: 24px 0;
+}

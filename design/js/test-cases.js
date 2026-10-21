@@ -1,433 +1,232 @@
-const testInput = document.getElementById("testInput");
-const charCount = document.getElementById("charCount");
+/*
+=========================================================
+DEVCORE AI - TEST CASE GENERATION
+Connected to the FastAPI backend
+=========================================================
+*/
 
-const generateBtn = document.getElementById("generateBtn");
+document.addEventListener("DOMContentLoaded", () => {
+    const API_URL = "http://127.0.0.1:8000/api/test-cases";
 
-const loadingSection = document.getElementById("loadingSection");
-const resultsSection = document.getElementById("resultsSection");
+    const testInput = document.getElementById("testInput");
+    const charCount = document.getElementById("charCount");
+    const generateBtn = document.getElementById("generateBtn");
 
-const testCasesBody = document.getElementById("testCasesBody");
+    const loadingSection = document.getElementById("loadingSection");
+    const resultsSection = document.getElementById("resultsSection");
+    const testCasesBody = document.getElementById("testCasesBody");
 
-const totalTests = document.getElementById("totalTests");
-const positiveTests = document.getElementById("positiveTests");
-const negativeTests = document.getElementById("negativeTests");
-const coverage = document.getElementById("coverage");
+    const totalTests = document.getElementById("totalTests");
+    const positiveTests = document.getElementById("positiveTests");
+    const negativeTests = document.getElementById("negativeTests");
+    const coverage = document.getElementById("coverage");
+    const testingSummary = document.getElementById("testingSummary");
 
-const testingSummary = document.getElementById("testingSummary");
+    const language = document.getElementById("language");
+    const testType = document.getElementById("testType");
 
-const language = document.getElementById("language");
-const testType = document.getElementById("testType");
+    // Check required HTML elements
+    const requiredElements = [
+        testInput, charCount, generateBtn, loadingSection,
+        resultsSection, testCasesBody, totalTests,
+        positiveTests, negativeTests, testingSummary,
+        language, testType
+    ];
 
-
-/* =========================
-   CHARACTER COUNTER
-========================= */
-
-testInput.addEventListener("input", () => {
-
-    const length = testInput.value.length;
-
-    charCount.textContent = `${length} / 5000 characters`;
-
-});
-
-
-/* =========================
-   GENERATE TEST CASES
-========================= */
-
-generateBtn.addEventListener("click", () => {
-
-    const input = testInput.value.trim();
-
-    if (input.length < 10) {
-
-        alert("Please enter a detailed requirement or source code.");
-
-        testInput.focus();
-
+    if (requiredElements.some(element => !element)) {
+        console.error("DevCore AI: A required HTML element is missing.");
         return;
     }
 
-
-    generateBtn.disabled = true;
-
-    loadingSection.classList.add("show");
-
-    resultsSection.classList.remove("show");
-
-
-    setTimeout(() => {
-
-        const testCases = generateDemoTestCases(input);
-
-        displayTestCases(testCases);
-
-        loadingSection.classList.remove("show");
-
-        resultsSection.classList.add("show");
-
-        generateBtn.disabled = false;
-
-        resultsSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }, 1800);
-
-});
-
-
-/* =========================
-   DEMO TEST GENERATOR
-========================= */
-
-function generateDemoTestCases(input) {
-
-    const text = input.toLowerCase();
-
-    const cases = [];
-
-
-    /*
-       LOGIN
-    */
-
-    if (
-        text.includes("login") ||
-        text.includes("password") ||
-        text.includes("email")
-    ) {
-
-        cases.push(
-            {
-                id: "TC-001",
-                test: "Login with valid credentials",
-                input: "Valid email and valid password",
-                expected: "User should be successfully logged in",
-                priority: "High",
-                type: "positive"
-            },
-
-            {
-                id: "TC-002",
-                test: "Login with invalid password",
-                input: "Valid email and incorrect password",
-                expected: "System should display an error message",
-                priority: "High",
-                type: "negative"
-            },
-
-            {
-                id: "TC-003",
-                test: "Login with invalid email",
-                input: "Unregistered email address",
-                expected: "System should reject the login attempt",
-                priority: "High",
-                type: "negative"
-            },
-
-            {
-                id: "TC-004",
-                test: "Login with empty fields",
-                input: "Email and password are empty",
-                expected: "Validation message should be displayed",
-                priority: "Medium",
-                type: "negative"
-            }
-        );
-
-    }
-
-
-    /*
-       REGISTRATION
-    */
-
-    if (
-        text.includes("register") ||
-        text.includes("registration") ||
-        text.includes("signup")
-    ) {
-
-        cases.push(
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Register with valid information",
-                input: "Valid name, email and password",
-                expected: "New user account should be created",
-                priority: "High",
-                type: "positive"
-            },
-
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Register with existing email",
-                input: "Email already registered",
-                expected: "System should show account already exists message",
-                priority: "Medium",
-                type: "negative"
-            }
-        );
-
-    }
-
-
-    /*
-       PAYMENT
-    */
-
-    if (
-        text.includes("payment") ||
-        text.includes("transaction") ||
-        text.includes("checkout")
-    ) {
-
-        cases.push(
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Complete payment successfully",
-                input: "Valid payment details",
-                expected: "Payment should be processed successfully",
-                priority: "High",
-                type: "positive"
-            },
-
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Payment with invalid details",
-                input: "Invalid card or payment information",
-                expected: "Payment should be rejected",
-                priority: "High",
-                type: "negative"
-            }
-        );
-
-    }
-
-
-    /*
-       SEARCH
-    */
-
-    if (
-        text.includes("search") ||
-        text.includes("find")
-    ) {
-
-        cases.push(
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Search with valid keyword",
-                input: "Enter a valid search keyword",
-                expected: "Relevant search results should be displayed",
-                priority: "Medium",
-                type: "positive"
-            },
-
-            {
-                id: `TC-${String(cases.length + 1).padStart(3, "0")}`,
-                test: "Search with empty keyword",
-                input: "Empty search field",
-                expected: "Validation message should be displayed",
-                priority: "Low",
-                type: "negative"
-            }
-        );
-
-    }
-
-
-    /*
-       DEFAULT CASES
-    */
-
-    if (cases.length === 0) {
-
-        cases.push(
-            {
-                id: "TC-001",
-                test: "Verify valid input",
-                input: "Enter valid input data",
-                expected: "System should process the input successfully",
-                priority: "High",
-                type: "positive"
-            },
-
-            {
-                id: "TC-002",
-                test: "Verify invalid input",
-                input: "Enter invalid input data",
-                expected: "System should display an appropriate error message",
-                priority: "High",
-                type: "negative"
-            },
-
-            {
-                id: "TC-003",
-                test: "Verify empty input",
-                input: "Leave required fields empty",
-                expected: "System should display validation messages",
-                priority: "Medium",
-                type: "negative"
-            },
-
-            {
-                id: "TC-004",
-                test: "Verify normal system operation",
-                input: "Provide valid data according to requirements",
-                expected: "System should perform the expected operation",
-                priority: "Medium",
-                type: "positive"
-            },
-
-            {
-                id: "TC-005",
-                test: "Verify boundary condition",
-                input: "Provide minimum or maximum allowed value",
-                expected: "System should handle the boundary value correctly",
-                priority: "Low",
-                type: "positive"
-            }
-        );
-
-    }
-
-
-    return cases;
-}
-
-
-/* =========================
-   DISPLAY TEST CASES
-========================= */
-
-function displayTestCases(cases) {
-
-    testCasesBody.innerHTML = "";
-
-    let positive = 0;
-    let negative = 0;
-
-
-    cases.forEach(testCase => {
-
-        if (testCase.type === "positive") {
-            positive++;
-        }
-
-        if (testCase.type === "negative") {
-            negative++;
-        }
-
-
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>
-                <span class="test-id">${testCase.id}</span>
-            </td>
-
-            <td>
-                ${escapeHTML(testCase.test)}
-            </td>
-
-            <td>
-                ${escapeHTML(testCase.input)}
-            </td>
-
-            <td>
-                ${escapeHTML(testCase.expected)}
-            </td>
-
-            <td>
-                <span class="priority ${testCase.priority.toLowerCase()}">
-                    ${testCase.priority}
-                </span>
-            </td>
-        `;
-
-        testCasesBody.appendChild(row);
-
+    // Character counter
+    testInput.addEventListener("input", () => {
+        charCount.textContent =
+            `${testInput.value.length} / 5000 characters`;
     });
 
+    // Generate test cases
+    generateBtn.addEventListener("click", generateTestCases);
 
-    const total = cases.length;
+    async function generateTestCases() {
+        const requirement = testInput.value.trim();
 
-    const coverageValue = Math.min(
-        98,
-        70 + (total * 4)
-    );
+        if (requirement.length < 10) {
+            alert("Please enter at least 10 characters of requirements or source code.");
+            testInput.focus();
+            return;
+        }
 
+        generateBtn.disabled = true;
+        loadingSection.classList.add("show");
+        resultsSection.classList.remove("show");
 
-    totalTests.textContent = total;
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    requirement: requirement,
+                    language: language.value,
+                    test_type: testType.value
+                })
+            });
 
-    positiveTests.textContent = positive;
+            const data = await response.json();
 
-    negativeTests.textContent = negative;
+            if (!response.ok) {
+                const message = typeof data.detail === "string"
+                    ? data.detail
+                    : "Unable to generate test cases.";
 
-    coverage.textContent = `${coverageValue}%`;
+                throw new Error(message);
+            }
 
+            if (
+                !Array.isArray(data.test_cases) ||
+                data.test_cases.length === 0
+            ) {
+                throw new Error("The AI did not return any test cases.");
+            }
 
-    displayTestingSummary(
-        total,
-        positive,
-        negative,
-        coverageValue
-    );
-}
+            displayTestCases(data);
 
+            loadingSection.classList.remove("show");
+            resultsSection.classList.add("show");
 
-/* =========================
-   TESTING SUMMARY
-========================= */
+            resultsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-function displayTestingSummary(
-    total,
-    positive,
-    negative,
-    coverageValue
-) {
+        } catch (error) {
+            console.error("Test Case Generation Error:", error);
 
-    const selectedLanguage =
-        language.options[language.selectedIndex].text;
+            alert(
+                error.message.includes("Failed to fetch")
+                    ? "Cannot connect to DevCore AI. Please check whether the backend is running."
+                    : error.message
+            );
 
-    const selectedType =
-        testType.options[testType.selectedIndex].text;
+        } finally {
+            loadingSection.classList.remove("show");
+            generateBtn.disabled = false;
+        }
+    }
 
+    // Display AI-generated test cases
+    function displayTestCases(data) {
+        testCasesBody.innerHTML = "";
 
-    testingSummary.innerHTML = `
+        let positive = 0;
+        let negative = 0;
 
-        <p>
-            DevCore AI generated
-            <strong>${total} test cases</strong>
-            using ${selectedType}.
-            The selected programming language is
-            <strong>${selectedLanguage}</strong>.
-        </p>
+        data.test_cases.forEach(testCase => {
+            if (testCase.type === "positive") positive++;
+            if (testCase.type === "negative") negative++;
 
-        <ul>
-            <li>${positive} positive test cases were generated.</li>
-            <li>${negative} negative and validation test cases were generated.</li>
-            <li>Estimated requirement coverage is ${coverageValue}%.</li>
-            <li>Test cases should be reviewed and updated according to the final system implementation.</li>
-        </ul>
+            const row = document.createElement("tr");
 
-    `;
-}
+            const idCell = document.createElement("td");
+            const idSpan = document.createElement("span");
+            idSpan.className = "test-id";
+            idSpan.textContent = testCase.id;
+            idCell.appendChild(idSpan);
 
+            const testCell = document.createElement("td");
+            testCell.textContent = testCase.test;
 
-/* =========================
-   ESCAPE HTML
-========================= */
+            const inputCell = document.createElement("td");
+            inputCell.textContent = testCase.input;
 
-function escapeHTML(value) {
+            const expectedCell = document.createElement("td");
+            expectedCell.textContent = testCase.expected;
 
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+            const priorityCell = document.createElement("td");
+            const prioritySpan = document.createElement("span");
+            prioritySpan.className =
+                `priority ${(testCase.priority || "Medium").toLowerCase()}`;
+            prioritySpan.textContent = testCase.priority || "Medium";
+            priorityCell.appendChild(prioritySpan);
+
+            row.append(
+                idCell,
+                testCell,
+                inputCell,
+                expectedCell,
+                priorityCell
+            );
+
+            testCasesBody.appendChild(row);
+        });
+
+        totalTests.textContent = data.test_cases.length;
+        positiveTests.textContent = positive;
+        negativeTests.textContent = negative;
+
+        // The backend does not calculate actual code or requirement coverage.
+        if (coverage) {
+            coverage.textContent = "N/A";
+            coverage.title =
+                "Actual coverage requires code execution or requirement traceability.";
+        }
+
+        displayTestingSummary(
+            data,
+            positive,
+            negative
+        );
+    }
+
+    // Display summary
+    function displayTestingSummary(data, positive, negative) {
+        testingSummary.innerHTML = "";
+
+        const paragraph = document.createElement("p");
+        paragraph.append("DevCore AI generated ");
+
+        const count = document.createElement("strong");
+        count.textContent = `${data.test_cases.length} test cases`;
+        paragraph.appendChild(count);
+
+        paragraph.append(
+            ` using ${data.test_type} testing. The selected programming language is `
+        );
+
+        const selectedLanguage = document.createElement("strong");
+        selectedLanguage.textContent = data.language;
+        paragraph.appendChild(selectedLanguage);
+
+        const list = document.createElement("ul");
+
+        const items = [
+            `${positive} positive test cases generated.`,
+            `${negative} negative test cases generated.`,
+            "Review the generated cases against your actual requirements."
+        ];
+
+        items.forEach(text => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            list.appendChild(li);
+        });
+
+        if (data.summary) {
+            const summaryHeading = document.createElement("h4");
+            summaryHeading.textContent = "Testing Approach";
+
+            const summaryText = document.createElement("p");
+            summaryText.textContent = data.summary;
+
+            testingSummary.append(
+                paragraph,
+                list,
+                summaryHeading,
+                summaryText
+            );
+        } else {
+            testingSummary.append(paragraph, list);
+        }
+    }
+});

@@ -1,516 +1,450 @@
-/* =========================================================
-   DEVCORE AI - CODE GENERATION
-   Frontend Demo
-   ========================================================= */
+/*
+=========================================================
+DEVCORE AI - CODE GENERATION
+Frontend integration with the existing FastAPI backend.
+=========================================================
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =====================================================
+    // HTML ELEMENTS
+    // =====================================================
+
+    const codeRequirement =
+        document.getElementById("codeRequirement");
+
+    const charCount =
+        document.getElementById("charCount");
+
+    const language =
+        document.getElementById("language");
+
+    const framework =
+        document.getElementById("framework");
+
+    const generateBtn =
+        document.getElementById("generateBtn");
+
+    const loadingSection =
+        document.getElementById("loadingSection");
+
+    const resultSection =
+        document.getElementById("resultSection");
+
+    const codeOutput =
+        document.getElementById("codeOutput");
+
+    const codeExplanation =
+        document.getElementById("codeExplanation");
+
+    const languageLabel =
+        document.getElementById("languageLabel");
+
+    const copyBtn =
+        document.getElementById("copyBtn");
 
 
-/* ================= ELEMENTS ================= */
+    // =====================================================
+    // BACKEND API
+    // =====================================================
 
-const codeRequirement =
-    document.getElementById("codeRequirement");
-
-const charCount =
-    document.getElementById("charCount");
-
-const language =
-    document.getElementById("language");
-
-const framework =
-    document.getElementById("framework");
-
-const generateBtn =
-    document.getElementById("generateBtn");
-
-const loadingSection =
-    document.getElementById("loadingSection");
-
-const resultSection =
-    document.getElementById("resultSection");
-
-const codeOutput =
-    document.getElementById("codeOutput");
-
-const codeExplanation =
-    document.getElementById("codeExplanation");
-
-const languageLabel =
-    document.getElementById("languageLabel");
-
-const copyBtn =
-    document.getElementById("copyBtn");
+    const API_URL =
+        "http://127.0.0.1:8000/api/code-generation";
 
 
-/* ================= CHARACTER COUNT ================= */
+    // =====================================================
+    // CHECK REQUIRED ELEMENTS
+    // =====================================================
 
-codeRequirement.addEventListener("input", function () {
+    const requiredElements = {
+        codeRequirement,
+        charCount,
+        language,
+        framework,
+        generateBtn,
+        loadingSection,
+        resultSection,
+        codeOutput,
+        codeExplanation,
+        languageLabel,
+        copyBtn
+    };
 
-    const length = codeRequirement.value.length;
+    const missingElements = Object.entries(requiredElements)
+        .filter(([name, element]) => !element)
+        .map(([name]) => name);
 
-    charCount.textContent =
-        `${length} / 5000 characters`;
+    if (missingElements.length > 0) {
 
-});
-
-
-/* ================= GENERATE CODE ================= */
-
-generateBtn.addEventListener("click", function () {
-
-    const requirement =
-        codeRequirement.value.trim();
-
-    const selectedLanguage =
-        language.value;
-
-    const selectedFramework =
-        framework.value;
-
-
-    /* Validation */
-
-    if (requirement.length < 10) {
-
-        alert(
-            "Please enter a more detailed description of what you want to build."
+        console.error(
+            "DevCore AI: Missing HTML elements:",
+            missingElements.join(", ")
         );
-
-        codeRequirement.focus();
 
         return;
     }
 
 
-    /* Hide previous result */
+    // =====================================================
+    // INITIAL STATE
+    // =====================================================
 
+    loadingSection.style.display = "none";
     resultSection.style.display = "none";
 
 
-    /* Show loading */
+    // =====================================================
+    // CHARACTER COUNTER
+    // =====================================================
 
-    loadingSection.style.display = "flex";
+    function updateCharacterCount() {
 
-    generateBtn.disabled = true;
+        charCount.textContent =
+            `${codeRequirement.value.length} / 5000 characters`;
 
-    generateBtn.innerHTML =
-        "<span>✦</span><span>Generating...</span>";
+    }
+
+    codeRequirement.addEventListener(
+        "input",
+        updateCharacterCount
+    );
+
+    updateCharacterCount();
 
 
-    /*
-        Demo delay.
+    // =====================================================
+    // GENERATE CODE
+    // =====================================================
 
-        Later this section will call:
-        Backend → FastAPI → Gemini API
-    */
+    generateBtn.addEventListener("click", async function (event) {
 
-    setTimeout(function () {
+        event.preventDefault();
 
-        const generatedCode =
-            generateDemoCode(
-                requirement,
-                selectedLanguage,
-                selectedFramework
+        const requirement =
+            codeRequirement.value.trim();
+
+        const selectedLanguage =
+            language.value;
+
+        const selectedFramework =
+            framework.value;
+
+
+        // Validate input.
+
+        if (requirement.length < 10) {
+
+            alert(
+                "Please enter at least 10 characters describing what you want to build."
             );
 
+            codeRequirement.focus();
 
-        const explanation =
-            generateExplanation(
-                requirement,
-                selectedLanguage,
-                selectedFramework
+            return;
+        }
+
+        if (requirement.length > 5000) {
+
+            alert(
+                "Your description cannot exceed 5000 characters."
             );
 
-
-        /* Update result */
-
-        codeOutput.textContent =
-            generatedCode;
-
-        codeExplanation.textContent =
-            explanation;
-
-        languageLabel.textContent =
-            selectedLanguage;
-
-
-        /* Hide loading */
-
-        loadingSection.style.display =
-            "none";
-
-
-        /* Show result */
-
-        resultSection.style.display =
-            "block";
-
-
-        /* Reset button */
-
-        generateBtn.disabled = false;
-
-        generateBtn.innerHTML =
-            "<span>✦</span><span>Generate Code</span>";
-
-
-        /* Scroll to result */
-
-        resultSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-
-    }, 1800);
-
-});
-
-
-/* ================= DEMO CODE GENERATOR ================= */
-
-function generateDemoCode(
-    requirement,
-    selectedLanguage,
-    selectedFramework
-) {
-
-    const text =
-        requirement.toLowerCase();
-
-
-    /* ---------- PYTHON ---------- */
-
-    if (selectedLanguage === "Python") {
-
-        if (
-            text.includes("largest") ||
-            text.includes("maximum")
-        ) {
-
-            return `# Find the largest number in a list
-
-def find_largest(numbers):
-    if not numbers:
-        return None
-
-    return max(numbers)
-
-
-# Example usage
-numbers = [10, 25, 7, 42, 18]
-
-largest = find_largest(numbers)
-
-print("Largest number:", largest)
-`;
+            return;
         }
 
 
-        if (
-            text.includes("calculator") ||
-            text.includes("addition")
-        ) {
+        // Update the UI.
 
-            return `# Simple Calculator
+        generateBtn.disabled = true;
 
-def add(a, b):
-    return a + b
+        generateBtn.innerHTML = `
+            <span>◌</span>
+            <span>Generating Code...</span>
+        `;
+
+        loadingSection.style.display = "flex";
+        resultSection.style.display = "none";
+
+        codeOutput.textContent = "";
+        codeExplanation.textContent = "";
+
+        try {
+
+            // Send request to FastAPI.
+
+            const response = await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    requirement: requirement,
+
+                    language: selectedLanguage,
+
+                    framework: selectedFramework
+
+                })
+
+            });
 
 
-def subtract(a, b):
-    return a - b
+            // Read response safely.
+
+            const responseText = await response.text();
+
+            let data;
+
+            try {
+
+                data = JSON.parse(responseText);
+
+            } catch {
+
+                throw new Error(
+                    "The backend returned an invalid response. " +
+                    "Check that FastAPI is running correctly."
+                );
+
+            }
 
 
-def multiply(a, b):
-    return a * b
+            // Handle HTTP errors.
+
+            if (!response.ok) {
+
+                let errorMessage = data.detail;
+
+                if (Array.isArray(errorMessage)) {
+
+                    errorMessage = errorMessage
+                        .map(item => item.msg || JSON.stringify(item))
+                        .join("\n");
+
+                }
+
+                throw new Error(
+                    typeof errorMessage === "string"
+                        ? errorMessage
+                        : "The backend could not generate your code."
+                );
+
+            }
 
 
-def divide(a, b):
-    if b == 0:
-        return "Cannot divide by zero"
+            // Validate the response.
 
-    return a / b
+            if (
+                data.status !== "success" ||
+                typeof data.code !== "string" ||
+                !data.code.trim()
+            ) {
+
+                console.error(
+                    "Unexpected code-generation response:",
+                    data
+                );
+
+                throw new Error(
+                    "The backend response does not contain valid generated code. " +
+                    "Check the response format in main.py."
+                );
+
+            }
 
 
-# Example
-a = 10
-b = 5
+            // Display generated code as plain text.
 
-print("Addition:", add(a, b))
-print("Subtraction:", subtract(a, b))
-print("Multiplication:", multiply(a, b))
-print("Division:", divide(a, b))
-`;
+            // textContent prevents generated code from being
+            // interpreted as HTML or JavaScript by the browser.
+
+            codeOutput.textContent =
+                removeCodeFences(data.code);
+
+            codeExplanation.textContent =
+                data.explanation ||
+                "Code generated successfully. Review the code before running it.";
+
+            languageLabel.textContent =
+                data.language || selectedLanguage;
+
+
+            // Show results.
+
+            loadingSection.style.display = "none";
+            resultSection.style.display = "block";
+
+            resultSection.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "DevCore AI code-generation error:",
+                error
+            );
+
+            alert(
+                "Unable to generate code.\n\n" +
+                getErrorMessage(error)
+            );
+
+        } finally {
+
+            loadingSection.style.display = "none";
+
+            generateBtn.disabled = false;
+
+            generateBtn.innerHTML = `
+                <span>✦</span>
+                <span>Generate Code</span>
+            `;
+
         }
 
-
-        return `# Generated Python Code
-# Requirement:
-# ${requirement}
-
-def main():
-
-    # TODO:
-    # Implement the requested functionality here.
-
-    print("Application started")
+    });
 
 
-if __name__ == "__main__":
-    main()
-`;
+    // =====================================================
+    // REMOVE OPTIONAL MARKDOWN CODE FENCES
+    // =====================================================
+
+    function removeCodeFences(code) {
+
+        let cleanedCode = code.trim();
+
+        const match = cleanedCode.match(
+            /^```(?:[\w+#.-]+)?[ \t]*\r?\n([\s\S]*?)\r?\n```$/
+        );
+
+        if (match) {
+
+            cleanedCode = match[1];
+
+        }
+
+        return cleanedCode;
+
     }
 
 
-    /* ---------- JAVA ---------- */
+    // =====================================================
+    // COPY GENERATED CODE
+    // =====================================================
 
-    if (selectedLanguage === "Java") {
+    copyBtn.addEventListener("click", async function () {
 
-        if (
-            text.includes("largest") ||
-            text.includes("maximum")
-        ) {
+        const code = codeOutput.textContent;
 
-            return `import java.util.*;
+        if (!code.trim()) {
 
-public class Main {
+            alert("There is no generated code to copy.");
 
-    public static int findLargest(int[] numbers) {
+            return;
 
-        int largest = numbers[0];
+        }
 
-        for (int number : numbers) {
+        try {
 
-            if (number > largest) {
-                largest = number;
+            await navigator.clipboard.writeText(code);
+
+            showCopySuccess();
+
+        } catch (error) {
+
+            console.error("Clipboard API failed:", error);
+
+            // Fallback for supported browsers.
+
+            const temporaryTextArea =
+                document.createElement("textarea");
+
+            temporaryTextArea.value = code;
+
+            temporaryTextArea.style.position = "fixed";
+            temporaryTextArea.style.left = "-9999px";
+
+            document.body.appendChild(temporaryTextArea);
+
+            temporaryTextArea.select();
+
+            try {
+
+                const copied =
+                    document.execCommand("copy");
+
+                if (!copied) {
+
+                    throw new Error("Copy command failed.");
+
+                }
+
+                showCopySuccess();
+
+            } catch (fallbackError) {
+
+                alert(
+                    "Unable to copy automatically. Please select the code and copy it manually."
+                );
+
+            } finally {
+
+                temporaryTextArea.remove();
+
             }
 
         }
 
-        return largest;
-    }
+    });
 
-    public static void main(String[] args) {
 
-        int[] numbers = {
-            10, 25, 7, 42, 18
-        };
+    function showCopySuccess() {
 
-        int result =
-            findLargest(numbers);
+        const originalText = copyBtn.textContent;
 
-        System.out.println(
-            "Largest number: " + result
-        );
-    }
-}
-`;
-        }
-
-
-        return `import java.util.Scanner;
-
-public class Main {
-
-    public static void main(String[] args) {
-
-        Scanner scanner =
-            new Scanner(System.in);
-
-        // Requirement:
-        // ${requirement}
-
-        System.out.println(
-            "Application started"
-        );
-
-        scanner.close();
-    }
-}
-`;
-    }
-
-
-    /* ---------- JAVASCRIPT ---------- */
-
-    if (selectedLanguage === "JavaScript") {
-
-        return `// Generated JavaScript Code
-
-function main() {
-
-    // Requirement:
-    // ${requirement}
-
-    console.log(
-        "Application started"
-    );
-}
-
-main();
-`;
-    }
-
-
-    /* ---------- C ---------- */
-
-    if (selectedLanguage === "C") {
-
-        return `#include <stdio.h>
-
-int main() {
-
-    /*
-       Requirement:
-       ${requirement}
-    */
-
-    printf("Application started\\n");
-
-    return 0;
-}
-`;
-    }
-
-
-    /* ---------- C++ ---------- */
-
-    if (selectedLanguage === "C++") {
-
-        return `#include <iostream>
-
-using namespace std;
-
-int main() {
-
-    /*
-       Requirement:
-       ${requirement}
-    */
-
-    cout << "Application started";
-
-    return 0;
-}
-`;
-    }
-
-
-    /* ---------- HTML ---------- */
-
-    if (selectedLanguage === "HTML") {
-
-        return `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <title>Generated Page</title>
-</head>
-
-<body>
-
-    <h1>Generated Application</h1>
-
-    <p>
-        ${requirement}
-    </p>
-
-</body>
-
-</html>
-`;
-    }
-
-
-    /* ---------- CSS ---------- */
-
-    if (selectedLanguage === "CSS") {
-
-        return `/* Generated CSS */
-
-body {
-    margin: 0;
-
-    font-family: Arial, sans-serif;
-
-    background: #f8fafc;
-
-    color: #0f172a;
-}
-
-.container {
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 20px;
-}
-`;
-    }
-
-
-    return "// Code generation is not available for this language yet.";
-}
-
-
-/* ================= EXPLANATION ================= */
-
-function generateExplanation(
-    requirement,
-    selectedLanguage,
-    selectedFramework
-) {
-
-    let explanation =
-        `DevCore AI generated a ${selectedLanguage} solution based on the provided requirement. `;
-
-
-    if (selectedFramework !== "None") {
-
-        explanation +=
-            `The selected technology is ${selectedFramework}. `;
-
-    }
-
-
-    explanation +=
-        "The generated code provides a basic implementation structure and can be further modified according to the project's detailed requirements.";
-
-
-    return explanation;
-}
-
-
-/* ================= COPY CODE ================= */
-
-copyBtn.addEventListener("click", async function () {
-
-    const code =
-        codeOutput.textContent;
-
-
-    try {
-
-        await navigator.clipboard.writeText(code);
-
-        copyBtn.textContent =
-            "Copied!";
-
+        copyBtn.textContent = "Copied!";
+        copyBtn.disabled = true;
 
         setTimeout(function () {
 
-            copyBtn.textContent =
-                "Copy";
+            copyBtn.textContent = originalText;
+            copyBtn.disabled = false;
 
         }, 1500);
 
+    }
 
-    } catch (error) {
 
-        alert(
-            "Unable to copy the code."
-        );
+    // =====================================================
+    // FRIENDLY ERROR MESSAGES
+    // =====================================================
+
+    function getErrorMessage(error) {
+
+        if (error instanceof TypeError) {
+
+            return (
+                "Cannot connect to the DevCore AI backend.\n\n" +
+                "Check that FastAPI is running at:\n" +
+                "http://127.0.0.1:8000\n\n" +
+                "Also check your browser console and backend terminal."
+            );
+
+        }
+
+        return error.message ||
+            "An unexpected error occurred. Please try again.";
 
     }
 

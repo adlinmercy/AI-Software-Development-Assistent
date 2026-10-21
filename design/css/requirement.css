@@ -966,3 +966,120 @@ textarea {
         gap: 10px;
     }
 }
+
+/* =========================================
+   ORGANIZED REQUIREMENT ANALYSIS
+========================================= */
+
+.result-content {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    padding: 18px 20px;
+    box-sizing: border-box;
+    line-height: 1.7;
+}
+
+/* Tables */
+
+.analysis-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 12px 0 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.analysis-table th {
+    background: #f1f5ff;
+    color: #1e3a8a;
+    font-weight: 700;
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid #dbe4f0;
+}
+
+.analysis-table td {
+    padding: 13px 16px;
+    color: #334155;
+    vertical-align: top;
+    border-bottom: 1px solid #edf0f5;
+    overflow-wrap: anywhere;
+}
+
+.analysis-table tr:last-child td {
+    border-bottom: none;
+}
+
+.analysis-table tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.analysis-table tbody tr:hover {
+    background: #eff6ff;
+}
+
+/* Section headings */
+
+.analysis-subheading {
+    margin: 22px 0 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.analysis-subheading:first-child {
+    margin-top: 0;
+}
+
+/* Bullet lists */
+
+.analysis-list {
+    padding-left: 24px;
+    margin: 10px 0 18px;
+}
+
+.analysis-list li {
+    padding: 5px 0;
+    color: #334155;
+    line-height: 1.7;
+}
+
+/* Paragraphs */
+
+.analysis-paragraph {
+    margin: 8px 0 12px;
+    color: #475569;
+    line-height: 1.8;
+}
+
+/* Empty result messages */
+
+.empty-result {
+    padding: 12px 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 768px) {
+
+    .result-content {
+        padding: 14px;
+    }
+
+    .analysis-table {
+        font-size: 12px;
+    }
+
+    .analysis-table th,
+    .analysis-table td {
+        padding: 10px;
+    }
+
+}

@@ -1,10 +1,16 @@
-/* =========================================================
-   DEVCORE AI - REQUIREMENT ANALYSIS
-   ========================================================= */
+/*
+=========================================================
+DEVCORE AI - REQUIREMENT ANALYSIS
+Connects the requirement analysis page to the FastAPI AI.
+Uses the existing four-card HTML layout.
+=========================================================
+*/
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* ================= ELEMENTS ================= */
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
 
     const requirementInput =
         document.getElementById("requirementInput");
@@ -40,29 +46,87 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("nonFunctionalCount");
 
 
-    /* ================= CHARACTER COUNTER ================= */
+    // =====================================================
+    // BACKEND API
+    // =====================================================
 
-    requirementInput.addEventListener("input", function () {
+    const API_URL =
+        "http://127.0.0.1:8000/api/requirement-analysis";
 
-        const currentLength = requirementInput.value.length;
+
+    // =====================================================
+    // CHECK REQUIRED HTML ELEMENTS
+    // =====================================================
+
+    const requiredElements = {
+        requirementInput,
+        charCount,
+        analyzeBtn,
+        loadingSection,
+        resultsSection,
+        functionalRequirements,
+        nonFunctionalRequirements,
+        missingRequirements,
+        suggestions
+    };
+
+    const missingElements = Object.entries(requiredElements)
+        .filter(([name, element]) => !element)
+        .map(([name]) => name);
+
+    if (missingElements.length > 0) {
+
+        console.error(
+            "DevCore AI: Missing HTML elements:",
+            missingElements.join(", ")
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // INITIAL STATE
+    // =====================================================
+
+    loadingSection.classList.remove("show");
+    resultsSection.classList.remove("show");
+
+    loadingSection.setAttribute("aria-hidden", "true");
+    resultsSection.setAttribute("aria-hidden", "true");
+
+
+    // =====================================================
+    // CHARACTER COUNTER
+    // =====================================================
+
+    function updateCharacterCount() {
 
         charCount.textContent =
-            `${currentLength} / 5000 characters`;
+            `${requirementInput.value.length} / 5000 characters`;
 
-    });
+    }
+
+    requirementInput.addEventListener(
+        "input",
+        updateCharacterCount
+    );
+
+    updateCharacterCount();
 
 
-    /* ================= ANALYZE BUTTON ================= */
+    // =====================================================
+    // ANALYZE BUTTON
+    // =====================================================
 
-    analyzeBtn.addEventListener("click", function () {
+    analyzeBtn.addEventListener("click", function (event) {
+
+        event.preventDefault();
 
         const requirement =
             requirementInput.value.trim();
 
-
-        /* Empty validation */
-
-        if (requirement === "") {
+        if (!requirement) {
 
             alert(
                 "Please enter your software requirements before analyzing."
@@ -73,13 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /* Minimum input */
-
         if (requirement.length < 20) {
 
             alert(
-                "Please provide a little more information about your software requirement."
+                "Please provide at least 20 characters describing your project."
             );
 
             requirementInput.focus();
@@ -87,381 +148,567 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
-        /* Start analysis */
-
         startAnalysis(requirement);
 
     });
 
 
-    /* ================= START ANALYSIS ================= */
+    // =====================================================
+    // START ANALYSIS
+    // =====================================================
 
-    function startAnalysis(requirement) {
-
-        /* Disable button */
+    async function startAnalysis(requirement) {
 
         analyzeBtn.disabled = true;
 
-        analyzeBtn.innerHTML =
-            `<span class="btn-icon">◌</span>
-             <span>Analyzing...</span>`;
-
-
-        /* Hide previous results */
+        analyzeBtn.innerHTML = `
+            <span class="btn-icon">◌</span>
+            <span>Analyzing...</span>
+        `;
 
         resultsSection.classList.remove("show");
-
-
-        /* Show loading */
+        resultsSection.setAttribute("aria-hidden", "true");
 
         loadingSection.classList.add("show");
+        loadingSection.setAttribute("aria-hidden", "false");
 
-
-        /* Scroll to loading section */
+        clearResults();
 
         loadingSection.scrollIntoView({
             behavior: "smooth",
             block: "center"
         });
 
+        try {
 
-        /*
-         * Frontend demo delay.
-         *
-         * Later this will be replaced with:
-         *
-         * fetch("/api/analyze-requirements", {...})
-         */
+            // Send the project description to FastAPI.
 
-        setTimeout(function () {
+            const response = await fetch(API_URL, {
 
-            const analysis =
-                generateDemoAnalysis(requirement);
+                method: "POST",
 
-            displayResults(analysis);
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-            loadingSection.classList.remove("show");
+                body: JSON.stringify({
+                    project_description: requirement
+                })
+
+            });
+
+
+            // Read the response.
+
+            const responseText = await response.text();
+
+            let data;
+
+            try {
+
+                data = JSON.parse(responseText);
+
+            } catch {
+
+                throw new Error(
+                    "The backend returned an invalid response. " +
+                    "Check that the FastAPI server is running."
+                );
+
+            }
+
+
+            // Handle HTTP errors.
+
+            if (!response.ok) {
+
+                const message =
+                    typeof data.detail === "string"
+                        ? data.detail
+                        : "The server could not analyze your requirements.";
+
+                throw new Error(message);
+
+            }
+
+
+            // Validate the AI response.
+
+            if (
+                !data.analysis ||
+                typeof data.analysis !== "string"
+            ) {
+
+                throw new Error(
+                    "The AI did not return a valid analysis report."
+                );
+
+            }
+
+
+            // Display the report in the four existing cards.
+
+            displayAnalysis(data.analysis);
 
             resultsSection.classList.add("show");
+            resultsSection.setAttribute("aria-hidden", "false");
+
+            resultsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        } catch (error) {
+
+            console.error(
+                "DevCore AI requirement analysis error:",
+                error
+            );
+
+            alert(
+                "Unable to analyze requirements.\n\n" +
+                getFriendlyError(error)
+            );
+
+        } finally {
+
+            loadingSection.classList.remove("show");
+            loadingSection.setAttribute("aria-hidden", "true");
 
             analyzeBtn.disabled = false;
 
-            analyzeBtn.innerHTML =
-                `<span class="btn-icon">✦</span>
-                 <span>Analyze Requirements</span>`;
-
-
-            /* Scroll to results */
-
-            setTimeout(function () {
-
-                resultsSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }, 150);
-
-        }, 1800);
-
-    }
-
-
-    /* =====================================================
-       DEMO AI ANALYSIS
-       ===================================================== */
-
-    function generateDemoAnalysis(requirement) {
-
-        const text =
-            requirement.toLowerCase();
-
-
-        /* ---------------- Functional ---------------- */
-
-        const functional = [];
-
-
-        if (
-            text.includes("login") ||
-            text.includes("sign in") ||
-            text.includes("authentication")
-        ) {
-            functional.push(
-                "The system should provide secure user authentication and login functionality."
-            );
-        }
-
-
-        if (
-            text.includes("register") ||
-            text.includes("registration") ||
-            text.includes("signup")
-        ) {
-            functional.push(
-                "The system should allow new users to create an account."
-            );
-        }
-
-
-        if (
-            text.includes("admin") ||
-            text.includes("administrator")
-        ) {
-            functional.push(
-                "The system should provide administrative functionality for managing system data and users."
-            );
-        }
-
-
-        if (
-            text.includes("track") ||
-            text.includes("location") ||
-            text.includes("live")
-        ) {
-            functional.push(
-                "The system should provide real-time tracking or status information."
-            );
-        }
-
-
-        if (
-            text.includes("notification") ||
-            text.includes("alert")
-        ) {
-            functional.push(
-                "The system should provide notifications or alerts to relevant users."
-            );
-        }
-
-
-        if (
-            text.includes("report") ||
-            text.includes("reports")
-        ) {
-            functional.push(
-                "The system should generate reports based on available system data."
-            );
-        }
-
-
-        if (
-            text.includes("database") ||
-            text.includes("store") ||
-            text.includes("save")
-        ) {
-            functional.push(
-                "The system should store and retrieve required application data."
-            );
-        }
-
-
-        if (functional.length === 0) {
-
-            functional.push(
-                "The system should implement the functionality described in the provided software requirement."
-            );
-
-            functional.push(
-                "The system should accept user input and process it according to the defined business requirements."
-            );
-
-            functional.push(
-                "The system should provide appropriate output based on the user's request."
-            );
-
-        }
-
-
-        /* ---------------- Non Functional ---------------- */
-
-        const nonFunctional = [
-
-            "The system should provide a user-friendly and easy-to-use interface.",
-
-            "The system should provide reliable and consistent responses.",
-
-            "The system should protect user data and prevent unauthorized access.",
-
-            "The system should provide acceptable response time for normal user operations."
-
-        ];
-
-
-        /* ---------------- Missing Information ---------------- */
-
-        const missing = [];
-
-
-        if (
-            !text.includes("user") &&
-            !text.includes("student") &&
-            !text.includes("admin") &&
-            !text.includes("customer")
-        ) {
-            missing.push(
-                "The target users or user roles are not clearly specified."
-            );
-        }
-
-
-        if (
-            !text.includes("database") &&
-            !text.includes("data") &&
-            !text.includes("store")
-        ) {
-            missing.push(
-                "The required data storage and database details are not specified."
-            );
-        }
-
-
-        if (
-            !text.includes("security") &&
-            !text.includes("secure")
-        ) {
-            missing.push(
-                "Specific security requirements have not been defined."
-            );
-        }
-
-
-        if (
-            !text.includes("performance") &&
-            !text.includes("fast") &&
-            !text.includes("response")
-        ) {
-            missing.push(
-                "Performance and response-time expectations are not clearly defined."
-            );
-        }
-
-
-        if (missing.length === 0) {
-
-            missing.push(
-                "No major ambiguity was detected from the provided description. Detailed stakeholder validation is still recommended."
-            );
-
-        }
-
-
-        /* ---------------- Suggestions ---------------- */
-
-        const suggestionsList = [
-
-            "Clearly define all user roles and their permissions.",
-
-            "Specify the expected inputs and outputs for each major feature.",
-
-            "Define security, performance, and scalability requirements.",
-
-            "Identify important business rules and system constraints.",
-
-            "Break large requirements into smaller, testable requirements."
-
-        ];
-
-
-        return {
-            functional: functional,
-            nonFunctional: nonFunctional,
-            missing: missing,
-            suggestions: suggestionsList
-        };
-
-    }
-
-
-    /* =====================================================
-       DISPLAY RESULTS
-       ===================================================== */
-
-    function displayResults(analysis) {
-
-
-        /* Functional requirements */
-
-        functionalRequirements.innerHTML =
-            createList(analysis.functional);
-
-        functionalCount.textContent =
-            analysis.functional.length;
-
-
-        /* Non-functional requirements */
-
-        nonFunctionalRequirements.innerHTML =
-            createList(analysis.nonFunctional);
-
-        nonFunctionalCount.textContent =
-            analysis.nonFunctional.length;
-
-
-        /* Missing information */
-
-        missingRequirements.innerHTML =
-            createList(analysis.missing);
-
-
-        /* Suggestions */
-
-        suggestions.innerHTML =
-            createList(analysis.suggestions);
-
-    }
-
-
-    /* =====================================================
-       CREATE LIST
-       ===================================================== */
-
-    function createList(items) {
-
-        if (!items || items.length === 0) {
-
-            return `
-                <p class="empty-result">
-                    No information available.
-                </p>
+            analyzeBtn.innerHTML = `
+                <span>✦</span>
+                <span>Analyze Requirements</span>
             `;
 
         }
 
-
-        let html = '<ul class="result-list">';
-
-
-        items.forEach(function (item) {
-
-            html += `
-                <li>${escapeHTML(item)}</li>
-            `;
-
-        });
+    }
 
 
-        html += "</ul>";
+    // =====================================================
+    // CLEAR RESULTS
+    // =====================================================
 
-        return html;
+    function clearResults() {
+
+        functionalRequirements.replaceChildren();
+        nonFunctionalRequirements.replaceChildren();
+        missingRequirements.replaceChildren();
+        suggestions.replaceChildren();
+
+        if (functionalCount) {
+            functionalCount.textContent = "0";
+        }
+
+        if (nonFunctionalCount) {
+            nonFunctionalCount.textContent = "0";
+        }
 
     }
 
 
-    /* =====================================================
-       SECURITY
-       Prevent raw HTML from user input appearing in results
-       ===================================================== */
+    // =====================================================
+    // DISPLAY AI ANALYSIS
+    // =====================================================
 
-    function escapeHTML(text) {
+    function displayAnalysis(markdown) {
 
-        const div =
-            document.createElement("div");
+        clearResults();
 
-        div.textContent = text;
+        /*
+         * The backend currently returns a Markdown report.
+         * Split it into sections using Markdown headings.
+         */
 
-        return div.innerHTML;
+        const sections = parseMarkdownSections(markdown);
+
+
+        // Functional requirements
+
+        const functionalText = findSection(sections, [
+            "functional requirements",
+            "functional requirement"
+        ]);
+
+        renderSection(
+            functionalRequirements,
+            functionalText,
+            "No functional requirements were identified."
+        );
+
+        if (functionalCount) {
+
+            functionalCount.textContent =
+                String(countItems(functionalText));
+
+        }
+
+
+        // Non-functional requirements
+
+        const nonFunctionalText = findSection(sections, [
+            "non-functional requirements",
+            "nonfunctional requirements",
+            "non-functional requirement"
+        ]);
+
+        renderSection(
+            nonFunctionalRequirements,
+            nonFunctionalText,
+            "No non-functional requirements were identified."
+        );
+
+        if (nonFunctionalCount) {
+
+            nonFunctionalCount.textContent =
+                String(countItems(nonFunctionalText));
+
+        }
+
+
+        // Missing or ambiguous information
+
+        const missingText = findSection(sections, [
+            "clarifying questions",
+            "missing requirements",
+            "missing or ambiguous information",
+            "ambiguities",
+            "assumptions and open questions"
+        ]);
+
+        renderSection(
+            missingRequirements,
+            missingText,
+            "No separate clarification section was found in the report."
+        );
+
+
+        // Suggestions and recommendations
+
+        const suggestionText = findSection(sections, [
+            "suggestions",
+            "recommendations",
+            "recommended development phases",
+            "suggested technology stack",
+            "risks and assumptions",
+            "constraints, risks, assumptions"
+        ]);
+
+        renderSection(
+            suggestions,
+            suggestionText,
+            "Review the full analysis for additional recommendations."
+        );
+
+    }
+
+
+    // =====================================================
+    // PARSE MARKDOWN HEADINGS
+    // =====================================================
+
+    function parseMarkdownSections(markdown) {
+
+        const lines = markdown.split(/\r?\n/);
+
+        const sections = [];
+
+        let currentTitle = "Overview";
+        let currentContent = [];
+
+        function saveSection() {
+
+            sections.push({
+                title: normalizeTitle(currentTitle),
+                content: currentContent.join("\n").trim()
+            });
+
+        }
+
+        for (const line of lines) {
+
+            const headingMatch =
+                line.match(/^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$/);
+
+            if (headingMatch) {
+
+                saveSection();
+
+                currentTitle = headingMatch[1]
+                    .replace(/\*\*/g, "")
+                    .trim();
+
+                currentContent = [];
+
+            } else {
+
+                currentContent.push(line);
+
+            }
+
+        }
+
+        saveSection();
+
+        return sections;
+
+    }
+
+
+    // =====================================================
+    // NORMALIZE SECTION TITLES
+    // =====================================================
+
+    function normalizeTitle(title) {
+
+        return title
+            .toLowerCase()
+            .replace(/^\d+[\s.)-]+/, "")
+            .replace(/[*_`]/g, "")
+            .replace(/[^\w\s-]/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+
+    }
+
+
+
+
+    // =====================================================
+// FIND AN EXACT REPORT SECTION
+// =====================================================
+
+function findSection(sections, possibleTitles) {
+
+    const normalizedTitles = possibleTitles.map(
+        normalizeTitle
+    );
+
+    // Match complete heading names only.
+    const matchingSection = sections.find(section =>
+        normalizedTitles.includes(section.title)
+    );
+
+    return matchingSection
+        ? matchingSection.content
+        : "";
+}
+
+// =====================================================
+// RENDER ORGANIZED REQUIREMENT RESULTS
+// =====================================================
+
+function renderSection(container, markdown, emptyMessage) {
+
+    container.replaceChildren();
+
+    if (!markdown || !markdown.trim()) {
+
+        const message = document.createElement("p");
+
+        message.className = "empty-result";
+        message.textContent = emptyMessage;
+
+        container.appendChild(message);
+
+        return;
+    }
+
+    const lines = markdown.split(/\r?\n/);
+
+    let table = null;
+    let tableBody = null;
+    let list = null;
+
+    function createTable() {
+
+        table = document.createElement("table");
+        table.className = "analysis-table";
+
+        const tbody = document.createElement("tbody");
+
+        tableBody = tbody;
+
+        table.appendChild(tbody);
+        container.appendChild(table);
+
+    }
+
+    function finishTable() {
+
+        table = null;
+        tableBody = null;
+
+    }
+
+    function addCell(row, text, isHeader = false) {
+
+        const cell = document.createElement(
+            isHeader ? "th" : "td"
+        );
+
+        cell.textContent = text;
+
+        row.appendChild(cell);
+
+    }
+
+    function cleanMarkdown(text) {
+
+        return text
+            .replace(/<[^>]*>/g, "")
+            .replace(/\*\*(.*?)\*\*/g, "$1")
+            .replace(/\*(.*?)\*/g, "$1")
+            .replace(/`([^`]+)`/g, "$1")
+            .replace(/^\s*[-*+]\s+/, "")
+            .trim();
+
+    }
+
+    for (const rawLine of lines) {
+
+        const line = rawLine.trim();
+
+        if (!line || /^[-|:\s]+$/.test(line)) {
+            continue;
+        }
+
+        // Markdown table rows
+        if (line.startsWith("|") && line.endsWith("|")) {
+
+            const cells = line
+                .slice(1, -1)
+                .split("|")
+                .map(cell => cleanMarkdown(cell));
+
+            if (
+                cells.every(cell => /^:?-{2,}:?$/.test(cell))
+            ) {
+                continue;
+            }
+
+            if (!table) {
+                createTable();
+            }
+
+            const row = document.createElement("tr");
+
+            const isHeader = tableBody.children.length === 0;
+
+            cells.forEach(cell => {
+                addCell(row, cell, isHeader);
+            });
+
+            tableBody.appendChild(row);
+
+            list = null;
+
+            continue;
+        }
+
+        finishTable();
+
+        // Markdown headings
+        const headingMatch = line.match(/^#{1,6}\s+(.+)$/);
+
+        if (headingMatch) {
+
+            const heading = document.createElement("h4");
+
+            heading.className = "analysis-subheading";
+            heading.textContent = cleanMarkdown(headingMatch[1]);
+
+            container.appendChild(heading);
+
+            list = null;
+
+            continue;
+        }
+
+        // Numbered or bulleted requirements
+        const listMatch = line.match(
+            /^(?:[-*+]\s+|\d+[.)]\s+)(.+)$/
+        );
+
+        if (listMatch) {
+
+            if (!list) {
+
+                list = document.createElement("ul");
+
+                list.className = "analysis-list";
+
+                container.appendChild(list);
+
+            }
+
+            const item = document.createElement("li");
+
+            item.textContent = cleanMarkdown(listMatch[1]);
+
+            list.appendChild(item);
+
+            continue;
+        }
+
+        // Regular paragraph
+        list = null;
+
+        const paragraph = document.createElement("p");
+
+        paragraph.className = "analysis-paragraph";
+        paragraph.textContent = cleanMarkdown(line);
+
+        container.appendChild(paragraph);
+
+    }
+
+}
+
+    // =====================================================
+    // COUNT REQUIREMENT ITEMS
+    // =====================================================
+
+    function countItems(markdown) {
+
+        if (!markdown || !markdown.trim()) {
+
+            return 0;
+
+        }
+
+        const lines = markdown.split(/\r?\n/);
+
+        const items = lines.filter(line =>
+            /^\s*(?:[-*+]|\d+[.)])\s+/.test(line)
+        );
+
+        return items.length;
+
+    }
+
+
+    // =====================================================
+    // FRIENDLY ERROR MESSAGES
+    // =====================================================
+
+    function getFriendlyError(error) {
+
+        if (error instanceof TypeError) {
+
+            return (
+                "Cannot connect to the DevCore AI backend.\n\n" +
+                "Make sure FastAPI is running at:\n" +
+                "http://127.0.0.1:8000\n\n" +
+                "Also check that the frontend is allowed to access the backend."
+            );
+
+        }
+
+        return error.message ||
+            "An unexpected error occurred. Please try again.";
 
     }
 

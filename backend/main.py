@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import sqlite3
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -38,6 +39,101 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# =========================================================
+# PROJECT HISTORY DATABASE
+# =========================================================
+
+HISTORY_DB_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "project_history.db",
+)
+
+
+def init_history_db():
+    """Create the project history table if it does not exist."""
+
+    with sqlite3.connect(HISTORY_DB_PATH) as connection:
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS project_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                activity_type TEXT NOT NULL,
+                project_name TEXT NOT NULL,
+                summary TEXT,
+                created_at TEXT NOT NULL,
+                request_data TEXT,
+                result_data TEXT
+            )
+        """)
+
+
+def save_history(
+    activity_type,
+    project_name,
+    summary,
+    request_data,
+    result_data,
+):
+    """Save a successful DevCore AI activity."""
+
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+            cursor = connection.execute("""
+                INSERT INTO project_history (
+                    activity_type,
+                    project_name,
+                    summary,
+                    created_at,
+                    request_data,
+                    result_data
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (
+                activity_type,
+                project_name[:200],
+                summary[:1000],
+                __import__("datetime").datetime.now().astimezone().isoformat(
+                    timespec="seconds"
+                ),
+                json.dumps(request_data, ensure_ascii=False, default=str),
+                json.dumps(result_data, ensure_ascii=False, default=str),
+            ))
+
+            return cursor.lastrowid
+
+    except Exception:
+        logger.exception("Failed to save project history")
+        return None
+
+
+# Initialize the database when the backend starts.
+init_history_db()
+
+@app.get("/api/history")
+def get_project_history():
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+            connection.row_factory = sqlite3.Row
+
+            rows = connection.execute("""
+                SELECT id, activity_type, project_name, summary, created_at
+                FROM project_history
+                ORDER BY id DESC
+            """).fetchall()
+
+            return {
+                "status": "success",
+                "activities": [dict(row) for row in rows],
+            }
+
+    except Exception as error:
+        logger.exception("Failed to retrieve project history")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to retrieve project history.",
+        ) from error
+
+
 
 
 # =========================================================
@@ -229,7 +325,9 @@ PROJECT DESCRIPTION:
                 detail="The AI returned an empty result. Please try again.",
             )
 
-        return {
+            
+
+        response = {
             "status": "success",
             "ai_connected": True,
             "model": MODEL_NAME,
@@ -237,6 +335,20 @@ PROJECT DESCRIPTION:
             "project_description": description,
             "analysis": analysis,
         }
+
+        save_history(
+            activity_type="requirement",
+            project_name=description[:100],
+            summary="Requirement analysis completed successfully.",
+            request_data={
+                "project_description": description,
+            },
+            result_data=response,
+        )
+
+        return response
+
+
 
     except HTTPException:
         raise

@@ -203,26 +203,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* ================================
-       COMPACT MODE
-       ================================ */
+   /* ================================
+   COMPACT MODE
+   ================================ */
 
-    const compactMode =
-        document.getElementById("compactMode");
+const compactMode = document.getElementById("compactMode");
 
+if (compactMode) {
+    // Restore the saved preference.
+    const savedCompactMode =
+        localStorage.getItem("devcoreCompactMode") === "true";
+
+    compactMode.checked = savedCompactMode;
+
+    document.documentElement.setAttribute(
+        "data-compact",
+        String(savedCompactMode)
+    );
+
+    // Save and apply changes immediately.
     compactMode.addEventListener("change", () => {
+        const enabled = compactMode.checked;
 
-        if (compactMode.checked) {
+        localStorage.setItem(
+            "devcoreCompactMode",
+            String(enabled)
+        );
 
-            document.body.style.fontSize = "98%";
+        document.documentElement.setAttribute(
+            "data-compact",
+            String(enabled)
+        );
 
-        } else {
-
-            document.body.style.fontSize = "100%";
-
-        }
-
+        showMessage(
+            aiMessage,
+            enabled
+                ? "Compact interface enabled."
+                : "Compact interface disabled."
+        );
     });
+}
+
 
 
     /* ================================

@@ -8,6 +8,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/theme.css">
+
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -578,8 +580,34 @@
 
 </main>
 
+<!-- Activity Result Modal -->
+<div id="activityModal" class="activity-modal" aria-hidden="true">
+    <div class="activity-modal-content" role="dialog" aria-modal="true" aria-labelledby="activityModalTitle">
 
+        <div class="activity-modal-header">
+            <div>
+                <h2 id="activityModalTitle">Activity Details</h2>
+                <p id="activityModalMeta"></p>
+            </div>
+
+            <button
+                type="button"
+                id="closeActivityModal"
+                class="activity-modal-close"
+                aria-label="Close activity details"
+            >&times;</button>
+        </div>
+
+        <div id="activityModalBody" class="activity-modal-body"></div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/profile.js"></script>
 <script src="js/project-history.js"></script>
+<script src="js/theme.js"></script>
+
 
 </body>
 </html>

@@ -806,3 +806,123 @@ body {
     }
 
 }
+
+/* Activity Result Modal */
+.activity-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.65);
+}
+
+.activity-modal-content {
+    width: min(850px, 100%);
+    max-height: 85vh;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.activity-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 26px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.activity-modal-header h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 20px;
+    overflow-wrap: anywhere;
+}
+
+.activity-modal-header p {
+    margin: 8px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.activity-modal-close {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.activity-modal-body {
+    padding: 26px;
+    max-height: calc(85vh - 100px);
+    overflow-y: auto;
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.activity-modal-body h1,
+.activity-modal-body h2,
+.activity-modal-body h3 {
+    color: #111827;
+    margin: 20px 0 10px;
+}
+
+.activity-modal-body h1 {
+    font-size: 24px;
+}
+
+.activity-modal-body h2 {
+    font-size: 20px;
+}
+
+.activity-modal-body h3 {
+    font-size: 17px;
+}
+
+.activity-modal-body p {
+    margin: 10px 0;
+}
+
+.activity-modal-body ul,
+.activity-modal-body ol {
+    padding-left: 24px;
+}
+
+.activity-modal-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+}
+
+.activity-modal-body th,
+.activity-modal-body td {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.activity-modal-body th {
+    background: #f1f5f9;
+}
+
+.activity-modal-body pre {
+    overflow-x: auto;
+    padding: 14px;
+    border-radius: 8px;
+    background: #f1f5f9;
+}
+
+.activity-modal-body code {
+    overflow-wrap: anywhere;
+}

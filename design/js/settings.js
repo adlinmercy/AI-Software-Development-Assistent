@@ -28,12 +28,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2500);
     }
 
+        // ================================
+    // LOAD SAVED SETTINGS
+    // ================================
 
-    /* ================================
-       PROFILE
-       ================================ */
+    const savedProfile = JSON.parse(
+        localStorage.getItem("devcoreProfile") || "{}"
+    );
 
-    saveProfileBtn.addEventListener("click", () => {
+    const savedAiPreferences = JSON.parse(
+        localStorage.getItem("devcoreAiPreferences") || "{}"
+    );
+
+    if (savedProfile.fullName) {
+        document.getElementById("fullName").value =
+            savedProfile.fullName;
+    }
+
+    if (savedProfile.email) {
+        document.getElementById("email").value =
+            savedProfile.email;
+    }
+
+    if (savedAiPreferences.language) {
+        document.getElementById("programmingLanguage").value =
+            savedAiPreferences.language;
+    }
+
+    if (savedAiPreferences.style) {
+        document.getElementById("responseStyle").value =
+            savedAiPreferences.style;
+    }
+
+
+        saveProfileBtn.addEventListener("click", () => {
 
         const fullName =
             document.getElementById("fullName").value.trim();
@@ -41,30 +69,41 @@ document.addEventListener("DOMContentLoaded", () => {
         const email =
             document.getElementById("email").value.trim();
 
-
-        if (fullName === "") {
+        if (!fullName) {
             alert("Please enter your full name.");
             return;
         }
 
-        if (email === "") {
+        if (!email) {
             alert("Please enter your email address.");
             return;
         }
 
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        localStorage.setItem(
+            "devcoreProfile",
+            JSON.stringify({
+                fullName: fullName,
+                email: email
+            })
+        );
+
+        updateDevCoreProfile();
+
         showMessage(
             profileMessage,
-            "Profile updated successfully."
+            "Profile saved successfully."
         );
 
     });
 
-
-    /* ================================
-       AI PREFERENCES
-       ================================ */
-
-    saveAiBtn.addEventListener("click", () => {
+        saveAiBtn.addEventListener("click", () => {
 
         const language =
             document.getElementById("programmingLanguage").value;
@@ -72,16 +111,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const style =
             document.getElementById("responseStyle").value;
 
-        console.log("Default Language:", language);
-        console.log("Response Style:", style);
+        localStorage.setItem(
+            "devcoreAiPreferences",
+            JSON.stringify({
+                language: language,
+                style: style
+            })
+        );
 
         showMessage(
             aiMessage,
-            "AI preferences updated successfully."
+            "AI preferences saved successfully."
         );
 
     });
-
+ 
 
     /* ================================
        CHANGE PASSWORD
@@ -133,24 +177,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* ================================
+        /* ================================
        THEME
        ================================ */
 
     const theme = document.getElementById("theme");
 
-    theme.addEventListener("change", () => {
+    if (theme) {
+        const savedTheme =
+            localStorage.getItem("devcoreTheme") || "Light";
 
-        if (theme.value === "Dark") {
-            alert(
-                "Dark mode will be connected to the application theme in the future."
+        theme.value = savedTheme;
+
+        theme.addEventListener("change", () => {
+            const selectedTheme = theme.value;
+
+            // Save the selected theme.
+            localStorage.setItem("devcoreTheme", selectedTheme);
+
+            // Apply the theme immediately.
+            document.documentElement.setAttribute(
+                "data-theme",
+                selectedTheme.toLowerCase()
             );
-
-            theme.value = "Light";
-        }
-
-    });
-
+        });
+    }
 
     /* ================================
        COMPACT MODE

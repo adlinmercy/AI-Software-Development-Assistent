@@ -1,0 +1,193 @@
+/* =========================================
+   DEVCORE AI - SHARED DARK THEME
+   Light Mode remains unchanged by default.
+   ========================================= */
+
+html[data-theme="dark"] body {
+    background: #0b1120 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Main page areas */
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] .page-content {
+    background: #0b1120 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Headers and navigation */
+html[data-theme="dark"] .top-navbar {
+    background: #111827 !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .topbar-title h2,
+html[data-theme="dark"] .mobile-page-name {
+    color: #f1f5f9 !important;
+}
+
+/* Cards and content panels */
+html[data-theme="dark"] .settings-card,
+html[data-theme="dark"] .result-card,
+html[data-theme="dark"] .history-card,
+html[data-theme="dark"] .history-item,
+html[data-theme="dark"] .activity-modal-content,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .feature-card {
+    background: #111827 !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Headings and important text */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] .page-header h1,
+html[data-theme="dark"] .settings-card-header h3,
+html[data-theme="dark"] .profile-info strong,
+html[data-theme="dark"] .profile-name,
+html[data-theme="dark"] .history-main h3,
+html[data-theme="dark"] .result-title h3,
+html[data-theme="dark"] .toggle-row strong {
+    color: #f1f5f9 !important;
+}
+
+/* Descriptions and secondary text */
+html[data-theme="dark"] p,
+html[data-theme="dark"] .form-group label,
+html[data-theme="dark"] .settings-card-header p,
+html[data-theme="dark"] .toggle-row p,
+html[data-theme="dark"] .history-time {
+    color: #cbd5e1 !important;
+}
+
+/* Input fields and dropdowns */
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+/* Placeholder text */
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Buttons */
+html[data-theme="dark"] .secondary-btn,
+html[data-theme="dark"] .notification-btn,
+html[data-theme="dark"] .notification-button {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+/* Tables */
+html[data-theme="dark"] table {
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] th {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] td,
+html[data-theme="dark"] th {
+    border-color: #475569 !important;
+}
+
+/* Code blocks */
+html[data-theme="dark"] pre,
+html[data-theme="dark"] code {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+/* Dividers */
+html[data-theme="dark"] hr,
+html[data-theme="dark"] .settings-card-header,
+html[data-theme="dark"] .toggle-row,
+html[data-theme="dark"] .sidebar-bottom {
+    border-color: #334155 !important;
+}
+
+/* Links */
+html[data-theme="dark"] a {
+    color: #93c5fd;
+}
+
+/* Modal */
+html[data-theme="dark"] .activity-modal {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+html[data-theme="dark"] .activity-modal-body {
+    color: #e2e8f0 !important;
+}
+
+/* =========================================
+   CODE GENERATION - DARK THEME
+   ========================================= */
+
+html[data-theme="dark"] .generator-card {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #334155 !important;
+}
+
+/* Card header */
+html[data-theme="dark"] .generator-card-header {
+    background: #111827 !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .generator-card-header h2 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .generator-card-header p {
+    color: #cbd5e1 !important;
+}
+
+/* Input area */
+html[data-theme="dark"] .generator-input-area {
+    background: #111827 !important;
+}
+
+html[data-theme="dark"] .generator-input-area label,
+html[data-theme="dark"] .option-group label {
+    color: #e2e8f0 !important;
+}
+
+/* Text area and language selectors */
+html[data-theme="dark"] .generator-card textarea,
+html[data-theme="dark"] .generator-card select {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .generator-card textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Character count and helper text */
+html[data-theme="dark"] .generator-card .input-bottom,
+html[data-theme="dark"] .generator-card .input-tip,
+html[data-theme="dark"] .generator-card #charCount {
+    color: #cbd5e1 !important;
+}
+
+/* Programming options */
+html[data-theme="dark"] .generation-options,
+html[data-theme="dark"] .option-group {
+    background: #111827 !important;
+}

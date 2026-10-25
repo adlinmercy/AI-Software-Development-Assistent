@@ -44,10 +44,13 @@ app.add_middleware(
 # PROJECT HISTORY DATABASE
 # =========================================================
 
+
 HISTORY_DB_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
+    os.path.expanduser("~"),
     "project_history.db",
 )
+
+
 
 
 def init_history_db():
@@ -133,6 +136,47 @@ def get_project_history():
             detail="Unable to retrieve project history.",
         ) from error
 
+@app.get("/api/history/{activity_id}")
+def get_history_activity(activity_id: int):
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+            connection.row_factory = sqlite3.Row
+
+            row = connection.execute("""
+                SELECT *
+                FROM project_history
+                WHERE id = ?
+            """, (activity_id,)).fetchone()
+
+            if row is None:
+                raise HTTPException(
+                    status_code=404,
+                    detail="History activity not found.",
+                )
+
+            activity = dict(row)
+
+            # Convert saved JSON strings back into Python objects.
+            for field in ("request_data", "result_data"):
+                if activity.get(field):
+                    try:
+                        activity[field] = json.loads(activity[field])
+                    except (json.JSONDecodeError, TypeError):
+                        pass
+
+            return {
+                "status": "success",
+                "activity": activity,
+            }
+
+    except HTTPException:
+        raise
+    except Exception as error:
+        logger.exception("Failed to retrieve history activity")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to retrieve history activity.",
+        ) from error
 
 
 
@@ -338,7 +382,7 @@ PROJECT DESCRIPTION:
 
         save_history(
             activity_type="requirement",
-            project_name=description[:100],
+            project_name="Requirement Analysis",
             summary="Requirement analysis completed successfully.",
             request_data={
                 "project_description": description,
@@ -526,7 +570,8 @@ Do not add greetings, introductions, or extra sections.
                 detail="Groq did not return usable code. Please try again.",
             )
 
-        return {
+        # Prepare the response.
+        response = {
             "status": "success",
             "language": language,
             "framework": framework,
@@ -534,6 +579,22 @@ Do not add greetings, introductions, or extra sections.
             "explanation": explanation,
             "message": "Code generated successfully.",
         }
+
+        # Save the successful activity to Project History.
+        save_history(
+            activity_type="generation",
+            project_name=f"{language} Code Generation",
+            summary=f"Code generated successfully in {language}.",
+            request_data={
+                "requirement": requirement,
+                "language": language,
+                "framework": framework,
+            },
+            result_data=response,
+        )
+
+        # Return the response after saving history.
+        return response
 
     except HTTPException:
         raise
@@ -697,7 +758,7 @@ Do not add an introduction or conclusion.
 
         fixed_code = remove_code_fences(parsed["fixed_code"]).strip()
 
-        return {
+        response = {
             "status": "success",
             "language": language,
             "error_summary": parsed["error_summary"],
@@ -706,6 +767,21 @@ Do not add an introduction or conclusion.
             "debug_suggestions": parsed["debug_suggestions"],
             "message": "Code debugging analysis completed.",
         }
+
+        # Save the successful debugging activity to Project History.
+        save_history(
+            activity_type="debugging",
+            project_name=f"{language} Code Debugging",
+            summary=f"Code debugging completed for {language}.",
+            request_data={
+                "code": code,
+                "language": language,
+                "error_message": error_message,
+            },
+            result_data=response,
+        )
+
+        return response
 
     except HTTPException:
         raise
@@ -943,7 +1019,7 @@ Return JSON with exactly this structure:
             if isinstance(item, str) and item.strip()
         ][:5]
 
-        return {
+        response = {
             "status": "success",
             "language": language,
             "scores": validated_scores,
@@ -951,6 +1027,24 @@ Return JSON with exactly this structure:
             "recommendations": safe_recommendations,
             "summary": summary.strip()[:1000],
         }
+
+        # Save the successful code review to Project History.
+        save_history(
+            activity_type="review",
+            project_name=f"{language} Code Review",
+            summary=f"Code review completed for {language}.",
+            request_data={
+                "code": code,
+                "language": language,
+                "quality": request.quality,
+                "security": request.security,
+                "performance": request.performance,
+                "maintainability": request.maintainability,
+            },
+            result_data=response,
+        )
+
+        return response
 
     except HTTPException:
         raise
@@ -1157,7 +1251,7 @@ RULES:
         if not isinstance(summary, str):
             summary = ""
 
-        return {
+        response = {
             "status": "success",
             "language": language,
             "test_type": test_type,
@@ -1167,6 +1261,21 @@ RULES:
             "negative_tests": negative_count,
             "summary": summary[:5000],
         }
+
+        # Save successful test case generation to Project History.
+        save_history(
+            activity_type="testing",
+            project_name=f"{language} Test Case Generation",
+            summary=f"Test cases generated successfully ({len(validated_cases)} tests).",
+            request_data={
+                "requirement": requirement,
+                "language": language,
+                "test_type": test_type,
+            },
+            result_data=response,
+        )
+
+        return response
 
     except HTTPException:
         raise
@@ -1271,13 +1380,32 @@ Instructions:
                 detail="The AI returned empty documentation. Please try again.",
             )
 
-        return {
+        response = {
             "status": "success",
             "documentation": documentation,
             "documentation_type": documentation_type,
             "language": language,
             "message": "Documentation generated successfully.",
         }
+
+        # Save successful documentation generation to Project History.
+        save_history(
+            activity_type="documentation",
+            project_name=f"{documentation_type.capitalize()} Documentation",
+            summary=(
+                f"{documentation_type.capitalize()} documentation "
+                "generated successfully."
+            ),
+            request_data={
+                "requirement": requirement,
+                "documentation_type": documentation_type,
+                "language": language,
+            },
+            result_data=response,
+        )
+
+        return response
+
 
     except HTTPException:
         raise

@@ -1,26 +1,34 @@
-/* ================================
+/* =========================================
    DEVCORE AI - SETTINGS JS
-   ================================ */
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const saveProfileBtn = document.getElementById("saveProfileBtn");
-    const saveAiBtn = document.getElementById("saveAiBtn");
-    const changePasswordBtn = document.getElementById("changePasswordBtn");
+    // =====================================
+    // ELEMENTS
+    // =====================================
 
-    const profileMessage = document.getElementById("profileMessage");
-    const aiMessage = document.getElementById("aiMessage");
-    const passwordMessage = document.getElementById("passwordMessage");
+    const saveProfileBtn =
+        document.getElementById("saveProfileBtn");
+
+    const saveAiBtn =
+        document.getElementById("saveAiBtn");
+
+    const profileMessage =
+        document.getElementById("profileMessage");
+
+    const aiMessage =
+        document.getElementById("aiMessage");
 
 
-    /* ================================
-       SHOW MESSAGE
-       ================================ */
+    // =====================================
+    // SHOW MESSAGE
+    // =====================================
 
     function showMessage(element, message) {
+        if (!element) return;
 
         element.textContent = message;
-
         element.classList.add("show");
 
         setTimeout(() => {
@@ -28,227 +36,251 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2500);
     }
 
-        // ================================
-    // LOAD SAVED SETTINGS
-    // ================================
 
-    const savedProfile = JSON.parse(
-        localStorage.getItem("devcoreProfile") || "{}"
-    );
+    // =====================================
+    // LOAD SAVED PROFILE AND AI PREFERENCES
+    // =====================================
 
-    const savedAiPreferences = JSON.parse(
-        localStorage.getItem("devcoreAiPreferences") || "{}"
-    );
+    function readSavedObject(key) {
+        try {
+            const value = JSON.parse(
+                localStorage.getItem(key) || "{}"
+            );
 
-    if (savedProfile.fullName) {
-        document.getElementById("fullName").value =
-            savedProfile.fullName;
+            if (
+                value &&
+                typeof value === "object" &&
+                !Array.isArray(value)
+            ) {
+                return value;
+            }
+
+        } catch (error) {
+            console.error(`Unable to load ${key}:`, error);
+        }
+
+        return {};
     }
 
-    if (savedProfile.email) {
-        document.getElementById("email").value =
-            savedProfile.email;
+    const savedProfile =
+        readSavedObject("devcoreProfile");
+
+    // IMPORTANT: savedAiPreferences is declared only once.
+    const savedAiPreferences =
+        readSavedObject("devcoreAiPreferences");
+
+    const fullNameInput =
+        document.getElementById("fullName");
+
+    const emailInput =
+        document.getElementById("email");
+
+    const programmingLanguage =
+        document.getElementById("programmingLanguage");
+
+    const responseStyle =
+        document.getElementById("responseStyle");
+
+    const aiSuggestionsToggle =
+        document.getElementById("aiSuggestions");
+
+
+    // Restore profile information.
+
+    if (fullNameInput && savedProfile.fullName) {
+        fullNameInput.value = savedProfile.fullName;
     }
 
-    if (savedAiPreferences.language) {
-        document.getElementById("programmingLanguage").value =
+    if (emailInput && savedProfile.email) {
+        emailInput.value = savedProfile.email;
+    }
+
+
+    // Restore AI preferences.
+
+    if (
+        programmingLanguage &&
+        savedAiPreferences.language
+    ) {
+        programmingLanguage.value =
             savedAiPreferences.language;
     }
 
-    if (savedAiPreferences.style) {
-        document.getElementById("responseStyle").value =
+    if (
+        responseStyle &&
+        savedAiPreferences.style
+    ) {
+        responseStyle.value =
             savedAiPreferences.style;
     }
 
+    if (aiSuggestionsToggle) {
+        aiSuggestionsToggle.checked =
+            savedAiPreferences.aiSuggestions !== false;
+    }
 
+
+    // =====================================
+    // PROFILE
+    // =====================================
+
+    if (saveProfileBtn) {
         saveProfileBtn.addEventListener("click", () => {
 
-        const fullName =
-            document.getElementById("fullName").value.trim();
+            const fullName =
+                fullNameInput.value.trim();
 
-        const email =
-            document.getElementById("email").value.trim();
+            const email =
+                emailInput.value.trim();
 
-        if (!fullName) {
-            alert("Please enter your full name.");
-            return;
-        }
+            if (!fullName) {
+                alert("Please enter your full name.");
+                return;
+            }
 
-        if (!email) {
-            alert("Please enter your email address.");
-            return;
-        }
+            if (!email) {
+                alert("Please enter your email address.");
+                return;
+            }
 
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
 
-        localStorage.setItem(
-            "devcoreProfile",
-            JSON.stringify({
+            const profile = {
                 fullName: fullName,
                 email: email
-            })
-        );
+            };
 
-        updateDevCoreProfile();
+            localStorage.setItem(
+                "devcoreProfile",
+                JSON.stringify(profile)
+            );
 
-        showMessage(
-            profileMessage,
-            "Profile saved successfully."
-        );
+            // Update the shared header if profile.js is loaded.
+            if (typeof updateDevCoreProfile === "function") {
+                updateDevCoreProfile();
+            }
 
-    });
+            showMessage(
+                profileMessage,
+                "Profile saved successfully."
+            );
 
+        });
+    }
+
+
+    // =====================================
+    // AI PREFERENCES
+    // =====================================
+
+    if (saveAiBtn) {
         saveAiBtn.addEventListener("click", () => {
 
-        const language =
-            document.getElementById("programmingLanguage").value;
+            const preferences = {
+                language: programmingLanguage.value,
+                style: responseStyle.value,
+                aiSuggestions: aiSuggestionsToggle.checked
+            };
 
-        const style =
-            document.getElementById("responseStyle").value;
+            localStorage.setItem(
+                "devcoreAiPreferences",
+                JSON.stringify(preferences)
+            );
 
-        localStorage.setItem(
-            "devcoreAiPreferences",
-            JSON.stringify({
-                language: language,
-                style: style
-            })
-        );
+            showMessage(
+                aiMessage,
+                "AI preferences saved successfully."
+            );
 
-        showMessage(
-            aiMessage,
-            "AI preferences saved successfully."
-        );
-
-    });
- 
-
-    /* ================================
-       CHANGE PASSWORD
-       ================================ */
-
-    changePasswordBtn.addEventListener("click", () => {
-
-        const currentPassword =
-            document.getElementById("currentPassword").value;
-
-        const newPassword =
-            document.getElementById("newPassword").value;
-
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
+        });
+    }
 
 
-        if (currentPassword === "") {
-            alert("Please enter your current password.");
-            return;
-        }
+    // =====================================
+    // THEME
+    // =====================================
 
-        if (newPassword === "") {
-            alert("Please enter a new password.");
-            return;
-        }
-
-        if (newPassword.length < 6) {
-            alert("New password must contain at least 6 characters.");
-            return;
-        }
-
-        if (newPassword !== confirmPassword) {
-            alert("New passwords do not match.");
-            return;
-        }
-
-
-        showMessage(
-            passwordMessage,
-            "Password changed successfully."
-        );
-
-
-        document.getElementById("currentPassword").value = "";
-        document.getElementById("newPassword").value = "";
-        document.getElementById("confirmPassword").value = "";
-
-    });
-
-
-        /* ================================
-       THEME
-       ================================ */
-
-    const theme = document.getElementById("theme");
+    const theme =
+        document.getElementById("theme");
 
     if (theme) {
+
         const savedTheme =
             localStorage.getItem("devcoreTheme") || "Light";
 
         theme.value = savedTheme;
 
         theme.addEventListener("change", () => {
+
             const selectedTheme = theme.value;
 
-            // Save the selected theme.
-            localStorage.setItem("devcoreTheme", selectedTheme);
+            localStorage.setItem(
+                "devcoreTheme",
+                selectedTheme
+            );
 
-            // Apply the theme immediately.
             document.documentElement.setAttribute(
                 "data-theme",
                 selectedTheme.toLowerCase()
             );
+
         });
     }
 
-   /* ================================
-   COMPACT MODE
-   ================================ */
 
-const compactMode = document.getElementById("compactMode");
+    // =====================================
+    // COMPACT MODE
+    // =====================================
 
-if (compactMode) {
-    // Restore the saved preference.
-    const savedCompactMode =
-        localStorage.getItem("devcoreCompactMode") === "true";
+    const compactMode =
+        document.getElementById("compactMode");
 
-    compactMode.checked = savedCompactMode;
+    if (compactMode) {
 
-    document.documentElement.setAttribute(
-        "data-compact",
-        String(savedCompactMode)
-    );
+        const savedCompactMode =
+            localStorage.getItem("devcoreCompactMode") === "true";
 
-    // Save and apply changes immediately.
-    compactMode.addEventListener("change", () => {
-        const enabled = compactMode.checked;
-
-        localStorage.setItem(
-            "devcoreCompactMode",
-            String(enabled)
-        );
+        compactMode.checked = savedCompactMode;
 
         document.documentElement.setAttribute(
             "data-compact",
-            String(enabled)
+            String(savedCompactMode)
         );
 
-        showMessage(
-            aiMessage,
-            enabled
-                ? "Compact interface enabled."
-                : "Compact interface disabled."
-        );
-    });
-}
+        compactMode.addEventListener("change", () => {
+
+            const enabled = compactMode.checked;
+
+            localStorage.setItem(
+                "devcoreCompactMode",
+                String(enabled)
+            );
+
+            document.documentElement.setAttribute(
+                "data-compact",
+                String(enabled)
+            );
+
+            showMessage(
+                aiMessage,
+                enabled
+                    ? "Compact interface enabled."
+                    : "Compact interface disabled."
+            );
+
+        });
+    }
 
 
-
-    /* ================================
-       NOTIFICATION SETTINGS
-       ================================ */
+    // =====================================
+    // NOTIFICATION SETTINGS
+    // =====================================
 
     const notificationSettings = [
         "emailNotifications",
@@ -256,15 +288,29 @@ if (compactMode) {
         "securityNotifications"
     ];
 
+    const savedNotifications =
+        readSavedObject("devcoreNotificationSettings");
+
     notificationSettings.forEach(id => {
 
-        const checkbox = document.getElementById(id);
+        const checkbox =
+            document.getElementById(id);
 
+        if (!checkbox) return;
+
+        // Restore the previously saved choice.
+        if (typeof savedNotifications[id] === "boolean") {
+            checkbox.checked = savedNotifications[id];
+        }
+
+        // Save the new choice.
         checkbox.addEventListener("change", () => {
 
-            console.log(
-                id,
-                checkbox.checked ? "Enabled" : "Disabled"
+            savedNotifications[id] = checkbox.checked;
+
+            localStorage.setItem(
+                "devcoreNotificationSettings",
+                JSON.stringify(savedNotifications)
             );
 
         });

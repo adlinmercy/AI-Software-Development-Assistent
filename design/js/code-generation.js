@@ -54,6 +54,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =====================================================
+    // GET SAVED AI RESPONSE STYLE
+    // =====================================================
+
+    function getSavedResponseStyle() {
+
+        try {
+
+            const preferences = JSON.parse(
+                localStorage.getItem("devcoreAiPreferences") || "{}"
+            );
+
+            const allowedStyles = [
+                "Concise",
+                "Balanced",
+                "Detailed"
+            ];
+
+            if (allowedStyles.includes(preferences.style)) {
+                return preferences.style;
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Unable to load AI response preferences:",
+                error
+            );
+
+        }
+
+        // Use Balanced when no valid preference is saved.
+        return "Balanced";
+
+    }
+
+
+    // =====================================================
     // CHECK REQUIRED ELEMENTS
     // =====================================================
 
@@ -131,7 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
             framework.value;
 
 
-        // Validate input.
+        // =================================================
+        // VALIDATE INPUT
+        // =================================================
 
         if (requirement.length < 10) {
 
@@ -154,7 +193,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // Update the UI.
+        // =================================================
+        // LOAD RESPONSE STYLE
+        // Read the saved value before sending the request.
+        // =================================================
+
+        const selectedResponseStyle =
+            getSavedResponseStyle();
+
+
+        // =================================================
+        // UPDATE UI
+        // =================================================
 
         generateBtn.disabled = true;
 
@@ -169,9 +219,12 @@ document.addEventListener("DOMContentLoaded", function () {
         codeOutput.textContent = "";
         codeExplanation.textContent = "";
 
+
         try {
 
-            // Send request to FastAPI.
+            // =============================================
+            // SEND REQUEST TO FASTAPI
+            // =============================================
 
             const response = await fetch(API_URL, {
 
@@ -187,14 +240,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     language: selectedLanguage,
 
-                    framework: selectedFramework
+                    framework: selectedFramework,
+
+                    response_style: selectedResponseStyle
 
                 })
 
             });
 
 
-            // Read response safely.
+            // =============================================
+            // READ RESPONSE SAFELY
+            // =============================================
 
             const responseText = await response.text();
 
@@ -214,7 +271,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // Handle HTTP errors.
+            // =============================================
+            // HANDLE HTTP ERRORS
+            // =============================================
 
             if (!response.ok) {
 
@@ -237,7 +296,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // Validate the response.
+            // =============================================
+            // VALIDATE RESPONSE
+            // =============================================
 
             if (
                 data.status !== "success" ||
@@ -258,7 +319,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // Display generated code as plain text.
+            // =============================================
+            // DISPLAY GENERATED CODE
+            // =============================================
 
             // textContent prevents generated code from being
             // interpreted as HTML or JavaScript by the browser.
@@ -274,7 +337,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.language || selectedLanguage;
 
 
-            // Show results.
+            // =============================================
+            // SHOW RESULTS
+            // =============================================
 
             loadingSection.style.display = "none";
             resultSection.style.display = "block";
@@ -394,6 +459,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             } catch (fallbackError) {
 
+                console.error(
+                    "Clipboard fallback failed:",
+                    fallbackError
+                );
+
                 alert(
                     "Unable to copy automatically. Please select the code and copy it manually."
                 );
@@ -408,6 +478,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+
+    // =====================================================
+    // COPY SUCCESS MESSAGE
+    // =====================================================
 
     function showCopySuccess() {
 

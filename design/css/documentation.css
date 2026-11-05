@@ -1,7 +1,23 @@
+/* =========================================================
+   DEVCORE AI - DOCUMENTATION
+========================================================= */
+
+/* ================= RESET ================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -10,190 +26,161 @@ body {
     color: #0f172a;
 }
 
-
-/* =========================
-   SIDEBAR
-========================= */
+/* ================= SIDEBAR ================= */
 
 .sidebar {
+    width: 250px;
+    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-
-    width: 250px;
-    height: 100vh;
-
     background: #0f172a;
-
-    padding: 24px 16px;
-
+    color: #ffffff;
     display: flex;
     flex-direction: column;
-
-    z-index: 1000;
+    padding: 24px 16px;
+    z-index: 100;
 }
 
 .sidebar-logo {
-    height: 42px;
-
+    height: 48px;
     display: flex;
     align-items: center;
-
-    gap: 10px;
-
-    padding-left: 8px;
-
+    gap: 11px;
+    padding: 0 8px;
+    margin-bottom: 24px;
     color: #ffffff;
-
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
+    letter-spacing: -0.3px;
 }
 
 .logo-icon {
-    width: 32px;
-    height: 32px;
-
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 9px;
     background: #2563eb;
-
-    border-radius: 8px;
-
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    color: #ffffff;
-
-    font-size: 18px;
+    font-size: 19px;
+    font-weight: 700;
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.25);
 }
 
+/* ================= NAVIGATION ================= */
+
 .sidebar-nav {
-    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
 }
 
 .nav-section-title {
-    padding: 0 12px;
-
-    margin-bottom: 10px;
-
     color: #64748b;
-
-    font-size: 10px;
-    font-weight: 600;
-
-    letter-spacing: 1px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    padding: 0 12px;
+    margin: 4px 0 9px;
 }
 
 .workspace-title {
-    margin-top: 26px;
+    margin-top: 23px;
 }
 
 .nav-item {
     height: 42px;
-
     display: flex;
     align-items: center;
-
-    gap: 12px;
-
+    gap: 11px;
     padding: 0 12px;
-
-    margin-bottom: 4px;
-
-    color: #94a3b8;
-
-    text-decoration: none;
-
     border-radius: 8px;
-
-    font-size: 13px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 12px;
     font-weight: 500;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-item.active {
     background: #1e293b;
     color: #ffffff;
 }
 
-.nav-item.active {
-    background: #1d4ed8;
-    color: #ffffff;
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon {
+    color: #60a5fa;
 }
 
 .nav-icon {
     width: 20px;
-
-    display: flex;
+    flex-shrink: 0;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 16px;
+    color: #64748b;
+    font-size: 15px;
 }
+
+/* ================= SIDEBAR BOTTOM ================= */
 
 .sidebar-bottom {
     margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #1e293b;
 }
 
+.logout {
+    margin-top: 3px;
+}
 
-/* =========================
-   MAIN
-========================= */
+/* ================= MAIN CONTENT ================= */
 
 .main-content {
     width: calc(100% - 250px);
-
     margin-left: 250px;
-
     min-height: 100vh;
 }
 
-
-/* =========================
-   TOP NAVBAR
-========================= */
+/* ================= TOP NAVBAR ================= */
 
 .top-navbar {
     height: 78px;
-
     width: 100%;
-
     background: #ffffff;
-
     border-bottom: 1px solid #e2e8f0;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 35px;
 }
 
 .topbar-title {
     display: flex;
     flex-direction: column;
-
     gap: 4px;
 }
 
 .topbar-title h2 {
     color: #0f172a;
-
     font-size: 16px;
     font-weight: 600;
-
     letter-spacing: -0.2px;
 }
 
 .topbar-title p {
     color: #94a3b8;
-
     font-size: 10px;
+    font-weight: 400;
 }
 
 .mobile-page-name {
     display: none;
-
     font-size: 15px;
     font-weight: 600;
 }
@@ -201,60 +188,63 @@ body {
 .topbar-right {
     display: flex;
     align-items: center;
-
-    gap: 22px;
+    gap: 18px;
 }
 
-.notification-btn {
+/* ================= NOTIFICATION ================= */
+
+.notification-btn,
+.notification-button {
     position: relative;
-
-    width: 36px;
-    height: 36px;
-
-    border: none;
-
-    background: transparent;
-
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
     cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
 
-    font-size: 16px;
+.notification-btn:hover,
+.notification-button:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
 .notification-dot {
     position: absolute;
-
-    top: 7px;
-    right: 7px;
-
+    top: 8px;
+    right: 8px;
     width: 6px;
     height: 6px;
-
     background: #2563eb;
-
     border-radius: 50%;
+    border: 1px solid #ffffff;
 }
+
+/* ================= PROFILE ================= */
 
 .profile {
     display: flex;
     align-items: center;
-
     gap: 10px;
+    padding-left: 3px;
 }
 
 .profile-avatar {
-    width: 34px;
-    height: 34px;
-
+    width: 40px;
+    height: 40px;
+    background: #2563eb;
+    color: #ffffff;
     border-radius: 50%;
-
-    background: #dbeafe;
-
-    color: #2563eb;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 13px;
     font-weight: 600;
 }
@@ -262,39 +252,32 @@ body {
 .profile-info {
     display: flex;
     flex-direction: column;
-
-    gap: 2px;
+    gap: 3px;
 }
 
 .profile-name {
+    color: #1e293b;
     font-size: 12px;
     font-weight: 600;
-
-    color: #334155;
 }
 
 .profile-role {
-    font-size: 10px;
-
     color: #94a3b8;
+    font-size: 9px;
 }
 
 .profile-arrow {
     color: #94a3b8;
-
-    font-size: 14px;
+    font-size: 11px;
+    margin-left: 3px;
 }
 
-
-/* =========================
-   PAGE CONTENT
-========================= */
+/* ================= PAGE CONTENT ================= */
 
 .page-content {
+    width: 100%;
     max-width: 1400px;
-
     margin: 0 auto;
-
     padding: 30px 35px 50px;
 }
 
@@ -305,115 +288,82 @@ body {
 .page-heading h1 {
     font-size: 22px;
     font-weight: 600;
-
+    color: #0f172a;
     margin-bottom: 7px;
 }
 
 .page-heading p {
     font-size: 12px;
-
     color: #64748b;
-
     line-height: 1.6;
 }
 
-
-/* =========================
-   INPUT CARD
-========================= */
+/* ================= INPUT CARD ================= */
 
 .documentation-card {
     background: #ffffff;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 12px;
-
     padding: 25px;
-
     margin-bottom: 24px;
 }
 
 .documentation-card-header {
     display: flex;
     align-items: center;
-
     gap: 14px;
-
     margin-bottom: 24px;
 }
 
 .documentation-card-icon {
     width: 42px;
     height: 42px;
-
+    flex-shrink: 0;
     border-radius: 9px;
-
     background: #eff6ff;
-
     color: #2563eb;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 20px;
 }
 
 .documentation-card-header h2 {
     font-size: 15px;
     font-weight: 600;
-
     margin-bottom: 4px;
 }
 
 .documentation-card-header p {
     font-size: 11px;
-
     color: #94a3b8;
 }
 
-
-/* =========================
-   TEXTAREA
-========================= */
+/* ================= TEXTAREA ================= */
 
 .input-area label,
 .option-group label {
     display: block;
-
     margin-bottom: 8px;
-
     font-size: 11px;
     font-weight: 600;
-
     color: #334155;
 }
 
 textarea {
     width: 100%;
-
     min-height: 190px;
-
     resize: vertical;
-
     padding: 14px;
-
     border: 1px solid #cbd5e1;
-
     border-radius: 8px;
-
     outline: none;
-
     font-family: "Inter", sans-serif;
-
     font-size: 12px;
-
     color: #334155;
-
     line-height: 1.6;
-
-    transition: 0.2s ease;
+    background: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 textarea::placeholder {
@@ -422,19 +372,14 @@ textarea::placeholder {
 
 textarea:focus {
     border-color: #2563eb;
-
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .input-bottom {
     display: flex;
-
     justify-content: space-between;
-
     margin-top: 8px;
-
     font-size: 10px;
-
     color: #94a3b8;
 }
 
@@ -442,126 +387,80 @@ textarea:focus {
     text-align: right;
 }
 
-
-/* =========================
-   OPTIONS
-========================= */
+/* ================= OPTIONS ================= */
 
 .documentation-options {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 18px;
-
     margin-top: 20px;
 }
 
 .option-group select {
     width: 100%;
-
     height: 42px;
-
     padding: 0 12px;
-
     border: 1px solid #cbd5e1;
-
     border-radius: 8px;
-
     background: #ffffff;
-
     color: #334155;
-
     font-family: "Inter", sans-serif;
-
     font-size: 12px;
-
     outline: none;
-
     cursor: pointer;
 }
 
 .option-group select:focus {
     border-color: #2563eb;
-
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
-
-/* =========================
-   BUTTON
-========================= */
+/* ================= BUTTON ================= */
 
 .documentation-action {
     display: flex;
-
     justify-content: flex-end;
-
     margin-top: 22px;
 }
 
 #generateBtn {
     height: 42px;
-
     padding: 0 20px;
-
     border: none;
-
     border-radius: 8px;
-
     background: #2563eb;
-
     color: #ffffff;
-
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     font-family: "Inter", sans-serif;
-
     font-size: 12px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 #generateBtn:hover {
     background: #1d4ed8;
-
     transform: translateY(-1px);
 }
 
 #generateBtn:disabled {
     opacity: 0.7;
-
     cursor: not-allowed;
-
     transform: none;
 }
 
-
-/* =========================
-   LOADING
-========================= */
+/* ================= LOADING ================= */
 
 .loading-section {
     display: none;
-
     background: #ffffff;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 12px;
-
     padding: 25px;
-
     align-items: center;
-
     gap: 15px;
-
     margin-bottom: 24px;
 }
 
@@ -572,13 +471,10 @@ textarea:focus {
 .loading-spinner {
     width: 28px;
     height: 28px;
-
+    flex-shrink: 0;
     border: 3px solid #dbeafe;
-
     border-top-color: #2563eb;
-
     border-radius: 50%;
-
     animation: spin 0.8s linear infinite;
 }
 
@@ -590,20 +486,15 @@ textarea:focus {
 
 .loading-section h3 {
     font-size: 13px;
-
     margin-bottom: 4px;
 }
 
 .loading-section p {
     font-size: 11px;
-
     color: #94a3b8;
 }
 
-
-/* =========================
-   RESULTS
-========================= */
+/* ================= RESULTS ================= */
 
 .results-section {
     display: none;
@@ -615,406 +506,197 @@ textarea:focus {
 
 .results-heading {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 18px;
 }
 
 .results-heading h2 {
     font-size: 16px;
     font-weight: 600;
-
     margin-bottom: 5px;
 }
 
 .results-heading p {
     color: #94a3b8;
-
     font-size: 11px;
 }
 
 .result-actions {
     display: flex;
     align-items: center;
-
     gap: 10px;
 }
 
 .analysis-status {
     padding: 7px 11px;
-
     background: #ecfdf5;
-
     color: #059669;
-
     border-radius: 20px;
-
     font-size: 10px;
     font-weight: 600;
 }
 
 .copy-btn {
     height: 30px;
-
     padding: 0 12px;
-
     border: 1px solid #cbd5e1;
-
     border-radius: 6px;
-
     background: #ffffff;
-
     color: #475569;
-
     font-family: "Inter", sans-serif;
-
     font-size: 10px;
     font-weight: 500;
-
     cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .copy-btn:hover {
     border-color: #2563eb;
-
     color: #2563eb;
 }
 
-
-/* =========================
-   RESULT CARD
-========================= */
+/* ================= RESULT CARD ================= */
 
 .result-card {
     background: #ffffff;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 12px;
-
     margin-bottom: 18px;
-
     overflow: hidden;
 }
 
 .result-card-header {
     padding: 18px 20px;
-
     border-bottom: 1px solid #f1f5f9;
 }
 
 .result-title {
     display: flex;
     align-items: center;
-
     gap: 12px;
 }
 
 .result-icon {
     width: 34px;
     height: 34px;
-
+    flex-shrink: 0;
     border-radius: 8px;
-
     background: #eff6ff;
-
     color: #2563eb;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 15px;
 }
 
 .result-title h3 {
     font-size: 13px;
     font-weight: 600;
-
     margin-bottom: 3px;
 }
 
 .result-title p {
     font-size: 10px;
-
     color: #94a3b8;
 }
 
-
-/* =========================
-   DOCUMENTATION OUTPUT
-========================= */
+/* ================= DOCUMENTATION OUTPUT ================= */
 
 .documentation-output {
     padding: 25px 28px;
-
     color: #334155;
-
     font-size: 12px;
-
     line-height: 1.7;
 }
 
 .documentation-output h1 {
     font-size: 21px;
-
     color: #0f172a;
-
     margin-bottom: 8px;
 }
 
 .documentation-output h2 {
     font-size: 15px;
-
     color: #0f172a;
-
     margin-top: 24px;
-
     margin-bottom: 8px;
-
     padding-bottom: 6px;
-
     border-bottom: 1px solid #e2e8f0;
 }
 
 .documentation-output h3 {
     font-size: 12px;
-
     color: #334155;
-
     margin-top: 15px;
-
     margin-bottom: 5px;
 }
 
 .documentation-output p {
     color: #64748b;
-
     margin-bottom: 10px;
 }
 
 .documentation-output ul {
     padding-left: 20px;
-
     margin-bottom: 12px;
 }
 
 .documentation-output li {
     color: #64748b;
-
     margin-bottom: 5px;
 }
 
 .documentation-output code {
     background: #f1f5f9;
-
     padding: 2px 5px;
-
     border-radius: 4px;
-
     font-size: 11px;
 }
 
-
-/* =========================
-   SECTION CARDS
-========================= */
+/* ================= SECTION CARDS ================= */
 
 .documentation-sections {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 15px;
 }
 
 .section-card {
     background: #ffffff;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 10px;
-
     padding: 18px;
-
     display: flex;
-
     align-items: flex-start;
-
     gap: 13px;
 }
 
 .section-icon {
     min-width: 34px;
     height: 34px;
-
     border-radius: 8px;
-
     background: #eff6ff;
-
     color: #2563eb;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     font-size: 14px;
 }
 
 .section-card h3 {
     font-size: 12px;
-
     font-weight: 600;
-
     margin-bottom: 5px;
 }
 
 .section-card p {
     font-size: 10px;
-
     line-height: 1.6;
-
     color: #94a3b8;
 }
 
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 1100px) {
-
-    .sidebar {
-        width: 220px;
-    }
-
-    .main-content {
-        width: calc(100% - 220px);
-
-        margin-left: 220px;
-    }
-
-    .page-content {
-        padding: 25px;
-    }
-
-    .top-navbar {
-        padding: 0 25px;
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .sidebar {
-        display: none;
-    }
-
-    .main-content {
-        width: 100%;
-
-        margin-left: 0;
-    }
-
-    .top-navbar {
-        height: 65px;
-
-        padding: 0 18px;
-    }
-
-    .topbar-title {
-        display: none;
-    }
-
-    .mobile-page-name {
-        display: block;
-    }
-
-    .profile-info,
-    .profile-arrow {
-        display: none;
-    }
-
-    .topbar-right {
-        gap: 10px;
-    }
-
-    .page-content {
-        padding: 22px 16px 40px;
-    }
-
-    .page-heading h1 {
-        font-size: 20px;
-    }
-
-    .documentation-card {
-        padding: 18px;
-    }
-
-    .documentation-options {
-        grid-template-columns: 1fr;
-    }
-
-    .input-bottom {
-        flex-direction: column;
-
-        gap: 5px;
-    }
-
-    .input-tip {
-        text-align: left;
-    }
-
-    .documentation-action {
-        justify-content: stretch;
-    }
-
-    #generateBtn {
-        width: 100%;
-
-        justify-content: center;
-    }
-
-    .results-heading {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
-    .result-actions {
-        width: 100%;
-    }
-
-    .documentation-sections {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-@media (max-width: 450px) {
-
-    .documentation-output {
-        padding: 20px;
-    }
-
-    .result-actions {
-        flex-wrap: wrap;
-    }
-
-}
-
-/* =========================
-   DOCUMENTATION OUTPUT
-========================= */
+/* ================= GENERATED DOCUMENTATION ================= */
 
 #documentationOutput {
     line-height: 1.8;
@@ -1057,6 +739,8 @@ textarea:focus {
     margin-bottom: 8px;
 }
 
+/* ================= GENERATED TABLES ================= */
+
 #documentationOutput table {
     width: 100%;
     border-collapse: collapse;
@@ -1084,7 +768,8 @@ textarea:focus {
     background: #f9fafb;
 }
 
-/* Code blocks */
+/* ================= CODE BLOCKS ================= */
+
 #documentationOutput pre {
     background: #1e293b;
     color: #f8fafc;
@@ -1096,22 +781,15 @@ textarea:focus {
     box-sizing: border-box;
 }
 
-/* Preserve spacing in code and ASCII diagrams */
 #documentationOutput pre code {
     display: block;
     background: transparent;
     color: inherit;
     padding: 0;
     border: none;
-    font-family: Consolas, "Courier New", monospace;
-    font-size: 13px;
-    line-height: 1.6;
-    white-space: pre;
-}
-
-#documentationOutput pre code {
     font-family: Consolas, monospace;
     font-size: 14px;
+    line-height: 1.6;
     white-space: pre;
 }
 
@@ -1122,6 +800,8 @@ textarea:focus {
     border-radius: 4px;
     font-family: Consolas, monospace;
 }
+
+/* ================= BLOCKQUOTE AND DIVIDER ================= */
 
 #documentationOutput blockquote {
     border-left: 4px solid #9ca3af;
@@ -1135,3 +815,123 @@ textarea:focus {
     border-top: 1px solid #d1d5db;
     margin: 24px 0;
 }
+
+/* ================= TABLET ================= */
+
+@media (max-width: 950px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        width: calc(100% - 220px);
+        margin-left: 220px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .top-navbar {
+        height: 65px;
+        padding: 0 18px;
+        justify-content: space-between;
+    }
+
+    .topbar-title {
+        display: none;
+    }
+
+    .mobile-page-name {
+        display: block;
+        color: #0f172a;
+    }
+
+    .topbar-right {
+        gap: 10px;
+    }
+
+    .profile {
+        padding: 0;
+    }
+
+    .page-content {
+        padding: 22px 18px 35px;
+    }
+
+    .page-heading h1 {
+        font-size: 20px;
+    }
+
+    .documentation-card {
+        padding: 18px;
+    }
+
+    .documentation-options {
+        grid-template-columns: 1fr;
+    }
+
+    .input-bottom {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .input-tip {
+        text-align: left;
+    }
+
+    .documentation-action {
+        justify-content: stretch;
+    }
+
+    #generateBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .result-actions {
+        width: 100%;
+    }
+
+    .documentation-sections {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 400px) {
+    .page-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .documentation-output {
+        padding: 20px;
+    }
+
+    .result-actions {
+        flex-wrap: wrap;
+    }
+}
+

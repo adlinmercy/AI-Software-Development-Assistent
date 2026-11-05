@@ -2,6 +2,9 @@ import json
 import logging
 import os
 import sqlite3
+import sys
+import shutil
+from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -10,10 +13,19 @@ from pydantic import BaseModel, Field
 from groq import Groq
 
 # =========================================================
-# CONFIGURATION
+# APPLICATION DATA CONFIGURATION
 # =========================================================
 
-load_dotenv()
+APP_DATA_DIR = Path(os.getenv("APPDATA", Path.home())) / "DevCoreAI"
+
+APP_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+if getattr(sys, "frozen", False):
+    ENV_FILE = APP_DATA_DIR / ".env"
+else:
+    ENV_FILE = Path(__file__).resolve().parent / ".env"
+
+load_dotenv(dotenv_path=ENV_FILE)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("devcore-ai")
@@ -22,6 +34,7 @@ API_KEY = os.getenv("GROQ_API_KEY")
 MODEL_NAME = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 
 client = Groq(api_key=API_KEY) if API_KEY else None
+logger.info("Groq API key loaded: %s", bool(API_KEY))
 
 app = FastAPI(
     title="DevCore AI API",
@@ -45,12 +58,18 @@ app.add_middleware(
 # =========================================================
 
 
-HISTORY_DB_PATH = os.path.join(
-    os.path.expanduser("~"),
-    "project_history.db",
-)
+if getattr(sys, "frozen", False):
 
+    HISTORY_DB_PATH = APP_DATA_DIR / "project_history.db"
 
+    OLD_DB_PATH = Path.home() / "project_history.db"
+
+    # Preserve existing history during first installation.
+    if not HISTORY_DB_PATH.exists() and OLD_DB_PATH.exists():
+        shutil.copy2(OLD_DB_PATH, HISTORY_DB_PATH)
+
+else:
+    HISTORY_DB_PATH = Path.home() / "project_history.db"
 
 
 def init_history_db():

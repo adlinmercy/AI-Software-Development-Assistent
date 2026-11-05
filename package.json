@@ -1,0 +1,25 @@
+{
+  "name": "ai-software-assistent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "electron/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adlinmercy/AI-Software-Development-Assistent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/adlinmercy/AI-Software-Development-Assistent/issues"
+  },
+  "homepage": "https://github.com/adlinmercy/AI-Software-Development-Assistent#readme",
+  "devDependencies": {
+    "electron": "^45.2.1"
+  }
+}

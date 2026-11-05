@@ -1103,3 +1103,321 @@ html[data-compact="true"] table th,
 html[data-compact="true"] table td {
     padding: 8px !important;
 }
+
+/* =========================================
+   DEVCORE AI - SHARED DARK THEME FIXES
+   SETTINGS + PROJECT HISTORY + COMMON UI
+   Append this section at the END of the CSS
+========================================= */
+
+
+/* =========================================
+   COMMON PAGE ELEMENTS
+========================================= */
+
+html[data-theme="dark"] .page-heading h1,
+html[data-theme="dark"] .page-heading h2,
+html[data-theme="dark"] .page-header h1,
+html[data-theme="dark"] .page-header h2 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .page-heading p,
+html[data-theme="dark"] .page-header p {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+html[data-theme="dark"] .sidebar {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .nav-item,
+html[data-theme="dark"] .nav-link {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .nav-item:hover,
+html[data-theme="dark"] .nav-item.active,
+html[data-theme="dark"] .nav-link:hover,
+html[data-theme="dark"] .nav-link.active {
+    background: #1e293b !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .nav-item:hover .nav-icon,
+html[data-theme="dark"] .nav-item.active .nav-icon,
+html[data-theme="dark"] .nav-link:hover .nav-icon,
+html[data-theme="dark"] .nav-link.active .nav-icon {
+    color: #60a5fa !important;
+}
+
+html[data-theme="dark"] .nav-section-title {
+    color: #64748b !important;
+}
+
+html[data-theme="dark"] .sidebar-bottom {
+    border-color: #334155 !important;
+}
+
+
+/* =========================================
+   SETTINGS PAGE
+========================================= */
+
+html[data-theme="dark"] .settings-card {
+    background: #111827 !important;
+    border: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .settings-card-header {
+    background: #111827 !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .settings-card-header h3 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .settings-card-header p {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .settings-body {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .settings-body label,
+html[data-theme="dark"] .form-group label {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .form-group input,
+html[data-theme="dark"] .form-group select,
+html[data-theme="dark"] .form-group textarea {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .form-group input:focus,
+html[data-theme="dark"] .form-group select:focus,
+html[data-theme="dark"] .form-group textarea:focus {
+    border-color: #3b82f6 !important;
+    outline: none;
+}
+
+html[data-theme="dark"] .profile-area {
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .profile-info strong {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .profile-info span {
+    color: #94a3b8 !important;
+}
+
+/* Settings buttons */
+
+html[data-theme="dark"] .primary-btn {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #2563eb !important;
+}
+
+html[data-theme="dark"] .primary-btn:hover {
+    background: #1d4ed8 !important;
+}
+
+html[data-theme="dark"] .secondary-btn {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .secondary-btn:hover {
+    background: #334155 !important;
+}
+
+/* Settings toggle rows */
+
+html[data-theme="dark"] .toggle-row {
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .toggle-row strong {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .toggle-row p {
+    color: #94a3b8 !important;
+}
+
+/* Toggle switch */
+
+html[data-theme="dark"] .switch .slider {
+    background: #475569 !important;
+}
+
+html[data-theme="dark"] .switch input:checked + .slider {
+    background: #2563eb !important;
+}
+
+/* Success message */
+
+html[data-theme="dark"] .success-message {
+    background: #064e3b !important;
+    color: #a7f3d0 !important;
+    border-color: #047857 !important;
+}
+
+
+/* =========================================
+   PROJECT HISTORY PAGE
+========================================= */
+
+/* Search and filter area */
+
+html[data-theme="dark"] .history-toolbar,
+html[data-theme="dark"] .history-controls {
+    background: transparent !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .history-toolbar input,
+html[data-theme="dark"] .history-toolbar select,
+html[data-theme="dark"] .history-controls input,
+html[data-theme="dark"] .history-controls select {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+/* History cards */
+
+html[data-theme="dark"] .history-card,
+html[data-theme="dark"] .history-item {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .history-item:hover {
+    background: #172033 !important;
+    border-color: #475569 !important;
+}
+
+html[data-theme="dark"] .history-main h3 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .history-main p {
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .history-time {
+    color: #94a3b8 !important;
+}
+
+/* History icons and labels */
+
+html[data-theme="dark"] .history-icon {
+    background: #1e293b !important;
+    color: #93c5fd !important;
+}
+
+/* Empty state */
+
+html[data-theme="dark"] .empty-state {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .empty-state h3 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .empty-state p {
+    color: #94a3b8 !important;
+}
+
+/* Activity count */
+
+html[data-theme="dark"] .activity-count {
+    color: #cbd5e1 !important;
+}
+
+/* History action buttons */
+
+html[data-theme="dark"] .history-item button,
+html[data-theme="dark"] .history-card button {
+    color: #93c5fd !important;
+}
+/* Activity modal */
+
+html[data-theme="dark"] .activity-modal-content {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #334155 !important;
+}
+
+html[data-theme="dark"] .activity-modal-header {
+    background: #111827 !important;
+    border-color: #334155 !important;
+}
+
+html[data-theme="dark"] .activity-modal-header h2,
+html[data-theme="dark"] .activity-modal-header h3 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .activity-modal-body {
+    background: #111827 !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .activity-modal-body h1,
+html[data-theme="dark"] .activity-modal-body h2,
+html[data-theme="dark"] .activity-modal-body h3,
+html[data-theme="dark"] .activity-modal-body h4 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .activity-modal-body p,
+html[data-theme="dark"] .activity-modal-body li {
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================
+   COMMON BUTTON AND INPUT FIXES
+========================================= */
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus {
+    border-color: #3b82f6 !important;
+}
+
+html[data-theme="dark"] button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+html[data-theme="dark"] .notification-btn:hover,
+html[data-theme="dark"] .notification-button:hover {
+    background: #334155 !important;
+    border-color: #475569 !important;
+}
+
+

@@ -1,6 +1,42 @@
+# ==========================================
+# DEVCORE AI - GIT IGNORE
+# ==========================================
 
+# Environment variables and secrets
 .env
+.env.*
+!.env.example
+
+# Python
 venv/
+.venv/
 __pycache__/
 *.py[cod]
 *.db
+.pytest_cache/
+.mypy_cache/
+
+# Backend build files
+backend/build/
+backend/dist/
+
+# Node.js dependencies
+node_modules/
+
+# Electron build files
+dist/
+release/
+out/
+
+# IDE and editor settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*

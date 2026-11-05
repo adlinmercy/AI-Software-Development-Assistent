@@ -1,7 +1,12 @@
 /* =========================================================
    DEVCORE AI
    REQUIREMENT ANALYSIS
-   CONSISTENT WITH DASHBOARD
+   DASHBOARD-CONSISTENT LAYOUT
+========================================================= */
+
+
+/* =========================================================
+   RESET
 ========================================================= */
 
 * {
@@ -15,7 +20,7 @@ html {
 }
 
 body {
-    font-family: "Inter", Arial, sans-serif;
+    font-family: "Inter", sans-serif;
     background: #f8fafc;
     color: #0f172a;
 }
@@ -27,7 +32,7 @@ textarea {
 
 
 /* =========================================================
-   APP LAYOUT
+   MAIN CONTENT
 ========================================================= */
 
 .main-content {
@@ -42,70 +47,79 @@ textarea {
 ========================================================= */
 
 .sidebar {
-    position: fixed;
-
-    left: 0;
-    top: 0;
-
     width: 250px;
     height: 100vh;
 
-    background: #0f172a;
+    position: fixed;
+    left: 0;
+    top: 0;
 
-    padding: 24px 16px;
+    background: #0f172a;
+    color: #ffffff;
 
     display: flex;
     flex-direction: column;
 
-    z-index: 1000;
+    padding: 24px 16px;
+
+    z-index: 100;
 }
 
 
 /* LOGO */
 
 .sidebar-logo {
+    height: 48px;
+
     display: flex;
     align-items: center;
 
     gap: 11px;
 
-    padding: 0 10px;
+    padding: 0 8px;
 
-    margin-bottom: 34px;
+    margin-bottom: 24px;
 }
 
 .logo-icon {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
 
     border-radius: 9px;
 
     background: #2563eb;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     color: #ffffff;
 
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
+
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.25);
 }
 
 .sidebar-logo span {
     color: #ffffff;
 
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 600;
 
-    letter-spacing: -0.4px;
+    letter-spacing: -0.3px;
 }
 
 
 /* NAVIGATION */
 
 .sidebar-nav {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
 
     overflow-y: auto;
 }
@@ -113,27 +127,29 @@ textarea {
 .nav-section-title {
     color: #64748b;
 
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 9px;
+    font-weight: 700;
 
-    letter-spacing: 1px;
+    letter-spacing: 0.9px;
 
     padding: 0 12px;
 
-    margin-bottom: 9px;
+    margin: 4px 0 9px;
+}
+
+.workspace-title {
+    margin-top: 23px;
 }
 
 .nav-item {
+    height: 42px;
+
     display: flex;
     align-items: center;
 
-    gap: 12px;
-
-    height: 42px;
+    gap: 11px;
 
     padding: 0 12px;
-
-    margin-bottom: 3px;
 
     border-radius: 8px;
 
@@ -141,10 +157,10 @@ textarea {
 
     text-decoration: none;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 
-    transition: 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .nav-item:hover {
@@ -153,33 +169,45 @@ textarea {
 }
 
 .nav-item.active {
-    background: #1d4ed8;
+    background: #1e293b;
     color: #ffffff;
+}
+
+.nav-item.active .nav-icon {
+    color: #60a5fa;
 }
 
 .nav-icon {
     width: 20px;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
+    color: #64748b;
 
     font-size: 15px;
+
+    flex-shrink: 0;
 }
 
-.workspace-title {
-    margin-top: 24px;
+.nav-item:hover .nav-icon {
+    color: #60a5fa;
 }
 
 
 /* SIDEBAR BOTTOM */
 
 .sidebar-bottom {
-    padding-top: 14px;
+    margin-top: auto;
+
+    padding-top: 15px;
 
     border-top: 1px solid #1e293b;
+}
+
+.logout {
+    margin-top: 3px;
 }
 
 
@@ -189,7 +217,6 @@ textarea {
 
 .top-navbar {
     height: 78px;
-
     width: 100%;
 
     background: #ffffff;
@@ -235,8 +262,6 @@ textarea {
 .mobile-page-name {
     display: none;
 
-    color: #0f172a;
-
     font-size: 15px;
     font-weight: 600;
 }
@@ -254,41 +279,46 @@ textarea {
 
 /* NOTIFICATION */
 
-.notification-btn {
-    position: relative;
+.notification-btn,
+.notification-button {
+    width: 40px;
+    height: 40px;
 
-    width: 38px;
-    height: 38px;
+    border: 1px solid #e2e8f0;
 
-    border: none;
+    border-radius: 9px;
 
-    background: transparent;
+    background: #f8fafc;
 
-    color: #64748b;
+    color: #475569;
 
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size: 17px;
+    font-size: 15px;
 
     cursor: pointer;
+
+    position: relative;
 
     transition: 0.2s ease;
 }
 
-.notification-btn:hover {
+.notification-btn:hover,
+.notification-button:hover {
     background: #f1f5f9;
-
-    color: #0f172a;
+    border-color: #cbd5e1;
 }
 
 .notification-dot {
+    width: 6px;
+    height: 6px;
+
     position: absolute;
 
     top: 8px;
     right: 8px;
-
-    width: 6px;
-    height: 6px;
 
     border-radius: 50%;
 
@@ -305,35 +335,37 @@ textarea {
     align-items: center;
 
     gap: 10px;
+
+    padding-left: 3px;
 }
 
 .profile-avatar {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: #ffffff;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
-
-    background: #dbeafe;
-
-    color: #2563eb;
-
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
 
-    gap: 2px;
+    gap: 3px;
 }
 
 .profile-name {
-    color: #0f172a;
+    color: #1e293b;
 
     font-size: 12px;
     font-weight: 600;
@@ -342,13 +374,15 @@ textarea {
 .profile-role {
     color: #94a3b8;
 
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .profile-arrow {
     color: #94a3b8;
 
-    font-size: 15px;
+    font-size: 11px;
+
+    margin-left: 3px;
 }
 
 
@@ -394,7 +428,7 @@ textarea {
 
 
 /* =========================================================
-   MAIN REQUIREMENT CARD
+   REQUIREMENT CARD
 ========================================================= */
 
 .requirement-card {
@@ -791,7 +825,7 @@ textarea {
 }
 
 
-/* COUNT */
+/* RESULT COUNT */
 
 .result-count {
     min-width: 24px;
@@ -817,7 +851,17 @@ textarea {
 /* RESULT CONTENT */
 
 .result-content {
-    padding: 17px 20px;
+    width: 100%;
+
+    min-width: 0;
+
+    overflow-x: auto;
+
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    line-height: 1.7;
 }
 
 .result-list {
@@ -858,17 +902,181 @@ textarea {
 }
 
 .empty-result {
-    color: #94a3b8;
+    padding: 12px 0;
 
-    font-size: 11px;
+    color: #64748b;
+
+    font-size: 14px;
 }
 
 
 /* =========================================================
-   TABLET
+   ORGANIZED ANALYSIS CONTENT
 ========================================================= */
 
-@media (max-width: 1100px) {
+
+/* TABLES */
+
+.analysis-table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    margin: 12px 0 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    font-size: 14px;
+}
+
+.analysis-table th {
+    background: #f1f5ff;
+
+    color: #1e3a8a;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid #dbe4f0;
+}
+
+.analysis-table td {
+    padding: 13px 16px;
+
+    color: #334155;
+
+    vertical-align: top;
+
+    border-bottom: 1px solid #edf0f5;
+
+    overflow-wrap: anywhere;
+}
+
+.analysis-table tr:last-child td {
+    border-bottom: none;
+}
+
+.analysis-table tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.analysis-table tbody tr:hover {
+    background: #eff6ff;
+}
+
+
+/* SECTION HEADINGS */
+
+.analysis-subheading {
+    margin: 22px 0 10px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #1e293b;
+}
+
+.analysis-subheading:first-child {
+    margin-top: 0;
+}
+
+
+/* BULLET LISTS */
+
+.analysis-list {
+    padding-left: 24px;
+
+    margin: 10px 0 18px;
+}
+
+.analysis-list li {
+    padding: 5px 0;
+
+    color: #334155;
+
+    line-height: 1.7;
+}
+
+
+/* PARAGRAPHS */
+
+.analysis-paragraph {
+    margin: 8px 0 12px;
+
+    color: #475569;
+
+    line-height: 1.8;
+}
+/* =========================================================
+   REQUIREMENT ANALYSIS TABLE - ALIGNMENT FIX
+========================================================= */
+
+/* Table layout */
+.analysis-table {
+    width: 100%;
+    table-layout: auto;
+}
+
+/* Requirement ID column */
+.analysis-table th:first-child,
+.analysis-table td:first-child {
+    width: 95px;
+    min-width: 95px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+/* Description column */
+.analysis-table th:nth-child(2),
+.analysis-table td:nth-child(2) {
+    min-width: 300px;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+/* Assumption column */
+.analysis-table th:last-child,
+.analysis-table td:last-child {
+    min-width: 220px;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+/* Keep table content properly aligned */
+.analysis-table td {
+    vertical-align: middle;
+}
+
+/* Responsive table */
+@media (max-width: 700px) {
+
+    .analysis-table {
+        min-width: 650px;
+    }
+
+    .analysis-table th:first-child,
+    .analysis-table td:first-child {
+        min-width: 85px;
+    }
+}
+
+
+/* =========================================================
+   TABLET RESPONSIVE
+========================================================= */
+
+@media (max-width: 950px) {
 
     .sidebar {
         width: 220px;
@@ -876,18 +1084,18 @@ textarea {
 
     .main-content {
         width: calc(100% - 220px);
-
         margin-left: 220px;
     }
 
-    .page-content {
-        padding: 25px;
+    .profile-info,
+    .profile-arrow {
+        display: none;
     }
 }
 
 
 /* =========================================================
-   MOBILE
+   MOBILE RESPONSIVE
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -898,14 +1106,15 @@ textarea {
 
     .main-content {
         width: 100%;
-
         margin-left: 0;
     }
 
     .top-navbar {
-        height: 60px;
+        height: 65px;
 
         padding: 0 18px;
+
+        justify-content: space-between;
     }
 
     .topbar-title {
@@ -916,17 +1125,16 @@ textarea {
         display: block;
     }
 
-    .profile-info,
-    .profile-arrow {
-        display: none;
-    }
-
     .topbar-right {
         gap: 10px;
     }
 
+    .profile {
+        padding: 0;
+    }
+
     .page-content {
-        padding: 22px 18px;
+        padding: 22px 18px 35px;
     }
 
     .page-heading h1 {
@@ -965,109 +1173,6 @@ textarea {
 
         gap: 10px;
     }
-}
-
-/* =========================================
-   ORGANIZED REQUIREMENT ANALYSIS
-========================================= */
-
-.result-content {
-    width: 100%;
-    min-width: 0;
-    overflow-x: auto;
-    padding: 18px 20px;
-    box-sizing: border-box;
-    line-height: 1.7;
-}
-
-/* Tables */
-
-.analysis-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin: 12px 0 20px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    overflow: hidden;
-    font-size: 14px;
-}
-
-.analysis-table th {
-    background: #f1f5ff;
-    color: #1e3a8a;
-    font-weight: 700;
-    text-align: left;
-    padding: 14px 16px;
-    border-bottom: 1px solid #dbe4f0;
-}
-
-.analysis-table td {
-    padding: 13px 16px;
-    color: #334155;
-    vertical-align: top;
-    border-bottom: 1px solid #edf0f5;
-    overflow-wrap: anywhere;
-}
-
-.analysis-table tr:last-child td {
-    border-bottom: none;
-}
-
-.analysis-table tbody tr:nth-child(even) {
-    background: #f8fafc;
-}
-
-.analysis-table tbody tr:hover {
-    background: #eff6ff;
-}
-
-/* Section headings */
-
-.analysis-subheading {
-    margin: 22px 0 10px;
-    font-size: 16px;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-.analysis-subheading:first-child {
-    margin-top: 0;
-}
-
-/* Bullet lists */
-
-.analysis-list {
-    padding-left: 24px;
-    margin: 10px 0 18px;
-}
-
-.analysis-list li {
-    padding: 5px 0;
-    color: #334155;
-    line-height: 1.7;
-}
-
-/* Paragraphs */
-
-.analysis-paragraph {
-    margin: 8px 0 12px;
-    color: #475569;
-    line-height: 1.8;
-}
-
-/* Empty result messages */
-
-.empty-result {
-    padding: 12px 0;
-    color: #64748b;
-    font-size: 14px;
-}
-
-/* Mobile responsiveness */
-
-@media (max-width: 768px) {
 
     .result-content {
         padding: 14px;
@@ -1081,5 +1186,87 @@ textarea {
     .analysis-table td {
         padding: 10px;
     }
-
 }
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .page-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+/* =========================================================
+   ORGANIZED MISSING INFORMATION & SUGGESTIONS
+========================================================= */
+
+/* Analysis list container */
+.result-content .analysis-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+/* Individual suggestion */
+.result-content .analysis-list li {
+    position: relative;
+    padding: 12px 15px 12px 34px;
+    margin: 0;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.7;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* Suggestion bullet */
+.result-content .analysis-list li::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 19px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2563eb;
+}
+
+/* Highlight suggestion topic */
+.result-content .analysis-list li strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Hover effect */
+.result-content .analysis-list li:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .result-content .analysis-list {
+        gap: 7px;
+    }
+
+    .result-content .analysis-list li {
+        padding: 10px 12px 10px 29px;
+        font-size: 11px;
+    }
+
+    .result-content .analysis-list li::before {
+        left: 12px;
+        top: 17px;
+    }
+}
+
+

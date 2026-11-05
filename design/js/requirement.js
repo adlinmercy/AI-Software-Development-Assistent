@@ -668,28 +668,32 @@ function renderSection(container, markdown, emptyMessage) {
 }
 
     // =====================================================
-    // COUNT REQUIREMENT ITEMS
-    // =====================================================
+// COUNT REQUIREMENT ITEMS
+// =====================================================
 
-    function countItems(markdown) {
+function countItems(markdown) {
 
-        if (!markdown || !markdown.trim()) {
+    if (!markdown || !markdown.trim()) {
+        return 0;
+    }
 
-            return 0;
+    const lines = markdown.split(/\r?\n/);
 
+    let count = 0;
+
+    for (const line of lines) {
+
+        const trimmedLine = line.trim();
+
+        // Count requirement IDs inside Markdown tables
+        if (/^\|\s*(?:FR|NFR)-\d+\s*\|/i.test(trimmedLine)) {
+            count++;
         }
-
-        const lines = markdown.split(/\r?\n/);
-
-        const items = lines.filter(line =>
-            /^\s*(?:[-*+]|\d+[.)])\s+/.test(line)
-        );
-
-        return items.length;
 
     }
 
-
+    return count;
+}
     // =====================================================
     // FRIENDLY ERROR MESSAGES
     // =====================================================

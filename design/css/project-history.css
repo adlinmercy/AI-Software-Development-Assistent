@@ -1,7 +1,23 @@
+/* =========================================================
+   DEVCORE AI - PROJECT HISTORY
+========================================================= */
+
+/* ================= RESET ================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
 }
 
 body {
@@ -11,9 +27,7 @@ body {
 }
 
 
-/* =========================
-   SIDEBAR
-========================= */
+/* ================= SIDEBAR ================= */
 
 .sidebar {
     position: fixed;
@@ -24,38 +38,44 @@ body {
     height: 100vh;
 
     background: #0f172a;
+    color: #ffffff;
 
     padding: 24px 16px;
 
     display: flex;
     flex-direction: column;
 
-    z-index: 1000;
+    z-index: 100;
 }
 
 .sidebar-logo {
-    height: 42px;
+    height: 48px;
 
     display: flex;
     align-items: center;
 
-    gap: 10px;
+    gap: 11px;
 
-    padding-left: 8px;
+    padding: 0 8px;
+    margin-bottom: 24px;
 
     color: #ffffff;
 
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
+
+    letter-spacing: -0.3px;
 }
 
 .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
 
     background: #2563eb;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     display: flex;
     align-items: center;
@@ -63,28 +83,36 @@ body {
 
     color: #ffffff;
 
-    font-size: 18px;
+    font-size: 19px;
+    font-weight: bold;
+
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.25);
 }
 
 .sidebar-nav {
-    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    overflow-y: auto;
 }
 
 .nav-section-title {
     padding: 0 12px;
 
-    margin-bottom: 10px;
+    margin: 4px 0 9px;
 
     color: #64748b;
 
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 9px;
+    font-weight: 700;
 
-    letter-spacing: 1px;
+    letter-spacing: 0.9px;
 }
 
 .workspace-title {
-    margin-top: 26px;
+    margin-top: 23px;
 }
 
 .nav-item {
@@ -93,11 +121,9 @@ body {
     display: flex;
     align-items: center;
 
-    gap: 12px;
+    gap: 11px;
 
     padding: 0 12px;
-
-    margin-bottom: 4px;
 
     color: #94a3b8;
 
@@ -105,40 +131,49 @@ body {
 
     border-radius: 8px;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 
-    transition: 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-item.active {
     background: #1e293b;
     color: #ffffff;
 }
 
-.nav-item.active {
-    background: #1d4ed8;
-    color: #ffffff;
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon {
+    color: #60a5fa;
 }
 
 .nav-icon {
     width: 20px;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 16px;
+    color: #64748b;
+
+    font-size: 15px;
 }
 
 .sidebar-bottom {
     margin-top: auto;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #1e293b;
+}
+
+.sidebar-bottom .nav-item {
+    margin-top: 3px;
 }
 
 
-/* =========================
-   MAIN CONTENT
-========================= */
+/* ================= MAIN CONTENT ================= */
 
 .main-content {
     width: calc(100% - 250px);
@@ -149,9 +184,7 @@ body {
 }
 
 
-/* =========================
-   TOP NAVBAR
-========================= */
+/* ================= TOP NAVBAR ================= */
 
 .top-navbar {
     height: 78px;
@@ -203,34 +236,53 @@ body {
     display: flex;
     align-items: center;
 
-    gap: 22px;
+    gap: 18px;
 }
 
-.notification-btn {
+.notification-btn,
+.notification-button {
     position: relative;
 
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
 
-    border: none;
+    border: 1px solid #e2e8f0;
 
-    background: transparent;
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    color: #475569;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
 
     cursor: pointer;
 
-    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+.notification-btn:hover,
+.notification-button:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
 .notification-dot {
     position: absolute;
 
-    top: 7px;
-    right: 7px;
+    top: 8px;
+    right: 8px;
 
     width: 6px;
     height: 6px;
 
     background: #2563eb;
+
+    border: 1px solid #ffffff;
 
     border-radius: 50%;
 }
@@ -240,17 +292,19 @@ body {
     align-items: center;
 
     gap: 10px;
+
+    padding-left: 3px;
 }
 
 .profile-avatar {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
 
     border-radius: 50%;
 
-    background: #dbeafe;
+    background: #2563eb;
 
-    color: #2563eb;
+    color: #ffffff;
 
     display: flex;
     align-items: center;
@@ -264,18 +318,18 @@ body {
     display: flex;
     flex-direction: column;
 
-    gap: 2px;
+    gap: 3px;
 }
 
 .profile-name {
     font-size: 12px;
     font-weight: 600;
 
-    color: #334155;
+    color: #1e293b;
 }
 
 .profile-role {
-    font-size: 10px;
+    font-size: 9px;
 
     color: #94a3b8;
 }
@@ -283,15 +337,16 @@ body {
 .profile-arrow {
     color: #94a3b8;
 
-    font-size: 14px;
+    font-size: 11px;
+
+    margin-left: 3px;
 }
 
 
-/* =========================
-   PAGE CONTENT
-========================= */
+/* ================= PAGE CONTENT ================= */
 
 .page-content {
+    width: 100%;
     max-width: 1400px;
 
     margin: 0 auto;
@@ -321,15 +376,11 @@ body {
 }
 
 
-/* =========================
-   TOOLBAR
-========================= */
+/* ================= TOOLBAR ================= */
 
 .history-toolbar {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 15px;
@@ -360,7 +411,6 @@ body {
 
 .search-box input {
     width: 100%;
-
     height: 42px;
 
     padding: 0 14px 0 40px;
@@ -421,9 +471,7 @@ body {
 }
 
 
-/* =========================
-   HISTORY CARD
-========================= */
+/* ================= HISTORY CARD ================= */
 
 .history-card {
     background: #ffffff;
@@ -439,9 +487,7 @@ body {
     padding: 20px 22px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     border-bottom: 1px solid #f1f5f9;
@@ -449,7 +495,6 @@ body {
 
 .history-card-header h2 {
     font-size: 15px;
-
     font-weight: 600;
 
     color: #0f172a;
@@ -473,18 +518,14 @@ body {
     color: #2563eb;
 
     font-size: 10px;
-
     font-weight: 600;
 }
 
 
-/* =========================
-   HISTORY ITEM
-========================= */
+/* ================= HISTORY ITEM ================= */
 
 .history-item {
     display: flex;
-
     align-items: center;
 
     gap: 15px;
@@ -555,7 +596,6 @@ body {
 
 .history-main {
     display: flex;
-
     align-items: center;
 
     gap: 10px;
@@ -565,7 +605,6 @@ body {
 
 .history-main h3 {
     font-size: 12px;
-
     font-weight: 600;
 
     color: #334155;
@@ -581,7 +620,6 @@ body {
     color: #64748b;
 
     font-size: 8px;
-
     font-weight: 600;
 }
 
@@ -632,9 +670,7 @@ body {
 }
 
 
-/* =========================
-   EMPTY STATE
-========================= */
+/* ================= EMPTY STATE ================= */
 
 .empty-state {
     display: none;
@@ -665,7 +701,6 @@ body {
 
 .empty-state h3 {
     font-size: 13px;
-
     font-weight: 600;
 
     margin-bottom: 5px;
@@ -678,153 +713,35 @@ body {
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ================= ACTIVITY RESULT MODAL ================= */
 
-@media (max-width: 1100px) {
-
-    .sidebar {
-        width: 220px;
-    }
-
-    .main-content {
-        width: calc(100% - 220px);
-
-        margin-left: 220px;
-    }
-
-    .page-content {
-        padding: 25px;
-    }
-
-    .top-navbar {
-        padding: 0 25px;
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .sidebar {
-        display: none;
-    }
-
-    .main-content {
-        width: 100%;
-
-        margin-left: 0;
-    }
-
-    .top-navbar {
-        height: 65px;
-
-        padding: 0 18px;
-    }
-
-    .topbar-title {
-        display: none;
-    }
-
-    .mobile-page-name {
-        display: block;
-    }
-
-    .profile-info,
-    .profile-arrow {
-        display: none;
-    }
-
-    .topbar-right {
-        gap: 10px;
-    }
-
-    .page-content {
-        padding: 22px 16px 40px;
-    }
-
-    .page-heading h1 {
-        font-size: 20px;
-    }
-
-    .history-toolbar {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .search-box {
-        max-width: none;
-    }
-
-    .filter-box select {
-        width: 100%;
-    }
-
-    .history-item {
-        align-items: flex-start;
-
-        padding: 18px;
-    }
-
-    .history-main {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 5px;
-    }
-
-    .view-btn {
-        margin-left: auto;
-    }
-
-}
-
-
-@media (max-width: 450px) {
-
-    .history-card-header {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 10px;
-    }
-
-    .history-item {
-        flex-wrap: wrap;
-    }
-
-    .history-details {
-        width: calc(100% - 55px);
-    }
-
-    .view-btn {
-        margin-left: 55px;
-    }
-
-}
-
-/* Activity Result Modal */
 .activity-modal {
     display: none;
+
     position: fixed;
     inset: 0;
+
     z-index: 10000;
+
     align-items: center;
     justify-content: center;
+
     padding: 20px;
+
     background: rgba(15, 23, 42, 0.65);
 }
 
 .activity-modal-content {
     width: min(850px, 100%);
+
     max-height: 85vh;
+
     overflow: hidden;
+
     background: #ffffff;
+
     border-radius: 16px;
+
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
@@ -832,41 +749,60 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
     gap: 16px;
+
     padding: 22px 26px;
+
     border-bottom: 1px solid #e5e7eb;
 }
 
 .activity-modal-header h2 {
     margin: 0;
+
     color: #111827;
+
     font-size: 20px;
+
     overflow-wrap: anywhere;
 }
 
 .activity-modal-header p {
     margin: 8px 0 0;
+
     color: #64748b;
+
     font-size: 13px;
 }
 
 .activity-modal-close {
     flex-shrink: 0;
+
     border: none;
+
     background: transparent;
+
     color: #64748b;
+
     font-size: 28px;
+
     cursor: pointer;
 }
 
 .activity-modal-body {
     padding: 26px;
+
     max-height: calc(85vh - 100px);
+
     overflow-y: auto;
+
     color: #334155;
+
     font-size: 14px;
     line-height: 1.8;
+
     white-space: pre-wrap;
+
     overflow-wrap: anywhere;
 }
 
@@ -874,6 +810,7 @@ body {
 .activity-modal-body h2,
 .activity-modal-body h3 {
     color: #111827;
+
     margin: 20px 0 10px;
 }
 
@@ -900,15 +837,20 @@ body {
 
 .activity-modal-body table {
     width: 100%;
+
     border-collapse: collapse;
+
     margin: 16px 0;
+
     font-size: 13px;
 }
 
 .activity-modal-body th,
 .activity-modal-body td {
     padding: 10px;
+
     border: 1px solid #e5e7eb;
+
     text-align: left;
 }
 
@@ -918,11 +860,163 @@ body {
 
 .activity-modal-body pre {
     overflow-x: auto;
+
     padding: 14px;
+
     border-radius: 8px;
+
     background: #f1f5f9;
 }
 
 .activity-modal-body code {
     overflow-wrap: anywhere;
 }
+
+
+/* ================= RESPONSIVE: TABLET ================= */
+
+@media (max-width: 950px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        width: calc(100% - 220px);
+        margin-left: 220px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+}
+
+
+/* ================= RESPONSIVE: MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .top-navbar {
+        height: 65px;
+        padding: 0 18px;
+
+        justify-content: space-between;
+    }
+
+    .topbar-title {
+        display: none;
+    }
+
+    .mobile-page-name {
+        display: block;
+    }
+
+    .topbar-right {
+        gap: 10px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+
+    .profile {
+        padding: 0;
+    }
+
+    .page-content {
+        padding: 22px 18px 35px;
+    }
+
+    .page-heading h1 {
+        font-size: 20px;
+    }
+
+    .history-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        max-width: none;
+    }
+
+    .filter-box select {
+        width: 100%;
+    }
+
+    .history-item {
+        align-items: flex-start;
+        padding: 18px;
+    }
+
+    .history-main {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .view-btn {
+        margin-left: auto;
+    }
+
+    .activity-modal {
+        padding: 12px;
+    }
+
+    .activity-modal-header {
+        padding: 18px;
+    }
+
+    .activity-modal-body {
+        padding: 18px;
+    }
+}
+
+
+/* ================= RESPONSIVE: SMALL MOBILE ================= */
+
+@media (max-width: 450px) {
+
+    .page-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .history-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .history-item {
+        flex-wrap: wrap;
+    }
+
+    .history-details {
+        width: calc(100% - 55px);
+    }
+
+    .view-btn {
+        margin-left: 55px;
+    }
+
+    .activity-modal-header h2 {
+        font-size: 17px;
+    }
+
+    .activity-modal-body {
+        font-size: 13px;
+    }
+}
+

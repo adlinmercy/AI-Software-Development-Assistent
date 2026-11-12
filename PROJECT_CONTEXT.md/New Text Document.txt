@@ -1,0 +1,246 @@
+# DevCore AI – Project Context
+
+**Last Updated:** 11 November 2026  
+**Project Status:** Existing application audit – Week 1, Day 1
+
+## 1. Project Overview
+
+DevCore AI is an AI-powered software development assistant designed as a Windows desktop application.
+
+Its purpose is to help developers with requirements analysis, code generation, debugging, code review, test case generation and documentation.
+
+## 2. Existing Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Desktop application | Electron |
+| Runtime | Node.js |
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Python, FastAPI |
+| API server | Uvicorn |
+| AI integration | Groq API |
+| Default AI model | openai/gpt-oss-20b |
+| Database | SQLite |
+| Packaging | PyInstaller |
+| Package management | npm, pip |
+
+## 3. Existing Architecture
+
+- Electron entry point: `electron/main.js`
+- Frontend pages and assets: `design/`
+- Frontend JavaScript: `design/js/`
+- Frontend stylesheets: `design/css/`
+- Backend API: `backend/main.py`
+- Backend launcher: `backend/run_backend.py`
+- Python dependencies: `backend/requirements.txt`
+
+Expected application flow:
+
+Electron → Frontend → FastAPI → Groq API / SQLite
+
+The exact frontend-to-backend communication and packaged startup behaviour still require further verification.
+
+## 4. Existing Modules
+
+1. Authentication
+2. Requirement Analysis
+3. Code Generation
+4. Code Debugging
+5. Code Review
+6. Test Case Generation
+7. Documentation Generation
+8. Test Case Generation
+9. Project History
+10. Settings
+
+Note: Confirm the final navigation and module list during the frontend audit. Some pages also include profile and authentication-related functionality.
+
+## 5. Existing Backend Findings
+
+- FastAPI application is defined in `backend/main.py`.
+- Uvicorn starts the application through `backend/run_backend.py`.
+- Backend host: `127.0.0.1`
+- Backend port: `8000`
+- AI API key environment variable: `GROQ_API_KEY`.
+- AI model can be configured using `GROQ_MODEL`.
+- SQLite is used for activity history.
+- `generate_ai_response()` is a shared AI-response helper.
+- Existing API modules include requirement analysis, code generation, debugging, code review, test cases, documentation and history.
+
+## 6. Important Findings and Known Issues
+
+### Requirement Analysis
+- Backend prompt currently requests 12 sections.
+- Agreed target report structure is exactly 9 sections:
+  1. Functional Requirements
+  2. Non-Functional Requirements
+  3. User Roles & Permissions
+  4. System Modules
+  5. Technical Requirements & Technology Stack
+  6. Database Requirements
+  7. Missing or Ambiguous Requirements
+  8. Risks & Challenges
+  9. Development Phases
+- Confirmed requirements, assumptions and recommendations must be distinguished.
+- Frontend currently uses a four-card display structure.
+- Requirement counting and report rendering need improvement.
+- Frontend character limit and backend maximum length are inconsistent.
+
+### Test Case Generation
+- Existing test type options and backend output classification need alignment.
+- Desired options include Functional, Unit, Integration and Input Validation.
+
+### Database
+- Existing history table does not have a `project_id`.
+- History records are not currently isolated by project.
+- Development database path in `main.py` is `Path.home()/project_history.db`.
+- Packaged database path uses `%APPDATA%\DevCoreAI\project_history.db`.
+- A database file seen in the backend folder may not be the active development database. Verify before modifying it.
+
+### Electron and Backend
+- Electron checks `http://127.0.0.1:8000/openapi.json` before opening the window.
+- Development backend executable path: `backend/dist/devcore_backend_test.exe`.
+- Packaged backend executable path: `devcore_backend.exe`.
+- Port conflict and backend shutdown behaviour need testing.
+- CORS behaviour with Electron's `loadFile()` needs verification.
+
+## 7. Agreed Future Upgrades
+
+### A. Multi-Project Workspace
+- Create, import, select and switch projects.
+- Keep each project's data independent.
+- Restore the selected project after restarting the application.
+
+### B. Shared Project Context
+- Reuse approved requirements, decisions, conversations and previous outputs across modules.
+- Keep individual modules usable without project context.
+- Central Project Assistant and individual modules must share the same project records.
+
+### C. Project RAG
+- Scan and index project source files.
+- Retrieve relevant code and file references for AI responses.
+- Exclude secrets, dependencies and build folders.
+- Keep retrieval isolated by project.
+
+### D. Git Assistant
+- Initial version should be read-only.
+- Show status, commits, changed files and diffs.
+- Explain changes and suggest commit messages.
+- No automatic destructive Git operations.
+
+### E. Smart Report Export
+- Export saved module outputs.
+- Support PDF, Word and Markdown initially, with other formats depending on available time.
+
+### F. Workflow Automation
+Initial workflows:
+- Requirement Analysis → Code Generation
+- Debugging → Code Review
+- Code Generation → Test Cases → Documentation
+
+Code changes must be previewed and approved before being applied.
+
+## 8. Multi-Project Isolation Requirements
+
+Every project-specific record and operation must be associated with a unique `project_id`.
+
+Separate project data:
+- Files and indexes
+- Conversations
+- Requirements and decisions
+- Generated artifacts
+- Workflow progress
+- Git information
+- Reports
+
+Verify project ownership on the backend. Never trust a client-provided project ID without authorization checks.
+
+Deleting one project must not affect other projects.
+
+## 9. Development Schedule
+
+Target duration: 8 weeks.
+
+Available time: 1–2 hours per day, 7 days per week.
+
+Main priority:
+1. Audit existing application.
+2. Multi-project workspace.
+3. Shared project context.
+4. Basic RAG.
+5. Integrate existing modules.
+6. Central Project Assistant.
+7. Testing and security.
+8. Packaging and final verification.
+
+Advanced Git features and advanced report formats can be postponed if time is limited.
+
+## 10. Current Progress – Week 1, Day 1
+
+### Inspected
+- `package.json`
+- `electron/main.js`
+- `backend/requirements.txt`
+- `backend/main.py`
+- `backend/run_backend.py`
+- `design/js/requirement.js`
+- `design/js/` file listing
+
+### Not yet verified
+- Complete frontend/backend API contracts across modules.
+- Actual runtime database location.
+- Authentication implementation.
+- CORS behaviour in the packaged Electron app.
+- Backend executable build consistency.
+- Git working tree and current commit.
+
+### Code changes
+No source code changes have been made during this audit.
+
+## 11. Working Rules
+
+- Inspect actual files before modifying them.
+- Preserve existing working modules and UI.
+- Explain what, why and how before implementation.
+- Use beginner-friendly Tanglish explanations.
+- Make small, testable changes.
+- Verify results before marking a feature complete.
+- Update this document after each work session.
+- Never store API keys, passwords or other secrets in this document.
+
+## 12. Next Step
+
+Continue Week 1, Day 1 by inspecting the database schema and verifying the active database location. Then document the audit findings and establish a safe Git checkpoint.
+
+### Requirement Analysis – Test 1 (11 November 2026)
+
+**Status: Partially Successful**
+
+- AI successfully generated a report.
+- Functional Requirements count displayed 0 despite 15 FR entries.
+- Non-Functional Requirements count displayed 0 despite 8 NFR entries.
+- Only four report sections were displayed instead of the agreed nine.
+- Unsupported numerical targets and compliance standards were introduced.
+- Technology recommendations need clearer separation from confirmed requirements.
+
+**Required fixes:**
+1. Correct requirement counting.
+2. Implement the exact nine-section report structure.
+3. Clearly separate confirmed requirements, assumptions and recommendations.
+4. Prevent unsupported numerical targets and standards from being presented as confirmed requirements.
+5. Verify report rendering and section extraction.
+Record for our testing
+Code Review – Test 1: Partially Successful
+- Correctly identified security vulnerabilities.
+- Found password visibility issue.
+- Provided useful maintainability feedback.
+- Missing password-hashing recommendation.
+- Score labels appear inconsistent with scores.
+- Performance score lacks explanation.
+
+est record
+- Test generation: Passed.
+- Arithmetic accuracy: Passed.
+- Positive/negative classification: Reasonable.
+- Test coverage reporting: Needs improvement.
+- Scenario completeness: Needs improvement.

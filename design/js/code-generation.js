@@ -4,7 +4,7 @@ DEVCORE AI - CODE GENERATION
 Frontend integration with the existing FastAPI backend.
 =========================================================
 */
-
+import { apiRequest } from "./api-client.js";
 document.addEventListener("DOMContentLoaded", function () {
 
     // =====================================================
@@ -43,14 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const copyBtn =
         document.getElementById("copyBtn");
-
-
-    // =====================================================
-    // BACKEND API
-    // =====================================================
-
-    const API_URL =
-        "http://127.0.0.1:8000/api/code-generation";
 
 
     // =====================================================
@@ -226,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // SEND REQUEST TO FASTAPI
             // =============================================
 
-            const response = await fetch(API_URL, {
+            const response = await apiRequest("/api/code-generation", {
 
                 method: "POST",
 
@@ -522,4 +514,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+});
+
+// ==========================================
+// BACK BUTTON
+// ==========================================
+
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = "dashboard.html";
+    }
 });

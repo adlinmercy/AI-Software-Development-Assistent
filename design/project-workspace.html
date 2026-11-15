@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Workspace | DevCore AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/project-workspace.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="logo-icon">✦</div>
+            <span>DevCore AI</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-section-title">MAIN</p>
+
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="requirement.html" class="nav-item">
+                <span class="nav-icon">⌕</span>
+                <span>Requirement Analysis</span>
+            </a>
+
+            <a href="code-generation.html" class="nav-item">
+                <span class="nav-icon">&lt;/&gt;</span>
+                <span>Code Generation</span>
+            </a>
+
+            <a href="code-debugging.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Code Debugging</span>
+            </a>
+
+            <a href="code-review.html" class="nav-item">
+                <span class="nav-icon">✓</span>
+                <span>Code Review</span>
+            </a>
+
+            <a href="test-cases.html" class="nav-item">
+                <span class="nav-icon">□</span>
+                <span>Test Cases</span>
+            </a>
+
+            <a href="documentation.html" class="nav-item">
+                <span class="nav-icon">▤</span>
+                <span>Documentation</span>
+            </a>
+
+            <p class="nav-section-title workspace-title">WORKSPACE</p>
+
+            <a href="project-workspace.html" class="nav-item active">
+                <span class="nav-icon">▣</span>
+                <span>Project Workspace</span>
+            </a>
+
+            <a href="project-history.html" class="nav-item">
+                <span class="nav-icon">◷</span>
+                <span>Project History</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+            <a href="logout.html" class="nav-item logout">
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP NAVBAR -->
+        <header class="top-navbar">
+
+            <div class="topbar-title">
+                <div class="topbar-heading-row">
+
+        <button
+            type="button"
+            class="back-button"
+            id="backButton"
+            title="Go Back"
+            aria-label="Go Back"
+        >
+            <span>←</span>
+        </button>
+                <h2>Project Workspace</h2>
+                </div>
+                <p>Manage your software development projects</p>
+            </div>
+
+            <div class="mobile-page-name">
+                Project Workspace
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="notification-btn" title="Notifications">
+                    🔔
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">U</div>
+
+                    <div class="profile-info">
+                        <span class="profile-name">User</span>
+                        <span class="profile-role">Developer</span>
+                    </div>
+
+                    <span class="profile-arrow">⌄</span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            <div class="page-heading">
+
+                <div>
+                    <h1>My Projects</h1>
+
+                    <p>
+                        Create, organize, and manage your development projects
+                        in one place.
+                    </p>
+                </div>
+
+                <button type="button" id="createProjectBtn" class="primary-btn">
+                    + Create Project
+                </button>
+
+            </div>
+
+
+            <!-- PROJECT SUMMARY -->
+            <div class="workspace-summary">
+
+                <div class="summary-card">
+                    <div class="summary-icon">▣</div>
+                    <div>
+                        <p>Total Projects</p>
+                        <h2 id="projectCount">0</h2>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon selected-icon">✓</div>
+                    <div>
+                        <p>Selected Project</p>
+                        <h2 id="selectedProjectName">None</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT LIST -->
+            <div class="projects-section">
+
+                <div class="projects-section-header">
+
+                    <div>
+                        <h2>Your Projects</h2>
+                        <p>All projects associated with your account</p>
+                    </div>
+
+                    <button type="button" id="refreshProjectsBtn" class="secondary-btn">
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div id="projectLoading" class="workspace-message">
+                    Loading your projects...
+                </div>
+
+                <div id="projectError" class="workspace-error" role="alert"></div>
+
+
+                <div id="projectsGrid" class="projects-grid"></div>
+
+
+                <div id="emptyProjects" class="empty-state" hidden>
+
+                    <div class="empty-icon">▣</div>
+
+                    <h3>No projects yet</h3>
+
+                    <p>
+                        Create your first project to start organizing
+                        your development work.
+                    </p>
+
+                    <button type="button" id="emptyCreateBtn" class="primary-btn">
+                        Create Your First Project
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- CREATE PROJECT MODAL -->
+    <div id="createProjectModal" class="project-modal" aria-hidden="true">
+
+        <div class="project-modal-content"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="modalTitle">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="modalTitle">Create New Project</h2>
+                    <p>Enter the basic details of your project.</p>
+                </div>
+
+                <button type="button"
+                        id="closeProjectModal"
+                        class="modal-close"
+                        aria-label="Close">&times;</button>
+
+            </div>
+
+
+            <form id="createProjectForm">
+
+                <div class="form-group">
+
+                    <label for="projectName">Project Name</label>
+
+                    <input
+                        type="text"
+                        id="projectName"
+                        maxlength="100"
+                        placeholder="Enter project name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="projectDescription">
+                        Project Description
+                    </label>
+
+                    <textarea
+                        id="projectDescription"
+                        maxlength="500"
+                        rows="4"
+                        placeholder="Describe your project (optional)"
+                    ></textarea>
+
+                </div>
+
+
+                <p id="createProjectError" class="form-error" role="alert"></p>
+
+
+                <div class="modal-actions">
+
+                    <button type="button"
+                            id="cancelProjectBtn"
+                            class="secondary-btn">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            id="saveProjectBtn"
+                            class="primary-btn">
+                        Create Project
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/profile.js"></script>
+    <script type="module" src="js/project-workspace.js"></script>
+    <script src="js/theme.js"></script>
+
+</body>
+</html>

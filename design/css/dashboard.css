@@ -822,6 +822,12 @@ body {
         0 6px 15px rgba(37, 99, 235, 0.18);
 }
 
+.empty-project .primary-button {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* =========================================
    TABLET

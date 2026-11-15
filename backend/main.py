@@ -7,10 +7,17 @@ import shutil
 from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from groq import Groq
+
+import firebase_admin
+from firebase_admin import credentials, auth as firebase_auth
+
+import uuid
+from datetime import datetime, timezone
 
 # =========================================================
 # APPLICATION DATA CONFIGURATION
@@ -29,6 +36,39 @@ load_dotenv(dotenv_path=ENV_FILE)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("devcore-ai")
+
+# =========================================================
+# FIREBASE ADMIN INITIALIZATION
+# =========================================================
+
+FIREBASE_SERVICE_ACCOUNT_PATH = (
+    APP_DATA_DIR / "firebase-service-account.json"
+)
+
+firebase_app = None
+
+try:
+    if FIREBASE_SERVICE_ACCOUNT_PATH.exists():
+
+        try:
+            firebase_app = firebase_admin.get_app()
+
+        except ValueError:
+            firebase_credential = credentials.Certificate(
+                str(FIREBASE_SERVICE_ACCOUNT_PATH)
+            )
+
+            firebase_app = firebase_admin.initialize_app(
+                firebase_credential
+            )
+
+        logger.info("Firebase Admin initialized successfully.")
+
+    else:
+        logger.warning("Firebase service account file not found.")
+
+except Exception:
+    logger.exception("Firebase Admin initialization failed.")
 
 API_KEY = os.getenv("GROQ_API_KEY")
 MODEL_NAME = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
@@ -54,6 +94,42 @@ app.add_middleware(
 )
 
 # =========================================================
+# FIREBASE AUTHENTICATION VERIFICATION
+# =========================================================
+
+bearer_scheme = HTTPBearer(auto_error=False)
+
+
+async def verify_firebase_token(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)
+):
+    if firebase_app is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Firebase authentication is not configured."
+        )
+
+    if credentials is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Authentication token is missing."
+        )
+
+    try:
+        decoded_token = firebase_auth.verify_id_token(
+            credentials.credentials,
+            app=firebase_app
+        )
+
+        return decoded_token["uid"]
+
+    except Exception:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired authentication token."
+        )
+
+# =========================================================
 # PROJECT HISTORY DATABASE
 # =========================================================
 
@@ -73,9 +149,11 @@ else:
 
 
 def init_history_db():
-    """Create the project history table if it does not exist."""
+    """Initialize DevCore AI database tables."""
 
     with sqlite3.connect(HISTORY_DB_PATH) as connection:
+
+        # Existing project history table
         connection.execute("""
             CREATE TABLE IF NOT EXISTS project_history (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -87,6 +165,105 @@ def init_history_db():
                 result_data TEXT
             )
         """)
+
+        # Multi-project workspace table
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS projects (
+                id TEXT PRIMARY KEY,
+                user_id TEXT NOT NULL,
+                name TEXT NOT NULL,
+                description TEXT DEFAULT '',
+                root_path TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                UNIQUE(user_id, name)
+            )
+        """)
+
+        # User-specific application settings
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS app_settings (
+                user_id TEXT NOT NULL,
+                key TEXT NOT NULL,
+                value TEXT,
+                PRIMARY KEY (user_id, key)
+            )
+        """)
+
+        # Faster project lookup by owner
+        connection.execute("""
+            CREATE INDEX IF NOT EXISTS idx_projects_user_id
+            ON projects(user_id)
+        """)
+
+        connection.commit()
+
+
+class ProjectCreateRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    description: str = Field(default="", max_length=500)
+# =========================================================
+# PROJECT WORKSPACE API
+# =========================================================
+
+@app.post("/api/projects")
+async def create_project(
+    project: ProjectCreateRequest,
+    user_id: str = Depends(verify_firebase_token)
+):
+    project_id = str(uuid.uuid4())
+    current_time = datetime.now(timezone.utc).isoformat()
+
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+            connection.execute(
+                """
+                INSERT INTO projects (
+                    id,
+                    user_id,
+                    name,
+                    description,
+                    root_path,
+                    created_at,
+                    updated_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    project_id,
+                    user_id,
+                    project.name.strip(),
+                    project.description.strip(),
+                    None,
+                    current_time,
+                    current_time
+                )
+            )
+
+        return {
+            "success": True,
+            "message": "Project created successfully.",
+            "project": {
+                "id": project_id,
+                "name": project.name.strip(),
+                "description": project.description.strip(),
+                "created_at": current_time
+            }
+        }
+
+    except sqlite3.IntegrityError:
+        raise HTTPException(
+            status_code=409,
+            detail="A project with this name already exists."
+        )
+
+    except sqlite3.Error:
+        logger.exception("Project creation failed.")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to create project."
+        )
+
 
 
 def save_history(
@@ -127,6 +304,85 @@ def save_history(
         logger.exception("Failed to save project history")
         return None
 
+
+# =========================================================
+# GET USER PROJECTS
+# =========================================================
+
+@app.get("/api/projects")
+async def get_projects(
+    user_id: str = Depends(verify_firebase_token)
+):
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+            connection.row_factory = sqlite3.Row
+
+            rows = connection.execute(
+                """
+                SELECT id, name, description, root_path,
+                       created_at, updated_at
+                FROM projects
+                WHERE user_id = ?
+                ORDER BY updated_at DESC
+                """,
+                (user_id,)
+            ).fetchall()
+
+        projects = [dict(row) for row in rows]
+
+        return {
+            "success": True,
+            "count": len(projects),
+            "projects": projects
+        }
+
+    except sqlite3.Error:
+        logger.exception("Project listing failed.")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to retrieve projects."
+        )
+
+# ==========================================
+# DELETE PROJECT API
+# ==========================================
+
+@app.delete("/api/projects/{project_id}")
+async def delete_project(
+    project_id: str,
+    user_id: str = Depends(verify_firebase_token)
+):
+    try:
+        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+
+            cursor = connection.execute(
+                """
+                DELETE FROM projects
+                WHERE id = ? AND user_id = ?
+                """,
+                (project_id, user_id)
+            )
+
+            if cursor.rowcount == 0:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Project not found."
+                )
+
+        return {
+            "success": True,
+            "message": "Project deleted successfully."
+        }
+
+    except HTTPException:
+        raise
+
+    except sqlite3.Error:
+        logger.exception("Project deletion failed.")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to delete project."
+        )
 
 # Initialize the database when the backend starts.
 init_history_db()
@@ -334,6 +590,7 @@ class RequirementRequest(BaseModel):
         min_length=20,
         max_length=10000,
     )
+
 
 
 @app.post("/api/requirement-analysis")

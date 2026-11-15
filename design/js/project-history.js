@@ -378,3 +378,17 @@ document.addEventListener("keydown", function (event) {
 });
     loadHistory();
 });
+
+// ==========================================
+// BACK BUTTON
+// ==========================================
+
+const backButton = document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = "dashboard.html";
+    }
+});

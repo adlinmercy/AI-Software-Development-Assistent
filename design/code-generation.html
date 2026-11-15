@@ -75,7 +75,12 @@
             <p class="nav-section-title workspace-title">
                 WORKSPACE
             </p>
-
+            
+            <a href="project-workspace.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>Project Workspace</span>
+            </a>
+            
             <a href="project-history.html" class="nav-item">
                 <span class="nav-icon">◷</span>
                 <span>Project History</span>
@@ -108,15 +113,31 @@
 
         <header class="top-navbar">
 
-            <div class="topbar-title">
+            
+<div class="topbar-title">
 
-                <h2>Code Generation</h2>
+    <div class="topbar-heading-row">
 
-                <p>
-                    Generate code from your software requirements
-                </p>
+        <button
+            type="button"
+            class="back-button"
+            id="backButton"
+            title="Go Back"
+            aria-label="Go Back"
+        >
+            <span>←</span>
+        </button>
 
-            </div>
+        <h2>Code Generation</h2>
+
+    </div>
+
+    <p>
+        Generate code from your software requirements
+    </p>
+
+</div>
+
 
             <div class="mobile-page-name">
                 Code Generation
@@ -462,11 +483,10 @@
 
     </main>
 
-
     <!-- JavaScript -->
     <script src="js/profile.js"></script>
     <script src="js/ai-preferences.js"></script>
-    <script src="js/code-generation.js"></script>
+    <script type="module" src="js/code-generation.js"></script>
     <script src="js/theme.js"></script>
 
 
